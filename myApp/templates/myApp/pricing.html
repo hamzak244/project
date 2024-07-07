@@ -1,0 +1,1366 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>ResearchDraft - Pricing</title>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+
+  <!-- 
+    - google font link
+  -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@500;700&family=Roboto:wght@400;500;700&display=swap"
+    rel="stylesheet">
+  </head>
+  <style>
+    :root {
+
+/**
+ * colors
+ */
+ --boeing-blue: #0039a6;
+ --intel-blue: #0071c5;
+ --denim: #1560bd;
+ --mcdonald-yellow: #FFC72C;
+--eerie-black: hsl(240, 6%, 10%);
+--light-gray: hsl(0, 0%, 80%);
+--cultured-2: hsl(210, 60%, 98%);
+--platinum: hsl(0, 0%, 90%);
+--gray-web: hsl(220, 5%, 49%);
+--cultured: hsl(0, 0%, 93%);
+--black_10: hsla(0, 0%, 0%, 0.1);
+--black_5: hsla(0, 0%, 0%, 0.05);
+--white-1: hsl(0, 0%, 100%);
+--white-2: hsl(0, 14%, 98%);
+--black: hsl(0, 0%, 0%);
+
+/**
+ * gradient color
+ */
+
+--gradient: linear-gradient(to left top, var(--intel-blue), var(--boeing-blue));
+
+/**
+ * typography
+ */
+
+--ff-roboto: 'Roboto', sans-serif;
+--ff-league-spartan: 'League Spartan', sans-serif;
+
+--fs-1: 3.5rem;
+--fs-2: 3rem;
+--fs-3: 2.1rem;
+--fs-4: 1.7rem;
+--fs-5: 1.4rem;
+--fs-6: 1.3rem;
+
+--fw-700: 700;
+--fw-500: 500;
+
+/**
+ * spacing
+ */
+
+--section-padding: 50px;
+
+/**
+ * shadow
+ */
+
+--shadow-1: 0 6px 24px var(--black_5);
+--shadow-2: 0 2px 28px var(--black_10);
+
+/**
+ * border radius
+ */
+
+--radius-2: 2px;
+--radius-5: 5px;
+--radius-8: 8px;
+
+/**
+ * transition
+ */
+
+--transition-1: 0.25s ease;
+--transition-2: 0.5s ease;
+--cubic-out: cubic-bezier(0.33, 0.85, 0.4, 0.96);
+
+}
+
+
+/*-----------------------------------*\
+#RESET
+\*-----------------------------------*/
+
+*,
+*::before,
+*::after {
+margin: 0;
+padding: 0;
+box-sizing: border-box;
+}
+
+li { list-style: none; }
+
+a {
+text-decoration: none;
+color: inherit;
+}
+
+a,
+img,
+span,
+time,
+label,
+input,
+button,
+textarea,
+ion-icon { display: block; }
+
+img { height: auto; }
+
+input,
+button,
+textarea {
+background: none;
+border: none;
+font: inherit;
+}
+
+input,
+textarea { width: 100%; }
+
+button { cursor: pointer; }
+
+ion-icon { pointer-events: none; }
+
+address { font-style: normal; }
+
+html {
+font-family: var(--ff-roboto);
+font-size: 10px;
+scroll-behavior: smooth;
+}
+
+body {
+background-color: var(--white-1);
+color: var(--gray-web);
+font-size: 1.6rem;
+line-height: 1.8;
+}
+
+::-webkit-scrollbar { width: 10px; }
+
+::-webkit-scrollbar-track { background-color: hsl(0, 0%, 98%); }
+
+::-webkit-scrollbar-thumb { background-color: hsl(0, 0%, 80%); }
+
+::-webkit-scrollbar-thumb:hover { background-color: hsl(0, 0%, 70%); }
+
+:focus-visible { outline-offset: 4px; }
+
+
+.container { padding-inline: 15px; }
+
+.btn {
+max-width: max-content;
+color: var(--white-1);
+font-size: var(--fs-6);
+font-weight: var(--fw-700);
+padding: 10px 30px;
+border-radius: var(--radius-5);
+transition: var(--transition-1);
+}
+
+.btn-primary {
+background-image: var(--gradient);
+background-size: 1000%;
+}
+
+.btn-primary:is(:hover, :focus) { background-position: bottom right; }
+
+.btn-secondary {
+background-color: var(--white-1);
+color:#0039a6;
+}
+
+.btn-secondary:is(:hover, :focus) {
+background-color: var(--mcdonald-yellow);
+color: var(--white-1);
+}
+
+.section { padding-block: var(--section-padding); }
+
+.h1,
+.h2,
+.h3 {
+color: var(--eerie-black);
+font-family: var(--ff-league-spartan);
+line-height: 1.2;
+}
+
+.h1 { font-size: var(--fs-1); }
+
+.h2 { font-size: var(--fs-2); }
+
+.h3 { font-size: var(--fs-3); }
+
+.w-100 { width: 100%; }
+
+.section-title,
+.section-text { text-align: center; }
+
+.section-text { font-size: var(--fs-6); }
+
+.grid-list {
+display: grid;
+gap: 30px;
+}
+
+.img-holder {
+aspect-ratio: var(--width) / var(--height);
+background-color: var(--light-gray);
+}
+
+.img-cover {
+width: 100%;
+height: 100%;
+object-fit: cover;
+}
+
+.colored{
+color: #FFC72C;
+}
+
+.section-title.coloredd{
+color: white;
+}
+
+
+/*-----------------------------------*\
+#HEADER
+\*-----------------------------------*/
+
+.header {
+position: fixed;
+top: 0;
+left: 0;
+width: 100%;
+background-color: var(--white-1);
+padding-block: 15px;
+border-block-end: 1px solid var(--cultured);
+z-index: 4;
+transition: var(--transition-1);
+}
+
+.header.active { filter: drop-shadow(var(--shadow-2)); }
+
+.header > .container {
+display: flex;
+justify-content: space-between;
+align-items: center;
+}
+
+.logo {
+font-family: var(--ff-league-spartan);
+color: var(--black);
+font-size: 3.5rem;
+font-weight: var(--fw-700);
+line-height: 1;
+}
+
+.nav-toggle-btn { font-size: 40px; }
+
+.nav-toggle-btn.active .open,
+.nav-toggle-btn .close { display: none; }
+
+.nav-toggle-btn .open,
+.nav-toggle-btn.active .close { display: block; }
+
+.navbar {
+background-color: var(--white-1);
+position: absolute;
+top: 100%;
+left: 50%;
+transform: translateX(-50%);
+max-width: calc(100% - 30px);
+width: 100%;
+padding-inline: 0;
+border: 1px solid var(--cultured);
+transition: 0.3s var(--cubic-out);
+max-height: 0;
+visibility: hidden;
+overflow: hidden;
+}
+
+.navbar.active {
+max-height: 320px;
+visibility: visible;
+transition-duration: 0.5s;
+}
+
+.navbar-list {
+padding: 20px 15px;
+padding-block-start: 10px;
+margin-right: 0%;
+opacity: 0;
+transition: var(--transition-1);
+}
+
+.navbar.active .navbar-list { opacity: 1; }
+
+.navbar-link {
+color: var(--eerie-black);
+font-family: var(--ff-league-spartan);
+font-size: var(--fs-4);
+line-height: 1.2;
+padding-block: 8px;
+transition: var(--transition-1);
+}
+
+.navbar-link:is(:hover, :focus) { color: var(--red-crayola); }
+
+.header .btn { margin-block-start: 10px; }
+
+
+/*-----------------------------------*\
+  #FOOTER
+\*-----------------------------------*/
+
+.footer { padding-block: 40px 20px; }
+
+.section.footer-top { border-block-end: none; }
+
+.footer{
+  background-color: #0039a6;
+}
+.footer-top {
+  display: grid;
+  gap: 20px;
+}
+
+.footer .logo { margin-block-end: 25px; }
+
+.footer-text {
+  font-size: var(--fs-5);
+  font-weight: var(--fw-500);
+  line-height: 1.4;
+  color: white;
+}
+
+.footer-list .h5 {
+  font-weight: var(--fw-700);
+  color: var(--mcdonald-yellow);
+  margin-block-end: 15px;
+}
+
+.footer-list-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: white;
+}
+
+.footer-list-item ion-icon {
+  font-size: 18px;
+  flex-shrink: 0;
+}
+.footer-list-item:hover ion-icon {
+ color: var(--mcdonald-yellow);
+}
+
+.footer-link {
+  font-size: var(--fs-7);
+  font-weight: var(--fw-500);
+  margin-block-start: 8px;
+  color: white;
+}
+.footer-link:hover {
+  color: var(--mcdonald-yellow);
+}
+
+.copyright {
+  font-size: var(--fs-8);
+  margin-block-start: 25px;
+  color: white;
+}
+
+.copyright-link { display: inline-block; }
+
+.footer-top { grid-template-columns: repeat(3, 1fr); }
+
+.footer-brand { grid-column: 1 / 4; }
+
+.footer-text {
+  max-width: 400px;
+  margin-block-end: 20px;
+}
+
+.footer-top { grid-template-columns: repeat(4, 1fr); }
+
+  .footer-brand { grid-column: 1 / 5; }
+
+  .footer-link { --fs-7: 1.7rem; }
+
+.footer-top { grid-template-columns: 1fr 0.4fr 0.4fr 0.4fr 0.4fr; }
+
+  .footer-brand {
+    grid-column: auto;
+    padding-inline-end: 100px;
+  }
+
+hr {
+  height: 1px;
+  border: 0;
+  color: #d2d2d2;
+  background-color: #d2d2d2;
+}
+
+span {
+  font-size: 2vw;
+  vertical-align: middle;
+  padding-right: 0.2em;
+}
+
+h5 {
+  margin: 15px;
+}
+  h4.card-title {
+  margin: 25px 0 15px 0;
+}
+
+.price {
+  font-size: 3.5em;
+  color: hsl(234, 14%, 30%);
+  margin: 0 0 20px 0;
+}
+
+.master-price {
+  margin-bottom: 25px;
+}
+
+.professional-card>h4 {
+  margin-top: 40px;
+}
+
+.professional-card>.price {
+  color: white;
+  margin-top: 20px;
+}
+
+.title {
+  padding: 2rem 0.2rem 0.2rem 0.2rem;
+  color: hsl(233, 13%, 49%);
+}
+
+.title>h1 {
+  margin-bottom: 10px;
+}
+
+.sub-title {
+  margin-bottom: 0;
+  margin-top: 0;
+  color: hsl(234, 14%, 74%);
+}
+
+.text, .card-title {
+  color: hsl(233, 13%, 49%);
+}
+
+/* ------------ Grid ------------*/
+.grid-parent {
+  margin-top: 60px;
+  display: grid;
+  grid-template-columns: repeat(3, 23%);
+  justify-content: center;
+}
+
+/* ------------ Cards ------------*/
+.card {
+  border-radius: 8px;
+  padding: 0 10%;
+  box-shadow: 0px 0px 25px -8px hsl(240, 9%, 76%);
+}
+
+.basic-card, .master-card {
+  background-color: white;
+  color: rgb(83, 83, 83);
+}
+
+.professional-card {
+  background-image: linear-gradient(to left top, var(--intel-blue), var(--boeing-blue));
+  color: white;
+  height: 110%;
+  place-self: center auto;
+}
+
+/* ------------ Buttons Style ------------*/
+.button {
+  background-image:linear-gradient(to left top, var(--intel-blue), var(--boeing-blue));
+  width: 100%;
+  height: 35px;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  padding: 5px 30px;
+  text-align: center;
+  text-decoration: none;
+  margin: 20px 0 25px 0;
+  margin-left: 60px;
+  font-weight: 700;
+  letter-spacing: 1.3px;
+}
+
+.professional-button {
+  background-color: #ffffff;
+  width: 100%;
+  height: 35px;
+  border: none;
+  border-radius: 5px;
+  color: var(--boeing-blue);
+  padding: 5px 30px;
+  text-align: center;
+  text-decoration: none;
+  margin-top: 15px;
+  font-weight: 700;
+  letter-spacing: 1.3px;
+}
+
+.pro-btn:hover {
+  border: 1px solid white;
+  background-image: linear-gradient(to left top, var(--intel-blue), var(--boeing-blue));
+  color: white;
+  cursor: pointer;
+}
+
+.btn:hover {
+  background-image: linear-gradient(to right, hsl(0, 0%, 100%), hsl(0, 0%, 100%));
+  color: var(--boeing-blue);
+  border: 1px solid var(--boeing-blue);
+  cursor: pointer;
+}
+
+/* The switch - the box around the slider */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 35px;
+  height: 20px;
+  bottom: 3px;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+/* Hide default HTML checkbox */
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* The slider */
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: linear-gradient(to left top, var(--intel-blue), var(--boeing-blue));
+  transition: .4s;
+}
+
+.slider:hover {
+  opacity: 0.5;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 16px;
+  width: 16px;
+  left: 3px;
+  bottom: 2px;
+  background-color: white;
+  transition: .4s;
+}
+
+input:checked+.slider {
+  background-image: linear-gradient(to left top, var(--intel-blue), var(--boeing-blue));
+}
+
+input:focus+.slider {
+  box-shadow: 0 0 1px hsl(237, 63%, 64%);
+}
+
+input:checked+.slider:before {
+  transform: translateX(13px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+
+/* ------------ Footer ------------*/
+footer {
+  margin-top: 100px;
+}
+
+.attribution {
+  font-size: 10px;
+  text-align: center;
+  display: block;
+  color: grey;
+  padding-bottom: 15px;
+}
+
+.attribution a {
+  text-decoration: none;
+  color: grey;
+}
+
+/* ------------ Mobile View: When the screen size is 800px or lower do this: ------------*/
+@media screen and (max-width: 800px) {
+  body {
+    background-image: url("../images/bg-top.svg");
+    background-size: 280px 310px;
+    background-position: 140% 0%;
+    font-size: 3vw;
+  }
+
+  span {
+    font-size: 5vw;
+  }
+
+  .title {
+    padding-top: 2rem;
+  }
+
+  .switch-section {
+    padding: 3rem;
+  }
+
+  .grid-parent {
+    margin-top: 20px;
+    grid-template-columns: repeat(1, 70%);
+    grid-row-gap: 6rem;
+  }
+
+  h4.card-title {
+    margin: 30px 0 15px 0;
+  }
+
+  footer {
+    margin-top: 30px;
+  }
+}
+
+/*-----------------------------------*\
+  #MEDIA QUERIES
+\*-----------------------------------*/
+
+/**
+ * responsive for larger than 575px screen
+ */
+
+ @media (min-width: 575px) {
+
+/**
+ * REUSED STYLE
+ */
+
+.container {
+  max-width: 540px;
+  width: 100%;
+  margin-inline: auto;
+}
+
+.grid-list {
+  grid-template-columns: 1fr 1fr;
+  column-gap: 25px;
+}
+ }
+
+ /**
+ * responsive for larger than 768px screen
+ */
+
+@media (min-width: 768px) {
+
+/**
+ * CUSTOM PROPERTY
+ */
+
+:root {
+
+  /**
+   * typography
+   */
+
+  --fs-1: 4.5rem;
+  --fs-2: 3.7rem;
+  --fs-3: 2.3rem;
+  --fs-4: 1.8rem;
+  --fs-5: 1.5rem;
+  --fs-6: 1.4rem;
+
+}
+
+
+
+/**
+ * REUSED STYLE
+ */
+
+.container { max-width: 720px; }
+
+.section-text {
+  max-width: 65ch;
+  margin-inline: auto;
+}
+}
+
+/**
+ * responsive for larger than 992px screen
+ */
+
+ @media (min-width: 992px) {
+
+/**
+ * CUSTOM PROPERTY
+ */
+
+:root {
+
+  /**
+   * typography
+   */
+
+  --fs-1: 5rem;
+  --fs-2: 4rem;
+  --fs-3: 2.5rem;
+
+  /**
+   * spacing
+   */
+
+  --section-padding: 100px;
+
+}
+
+
+
+/**
+ * REUSED STYLE
+ */
+
+.container { max-width: 960px; }
+
+.grid-list { grid-template-columns: repeat(3, 1fr); }
+
+
+
+/**
+ * HEADER
+ */
+
+.nav-toggle-btn { display: none; }
+
+.navbar,
+.navbar.active { all: unset; }
+
+.navbar-list {
+  all: unset;
+  display: flex;
+  align-items: center;
+  gap: 30px;
+}
+
+.navbar-link { position: relative; }
+
+.navbar-link:is(:hover, :focus) { color: var(--eerie-black); }
+
+.navbar-link::after {
+  content: "";
+  position: absolute;
+  bottom: 5px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-image: var(--gradient);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: var(--transition-2);
+}
+
+.navbar-link:is(:hover, :focus)::after { transform: scaleX(1); }
+
+.header .btn { margin-block-start: 0; }
+
+ }
+ /**
+ * responsive for larger than 1200px screen
+ */
+
+@media (min-width: 1200px) {
+
+/**
+ * CUSTOM PROPERTY
+ */
+
+:root {
+
+  /**
+   * typography
+   */
+
+  --fs-1: 6.8rem;
+  --fs-2: 4.5rem;
+  --fs-4: 1.9rem;
+  --fs-5: 1.6rem;
+  --fs-6: 1.6rem;
+
+}
+
+
+
+/**
+ * REUSED STYLE
+ */
+
+.container { max-width: 1140px; }
+
+.btn { --fs-6: 1.5rem; }
+
+}
+/**
+   * Footer
+   */
+   ul {
+    margin: 0px;
+    padding: 0px;
+  }
+  .footer-section {
+    background: #151414;
+    position: relative;
+  }
+  .footer-cta {
+    border-bottom: 1px solid #373636;
+  }
+  .single-cta i {
+    color: #ff5e14;
+    font-size: 30px;
+    float: left;
+    margin-top: 8px;
+  }
+  .cta-text {
+    padding-left: 15px;
+    display: inline-block;
+  }
+  .cta-text h4 {
+    color: #fff;
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 2px;
+  }
+  .cta-text span {
+    color: #757575;
+    font-size: 15px;
+  }
+  .footer-content {
+    position: relative;
+    z-index: 2;
+  }
+  .footer-pattern img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 330px;
+    background-size: cover;
+    background-position: 100% 100%;
+  }
+  .footer-logo {
+    margin-bottom: 30px;
+  }
+  .footer-logo img {
+    max-width: 200px;
+  }
+  .footer-text p {
+    margin-bottom: 14px;
+    font-size: 14px;
+    color: #7e7e7e;
+    line-height: 28px;
+  }
+  .footer-social-icon span {
+    color: #fff;
+    display: block;
+    font-size: 20px;
+    font-weight: 700;
+    font-family: "Poppins", sans-serif;
+    margin-bottom: 20px;
+  }
+  .footer-social-icon a {
+    color: #fff;
+    font-size: 16px;
+    margin-right: 15px;
+  }
+  .footer-social-icon i {
+    height: 40px;
+    width: 40px;
+    text-align: center;
+    line-height: 38px;
+    border-radius: 50%;
+  }
+  .facebook-bg {
+    background: #3b5998;
+  }
+  .twitter-bg {
+    background: #55acee;
+  }
+  .google-bg {
+    background: #dd4b39;
+  }
+  .footer-widget-heading h3 {
+    color: #fff;
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 40px;
+    position: relative;
+  }
+  .footer-widget-heading h3::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -15px;
+    height: 2px;
+    width: 50px;
+    background: #ff5e14;
+  }
+  .footer-widget ul li {
+    display: inline-block;
+    width: 50%;
+    margin-bottom: 12px;
+  }
+  .footer-widget ul li a:hover {
+    color: #ff5e14;
+  }
+  .footer-widget ul li a {
+    color: #878787;
+    text-transform: capitalize;
+  }
+  .subscribe-form {
+    position: relative;
+    overflow: hidden;
+  }
+  .subscribe-form input {
+    width: 100%;
+    padding: 14px 28px;
+    background: #2e2e2e;
+    border: 1px solid #2e2e2e;
+    color: #fff;
+  }
+  .subscribe-form button {
+    position: absolute;
+    right: 0;
+    background: #ff5e14;
+    padding: 13px 20px;
+    border: 1px solid #ff5e14;
+    top: 0;
+  }
+  .subscribe-form button i {
+    color: #fff;
+    font-size: 22px;
+    transform: rotate(-6deg);
+  }
+  .copyright-area {
+    background: #202020;
+    padding: 25px 0;
+  }
+  .copyright-text p {
+    margin: 0;
+    font-size: 14px;
+    color: #878787;
+  }
+  .copyright-text p a {
+    color: #ff5e14;
+  }
+  .footer-menu li {
+    display: inline-block;
+    margin-left: 20px;
+  }
+  .footer-menu li:hover a {
+    color: #ff5e14;
+  }
+  .footer-menu li a {
+    font-size: 14px;
+    color: #878787;
+  }
+  .payment-popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+  }
+
+  .payment-popup.active {
+    display: flex;
+
+  }
+
+  .popup-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+    max-width: 400px;
+    width: 90%;
+    max-height: 80%; /* Added maximum height */
+  overflow-y: auto; /* Added overflow property */
+  }
+
+  .popup-content h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+
+  .popup-content form {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .popup-content label {
+    margin-bottom: 10px;
+  }
+
+  .popup-content input,
+  .popup-content select {
+    width: 100%;
+    padding: 3px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+  }
+
+  .popup-content button {
+    background-color: #0039a6;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 12px 20px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+  }
+
+  .popup-content button:hover {
+    background-color: #002883;
+  }
+
+  .close-btn {
+    background-color: transparent;
+    border: none;
+    color: #777;
+    font-size: 20px;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+  }
+
+  .close-btn:hover {
+    color: #555;
+  }
+  </style>
+  
+  <body id="top">
+
+    <!-- 
+      - #HEADER
+    -->
+  
+    <header class="header" data-header>
+      <div class="container">
+  
+        <a href="{% url 'pricing'%}"class="logo"><img src="{% static 'images/Logo.png' %}" alt="ResearchDraft"></a>
+  
+        <nav class="navbar container" data-navbar>
+          <ul class="navbar-list">
+  
+            <li>
+              <a href="{% url 'feature'%}" class="navbar-link" data-nav-link>Features</a>
+            </li>
+  
+            <li>
+              <a href="{% url 'pricing'%}" class="navbar-link" data-nav-link>Pricing</a>
+            </li>
+  
+            <li>
+              <a href="{% url 'blog'%}" class="navbar-link" data-nav-link>Blog</a>
+            </li>
+  
+            <li>
+              <a href="{% url 'login'%}" class="btn btn-primary">Login</a>
+            </li>
+  
+            <li>
+              <a href="{% url 'signup'%}" class="btn btn-primary">Get Started</a>
+            </li>
+  
+          </ul>
+        </nav>
+  
+        <button class="nav-toggle-btn" aria-label="Toggle menu" data-nav-toggler>
+          <ion-icon name="menu-outline" class="open"></ion-icon>
+          <ion-icon name="close-outline" class="close"></ion-icon>
+        </button>
+  
+      </div>
+    </header>
+
+    <!-- 
+        - #Pricing
+      -->
+<br>
+      <div class="title">
+        <h1 style="margin-top: 70px; text-align: center; color: black;">Give your research writing an upgrade. Try <span style="color: #0039a6; display: inline;">
+          ResearchDraft</span>Premium!
+        </h1>
+        <p style="text-align: center;">These pricing packages are on monthly basis</p>
+      </div>
+      <br>
+
+      <div class="grid-parent">
+
+        <div class="card basic-card" style="text-align: center;">
+    <br>
+          <h3 class="card-title" style= "font-weight: bolder">Free</h3>
+    
+          <h1 class="price special-price" style="display: inline;">$0</h1>
+          <br>
+          <hr id="hr">
+          <h5 class="text" style="font-size: medium;">Create two new projects</h5>
+          <hr>
+          <h5 class="text" style="font-size: medium;">Upload two reference webpage links</h5>
+          <hr>
+          <hr>
+          <div>
+            <button style= "align-items: center;"class="button btn" type="button" name="button">CONTINUE</button>
+          </div>
+        </div>
+    
+        <div class="card professional-card" style="text-align: center;">
+          <br>
+          <h3 style="font-weight: bolder;">Standard</h3>
+          <h1 class="price" style="display: inline">$20</h1>
+          <br>
+          <hr>
+          <h5 class="text" style="color: white; font-size: medium;">Create four new projects</h5>
+          <hr>
+          <h5 class="text" style="color: white; font-size: medium;">Upload four reference webpage links</h5>
+          <hr>
+          <hr>
+          <div>
+            <button class="professional-button pro-btn" type="button" name="button" onclick="showPaymentPopup()">UPGRADE</button>
+          </div>
+        </div>
+        <div class="card master-card" style="text-align: center;">
+    <br>
+          <h3 style="font-weight: bolder;" class="card-title">Premium</h3>
+          <h1 class="price" style="display: inline">$40</h1>
+<br>
+          <hr id="hr">
+          <h5 class="text" style="font-size: medium;">Create unlimited new projects</h5>
+          <hr>
+          <h5 class="text" style="font-size: medium;">Upload unlimited reference webpage links</h5>
+          <hr>
+          <hr>
+          <div>
+            <button class="button btn" type="button" name="button" onclick="showPaymentPopup()">UPGRADE</button>
+          </div>
+        </div>
+      </div>
+
+        <!-- Payment Popup -->
+  <div class="payment-popup" id="paymentPopup">
+    <div class="popup-content">
+      <h2>Payment Details</h2>
+      <form action="#">
+        <label for="fullname">Full Name</label>
+        <input type="text" id="fullname" name="fullname" required>
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" required>
+        <label for="CreditCard">Credit Card Number</label>
+        <input type="number" id="CreditCard" name="CreditCard" required>
+        <label for="SecurityCode">Security Code</label>
+        <input type="number" id="SecurityCode" name="SecurityCode" required>
+        <label for="ExpirationDate">Expiration Date</label>
+        <input type="date" id="ExpirationDate" name="ExpirationDate" required>
+        <label for="country">Country</label>
+        <select id="country" name="country" required>
+          <option value="USA">Pakistan</option>
+          <option value="USA">USA</option>
+          <option value="UK">UK</option>
+          <option value="Canada">Canada</option>
+        </select>
+        <!-- Add more fields for payment details (e.g., credit card number, expiry date) -->
+        <button type="submit">Pay Now</button>
+      </form>
+    </div>
+  </div>
+<!-- 
+    - #FOOTER
+  -->
+  <footer class="footer">
+    <div class="container">
+
+      <div class="footer-top section">
+
+        <div class="footer-brand">
+
+          <a href="#" class="logo">
+            <img src='{% static 'images/white Logo.png' %}' width="200" height="100" alt=" logo">
+          </a>
+
+          <p class="footer-text">
+            Elevate your academic writing with AI driven sugestions. Start your writing journey today!
+          </p>
+
+        </div>
+
+        <ul class="footer-list">
+
+          <li>
+            <p class="h5">Social</p>
+          </li>
+
+          <li class="footer-list-item">
+            <ion-icon name="logo-facebook"></ion-icon>
+
+            <a href="#" class="footer-link">Facebook</a>
+          </li>
+
+          <li class="footer-list-item">
+            <ion-icon name="logo-twitter"></ion-icon>
+
+            <a href="#" class="footer-link">Twitter</a>
+          </li>
+
+          <li class="footer-list-item">
+            <ion-icon name="logo-linkedin"></ion-icon>
+
+            <a href="#" class="footer-link">LinkedIn</a>
+          </li>
+
+          <li class="footer-list-item">
+            <ion-icon name="logo-instagram"></ion-icon>
+
+            <a href="#" class="footer-link">Instagram</a>
+          </li>
+
+        </ul>
+
+        <ul class="footer-list">
+
+          <li>
+            <p class="h5">About</p>
+          </li>
+
+          <li>
+            <a href="#" class="footer-link">Contact</a>
+          </li>
+
+          <li>
+            <a href="#" class="footer-link ">Terms</a>
+          </li>
+
+          <li>
+            <a href="#" class="footer-link">Privacy Policy</a>
+          </li>
+
+          <li>
+            <a href="#" class="footer-link">Cookies</a>
+          </li>
+
+          <li>
+            <a href="#" class="footer-link">Sitemap</a>
+          </li>
+
+        </ul>
+
+        <ul class="footer-list">
+
+          <li>
+            <p class="h5">Useful Links</p>
+          </li>
+
+          <li>
+            <a href="{% url 'home'%}" class="footer-link">Home</a>
+          </li>
+
+          <li>
+            <a href="{% url 'pricing'%}" class="footer-link">Pricing</a>
+          </li>
+
+          <li>
+            <a href="{% url 'feature'%}" class="footer-link">Features</a>
+          </li>
+
+          <li>
+            <a href="#" class="footer-link">FAQ's</a>
+          </li>
+
+          <li>
+            <a href="{% url 'blog'%}" class="footer-link">Blogs</a>
+          </li>
+        </ul>
+      </div>
+        <p class="copyright">
+          &copy; All rights reserved. 2024 <a href="#" class="copyright-link hover:underline">ResearchDraft</a>.
+        </p>
+    </div>
+  </footer>
+
+  <script>
+    // Function to show payment popup
+    function showPaymentPopup() {
+  var paymentPopup = document.getElementById("paymentPopup");
+  paymentPopup.style.display = "flex";
+}
+
+  function closePaymentPopup() {
+    document.getElementById("paymentPopup").classList.remove("active");
+  }
+
+    // Close payment popup when clicking outside the popup
+    window.onclick = function (event) {
+      const paymentPopup = document.getElementById("paymentPopup");
+      if (event.target == paymentPopup) {
+        paymentPopup.style.display = "none";
+      }
+    }
+  </script>
+    </body>
+    </html>
+  

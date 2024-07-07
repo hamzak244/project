@@ -1,0 +1,692 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ResearchDraft - Chat</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.4.2/uicons-bold-rounded/css/uicons-bold-rounded.css'>
+  <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.4.2/uicons-bold-straight/css/uicons-bold-straight.css'>
+  <style>
+    body {
+        font-family: 'Roboto', sans-serif;
+        font-size: 16px;
+        background-color: white;
+        margin: 0;
+        padding: 0;
+    }
+
+    #hidden-menu {
+    position: fixed;
+    font-size: large;
+    top: 0;
+    width: 5%;
+    height: 100%;
+    background: white;
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-in-out;
+    z-index: 2;
+    border-right: 1px solid #ccc;
+    left: 0;
+    transform: translateX(-100%);
+}
+
+
+    #hidden-menu.show {
+        transform: translateX(0);
+    }
+
+    nav ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    nav li {
+    padding: 15px;
+    border-bottom: 1px solid #ccc;
+    position: relative; /* Needed for tooltip positioning */
+}
+
+    nav li a {
+        display: flex;
+        align-items: center;
+        margin-left: 5px;
+        color: #0039a6;
+        font-size: x-large;
+        text-decoration: none;
+    }
+
+    nav li:hover {
+        background-color: #e6e6e6;
+    }
+
+    nav i {
+        margin-left: 8px;
+        margin-right: 10px;
+    }
+    nav .tooltip-text {
+    visibility: hidden;
+    width: 80px;
+    background-color: white;
+    color: #0039a6;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px;
+    position: absolute;
+    z-index: 1;
+    top: 50%;
+    left: 100%;
+    margin-left: 10px;
+    transform: translateY(-50%);
+    opacity: 0;
+    transition: opacity 0.3s;
+    font-size: large; /* Set a specific font size for tooltips */
+}
+
+nav li a:hover .tooltip-text {
+    visibility: visible;
+    opacity: 1;
+}
+    #toggleMenuBtn {
+        position: fixed;
+        top: 15px;
+        left: 12px;
+        z-index: 3;
+        background: #0039a6;
+        width: 30px;
+        height: 30px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border: none;
+        color:  white;
+        cursor: pointer;
+    }
+
+
+    #toggleEditorBtn {
+        position: fixed;
+        top: 15px;
+        right: 10px;
+        z-index: 3;
+        background: #0039a6;
+        width: 30px;
+        height: 30px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border: none;
+        color: #fff;
+        cursor: pointer;
+    }
+    .tooltip-text {
+    visibility: hidden;
+    width: 80px;
+    background-color: white;
+    color: #0039a6;
+    text-align: center;
+    border-radius: 6px;
+    position: absolute;
+    z-index: 1;
+    top: 125%; /* Position below the button */
+    right: 20%;
+    margin-left: -40px; /* Center the tooltip */
+    opacity: 0;
+    transition: opacity 0.3s;
+    font-size: large;
+}
+
+#toggleEditorBtn:hover .tooltip-text {
+    visibility: visible;
+    opacity: 1;
+}
+    button {
+        background-color: #ffffff;
+        border: 2px solid #0039a6;
+        border-radius: 15px;
+        color: #0039a6;
+        padding: 12px 24px;
+        font-size: 16px;
+        transition: background-color 0.2s, color 0.2s, border-color 0.2s;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    button:hover {
+        background-color: #0039a6;
+        color: #ffffff;
+        border-color: #0039a6;
+    }
+
+    .container {
+  display: flex;
+  justify-content: space-around;
+  margin: 70px auto;
+  margin-left: 200px;
+  padding: 20px;
+  width: 80%;
+  max-width: 1200px;
+}
+
+    .chat-container, .editor-container {
+        display: flex;
+        flex-direction: column;
+        width: 48%;
+        height: 80vh;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        background-color: white;
+        border-radius: 10px;
+        overflow: hidden;
+        margin-bottom: 20px;
+    }
+
+    .chat-header {
+        display: flex;
+        justify-content: flex-end;
+        padding: 10px;
+        background-color: #0039a6;
+        color: #ffffff;
+    }
+
+    .chat-window, .text-editor {
+        flex: 1;
+        padding: 20px;
+        overflow-y: auto;
+        background-color: white;
+        border-bottom: 1px solid #e0e0e0;
+    }
+
+    .input-container {
+        display: flex;
+        padding: 20px;
+        background-color: white;
+    }
+
+    input[type="text"] {
+        flex: 1;
+        padding: 10px;
+        font-size: 16px;
+        border: 1px solid #e0e0e0;
+        border-radius: 5px;
+        margin-right: 10px;
+        outline: none;
+        transition: border-color 0.3s;
+    }
+
+    input[type="text"]:focus {
+        border-color: #0039a6;
+    }
+
+    .send-button {
+        padding: 10px 20px;
+        font-size: 16px;
+        font-weight: 500;
+        background-color: #0039a6;
+        color: #ffffff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    .send-button:hover {
+        background-color: #0056b3;
+    }
+
+    .message {
+        margin-bottom: 15px;
+        padding: 10px;
+        border-radius: 10px;
+        max-width: 80%;
+        word-wrap: break-word;
+    }
+
+    .user-message {
+        align-self: flex-end;
+        background-color: lightgray;
+        margin-left: 120px;
+        color: black;
+    }
+
+    .bot-message {
+        align-self: flex-start;
+        background-color: wheat;
+        color: #333333;
+    }
+
+    .chat-header i {
+        margin-left: 10px;
+        cursor: pointer;
+    }
+
+    .editor-container {
+        position: relative;
+    }
+
+    .editor-container.show {
+        display: flex;
+    }
+
+    .text-editor {
+        border: 1px solid #e0e0e0;
+        border-radius: 5px;
+        padding: 10px;
+        outline: none;
+        height: 100%;
+        box-sizing: border-box;
+    }
+
+    .text-editor[contenteditable="true"]:empty::before {
+    content: attr(data-placeholder);
+    color: #999999;
+}
+
+.editor-header {
+        display: flex;
+        justify-content: flex-end;
+        background-color: #0039a6;
+        color: #ffffff;
+    }
+    .editor-header button {
+        background-color: #0039a6;
+        color: white;
+        border: none;
+        padding: 8px 16px;
+        margin-right: 10px;
+        border-radius: 5px;
+        font-size: 14px;
+    }
+
+    .editor-header button i {
+        margin-right: 5px;
+    }
+
+    .editor-header button:hover {
+        background-color: #0056b3;
+    }
+    .editor-header h4{
+        margin-left: 0;
+        margin-right: 280;
+        padding: 0%;
+        color: white;
+    }
+
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 2;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgb(0,0,0);
+        background-color: rgba(0,0,0,0.4);
+        padding-top: 60px;
+    }
+
+    .modal-content {
+        background-color: white;
+        margin: 5% auto;
+        top: 30px;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 80%;
+        max-width: 300px;
+        text-align: center;
+        border-radius: 10px;
+    }
+
+    .modal-content button {
+        margin: 10px;
+    }
+
+    /* Media Queries for Responsiveness */
+
+    @media (max-width: 1200px) {
+        #hidden-menu {
+            width: 12%;
+        }
+
+        #toggleMenuBtn {
+            left: 10px;
+        }
+
+        .container {
+            flex-direction: column;
+            align-items: center;
+            width: 90%;
+        }
+
+        .chat-container, .editor-container {
+            width: 80%;
+            margin-bottom: 20px;
+        }
+    }
+
+    @media (max-width: 1024px) {
+        #hidden-menu {
+            width: 12%;
+        }
+
+        #toggleMenuBtn {
+            left: 10px;
+        }
+
+        .container {
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+        }
+
+        .chat-container, .editor-container {
+            width: 80%;
+            margin-bottom: 20px;
+        }
+    }
+
+    @media (max-width: 800px) {
+        #hidden-menu {
+      width: 12%;
+    }
+
+        #toggleMenuBtn {
+            left: 10px;
+        }
+
+        .container {
+            flex-direction: column;
+            align-items: center;
+            width: 90%;
+        }
+
+        .chat-container, .editor-container {
+            width: 80%;
+            margin-bottom: 20px;
+        }
+    }
+
+    @media (max-width: 768px) {
+        #hidden-menu {
+      width: 12%;
+    }
+
+        #toggleMenuBtn {
+            left: 10px;
+        }
+
+        .container {
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+        }
+
+        .chat-container, .editor-container {
+            width: 70%;
+            margin-bottom: 20px;
+        }
+    }
+
+    @media (max-width: 600px) {
+        #hidden-menu {
+      width: 12%;
+    }
+
+        #toggleMenuBtn {
+            left: 10px;
+        }
+
+        .container {
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+        }
+
+        .chat-container, .editor-container {
+            width: 60%;
+            left: 5px;
+            margin-bottom: 20px;
+        }
+    }
+
+    @media (max-width: 468px) {
+        #hidden-menu {
+            width: 15%;
+        }
+
+        #toggleMenuBtn {
+            left: 10px;
+        }
+
+        .container {
+            flex-direction: column;
+            align-items: center;
+            margin-left: 5px;
+            width: 100%;
+        }
+
+        .chat-container, .editor-container {
+            width: 100%;
+            left: 10px;
+            margin-bottom: 20px;
+        }
+    }
+</style>
+</head>
+<body>
+  <button id="toggleMenuBtn" onclick="toggleMenu()">&#9776;</button>
+  <div id="hidden-menu">
+    <br>
+    <br>
+    <br>
+    <nav>
+      <ul>
+        <br>
+        <li><a href="{% url 'create_project' %}"><i class="fi fi-br-house-chimney"></i><span class="tooltip-text">Home</span></a></li>
+        <br>
+        <li><a href="{% url 'pricing' %}"><i class="fi fi-br-dollar"></i><span class="tooltip-text">Pricing</span></a></li>
+        <br>
+        <li><a href="{% url 'fetch_data' %}" id="viewcomponentsbtn"><i class="fi fi-bs-duplicate"></i><span class="tooltip-text">View Papers</span></a></li>
+        <br>
+        <li><a href="{% url 'reference_page' %}" id="viewcomponentsbtn"><i class="fi fi-br-add-document"></i><span class="tooltip-text">Add Papers</span></a></li>
+        <br>
+        <li><a href="{% url 'account_page' %}"><i class="fi fi-br-circle-user"></i><span class="tooltip-text">My Account</span></a></li>
+        <br>
+        <li><a href="#" id="logoutBtn"><i class="fi fi-bs-sign-out-alt"></i><span class="tooltip-text">Log Out</span></a></li>
+        <br>
+        <li><a href="{% url 'help' %}"><i class="fi fi-br-interrogation"></i><span class="tooltip-text">Help Center</span></i></a></li>
+      </ul>
+    </nav>
+  </div>
+  <button id="toggleEditorBtn">
+    <i class="fa fa-edit"></i>
+    <span class="tooltip-text">Text Editor</span>
+</button>
+  <div class="container">
+    <div class="chat-container">
+      <div class="chat-header">
+        <h4 style="margin: 0; flex-grow: 1; align-self: center;">Research Draft - AI</h4>
+        <i class="fas fa-copy" id="copyBtn"></i>
+        <i class="fas fa-trash-alt" id="clearBtn"></i>
+      </div>
+      <div class="chat-window" id="chatWindow">
+        <!-- Messages will be appended here -->
+        <div class="message bot-message">Hi there! How can I assist you today?</div>
+
+      </div>
+      <div class="input-container">
+        <input type="text" id="userInput" placeholder="Type your query here...">
+        <button id="sendBtn" class="send-button"><i class="fa-solid fa-arrow-up"></i></button>
+      </div>
+    </div>
+
+    <div class="editor-container" id="text-editor-container" style="display: none;">
+        <div class="editor-header">
+            <h4 style="margin: 10; flex-grow: 1; align-self: center;">Text Editor</h4>
+            <button id="clearTextBtn"><i class="fas fa-eraser"></i> Clear</button>
+            <button id="downloadTxtBtn"><i class="fas fa-file-alt"></i> TXT</button>
+          </div>
+      <div class="text-editor" id="textEditor" contenteditable="true" data-placeholder='Type your research paper content here or paste it.'>
+      </div>
+    </div>
+  </div>
+
+<!-- Logout Confirmation Modal -->
+<div id="logoutModal" class="modal">
+    <div class="modal-content">
+      <p>DO YOU WANT TO LOG OUT?</p>
+      <form action="{% url 'logout' %}" method="post">
+        {% csrf_token %}
+        <button id="confirmLogoutBtn" type="submit">Logout</button>
+        <button id="cancelLogoutBtn" type="button">Cancel</button>
+    </form>
+    </div>
+</div>
+
+  <script>
+    function toggleMenu() {
+    var hiddenMenu = document.getElementById('hidden-menu');
+    hiddenMenu.classList.toggle('show');
+}
+
+// Display the hidden menu when the page loads
+window.onload = function() {
+    var hiddenMenu = document.getElementById('hidden-menu');
+    hiddenMenu.classList.add('show');
+};
+
+document.getElementById('toggleEditorBtn').addEventListener('click', function() {
+    var textEditorContainer = document.getElementById('text-editor-container');
+    if (textEditorContainer.style.display === 'none' || textEditorContainer.style.display === '') {
+        textEditorContainer.style.display = 'flex';
+    } else {
+        textEditorContainer.style.display = 'none';
+    }
+});
+
+// Function to update placeholder logic
+function updatePlaceholder() {
+      const textEditor = document.getElementById('textEditor');
+      const placeholderText = 'Type your research paper content here or paste it.';
+      
+      if (textEditor.textContent.trim() === '' && !textEditor.querySelector(':not(br):not(div)')) {
+        textEditor.setAttribute('data-placeholder', placeholderText);
+      } else {
+        textEditor.removeAttribute('data-placeholder');
+      }
+    }
+// Event listener for input events on textEditor
+document.getElementById('textEditor').addEventListener('input', function() {
+      updatePlaceholder();
+    });
+
+    // Ensure the placeholder shows correctly on page load
+    window.addEventListener('DOMContentLoaded', function() {
+      updatePlaceholder();
+    });
+    document.getElementById('sendBtn').addEventListener('click', function() {
+        const userInput = document.getElementById('userInput').value;
+        if (userInput.trim() !== '') {
+            const userMessage = document.createElement('div');
+            userMessage.classList.add('message', 'user-message');
+            userMessage.textContent = userInput;
+            document.getElementById('chatWindow').appendChild(userMessage);
+            document.getElementById('userInput').value = '';
+
+            fetch("{% url 'chat_view' %}", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': '{{ csrf_token }}'
+                },
+                body: JSON.stringify({ query: userInput })
+            })
+            .then(response => response.json())
+            .then(data => {
+                const botMessage = document.createElement('div');
+                botMessage.classList.add('message', 'bot-message');
+                botMessage.textContent = data.answer;
+                document.getElementById('chatWindow').appendChild(botMessage);
+
+                document.getElementById('chatWindow').scrollTop = document.getElementById('chatWindow').scrollHeight;
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+    });
+
+    document.getElementById('clearBtn').addEventListener('click', function() {
+        document.getElementById('chatWindow').innerHTML = '';
+    });
+
+    document.getElementById('copyBtn').addEventListener('click', function() {
+        const chatWindow = document.getElementById('chatWindow');
+        const range = document.createRange();
+        range.selectNode(chatWindow);
+        window.getSelection().removeAllRanges();
+        window.getSelection().addRange(range);
+        document.execCommand('copy');
+        window.getSelection().removeAllRanges();
+        alert('Chat copied to clipboard!');
+    });
+
+    document.getElementById('clearTextBtn').addEventListener('click', function() {
+        document.getElementById('textEditor').innerHTML = '';
+    });
+
+    document.getElementById('downloadTxtBtn').addEventListener('click', function() {
+        const text = document.getElementById('textEditor').innerText;
+        const blob = new Blob([text], { type: 'text/plain' });
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = 'document.txt';
+        link.click();
+    });
+
+    document.getElementById('downloadDocBtn').addEventListener('click', function() {
+        const text = document.getElementById('textEditor').innerText;
+        const blob = new Blob([text], { type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' });
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = 'document.docx';
+        link.click();
+    });
+
+    
+
+//logout modal
+document.addEventListener('DOMContentLoaded', function() {
+    const logoutBtn = document.getElementById('logoutBtn');
+    const logoutModal = document.getElementById('logoutModal');
+    const confirmLogoutBtn = document.getElementById('confirmLogoutBtn');
+    const cancelLogoutBtn = document.getElementById('cancelLogoutBtn');
+
+    logoutBtn.onclick = function() {
+        logoutModal.style.display = 'block';
+    };
+
+    cancelLogoutBtn.onclick = function() {
+        logoutModal.style.display = 'none';
+    };
+
+    window.onclick = function(event) {
+        if (event.target == logoutModal) {
+            logoutModal.style.display = 'none';
+        }
+    };
+});
+
+    document.getElementById('textEditor').addEventListener('input', function() {
+        if (this.textContent.trim() === '') {
+            this.setAttribute('data-placeholder', 'TYPE YOUR RESEARCH PAPER CONTENT HERE OR PASTE IT.');
+        } else {
+            this.removeAttribute('data-placeholder');
+        }
+    });
+</script>
+</body>
+</html>

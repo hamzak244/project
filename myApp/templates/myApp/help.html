@@ -1,0 +1,598 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ResearchDraft - Help</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.4.2/uicons-bold-rounded/css/uicons-bold-rounded.css'>
+  <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.4.2/uicons-bold-straight/css/uicons-bold-straight.css'>
+  <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.4.2/uicons-regular-rounded/css/uicons-regular-rounded.css'><style>
+   body {
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  background-color: white;
+  margin: 0;
+  padding: 0;
+}
+
+#hidden-menu {
+    position: fixed;
+    font-size: large;
+    top: 0;
+    width: 5%;
+    height: 100%;
+    background: white;
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-in-out;
+    z-index: 2;
+    border-right: 1px solid #ccc;
+    left: 0;
+    transform: translateX(-100%);
+}
+
+
+    #hidden-menu.show {
+        transform: translateX(0);
+    }
+
+    nav ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    nav li {
+    padding: 15px;
+    border-bottom: 1px solid #ccc;
+    position: relative; /* Needed for tooltip positioning */
+}
+
+    nav li a {
+        display: flex;
+        align-items: center;
+        margin-left: 5px;
+        color: #0039a6;
+        font-size: x-large;
+        text-decoration: none;
+    }
+
+    nav li:hover {
+        background-color: #e6e6e6;
+    }
+
+    nav i {
+        margin-left: 8px;
+        margin-right: 10px;
+    }
+    nav .tooltip-text {
+    visibility: hidden;
+    width: 80px;
+    background-color: white;
+    color: #0039a6;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px;
+    position: absolute;
+    z-index: 1;
+    top: 50%;
+    left: 100%;
+    margin-left: 10px;
+    transform: translateY(-50%);
+    opacity: 0;
+    transition: opacity 0.3s;
+    font-size: large; /* Set a specific font size for tooltips */
+}
+
+nav li a:hover .tooltip-text {
+    visibility: visible;
+    opacity: 1;
+}
+    #toggleMenuBtn {
+        position: fixed;
+        top: 15px;
+        left: 12px;
+        z-index: 3;
+        background: #0039a6;
+        width: 30px;
+        height: 30px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border: none;
+        color:  white;
+        cursor: pointer;
+    }
+.main-content {
+  margin-left: 20%;
+  padding: 20px;
+  transition: margin-left 0.3s ease-in-out;
+}
+.modal {
+      display: none;
+      position: fixed;
+      z-index: 2;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgb(0,0,0);
+      background-color: rgba(0,0,0,0.4);
+      padding-top: 60px;
+    }
+
+    .modal-content {
+      background-color: white;
+      margin: 5% auto;
+      top: 30px;
+      padding: 20px;
+      border: 1px solid #888;
+      width: 80%;
+      max-width: 300px;
+      text-align: center;
+      border-radius: 10px;
+    }
+
+    .modal-content button {
+      margin: 10px;
+    }
+
+@media (max-width: 768px) {
+  .main-content {
+    margin-left: 0;
+  }
+
+  #toggleMenuBtn {
+    left: 10px;
+  }
+}
+
+
+/*-----------------------------------*\
+#CONTACT
+\*-----------------------------------*/
+
+.contact {
+  background-color: #fff;
+  padding: 40px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  margin: 40px auto;
+  max-width: 800px;
+}
+
+.contact .section-title {
+  font-size: 2em;
+  color: #333;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.input-field {
+  background-color: #f0f0f0;
+  color: #333;
+  font-size: 1em;
+  padding: 15px;
+  border: none;
+  border-radius: 5px;
+  width: 90%;
+  box-sizing: border-box;
+
+}
+
+.input-field:focus {
+  outline: 2px solid #0039a6;
+}
+.input-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 20px; /* Add a one-line gap between input fields */
+}
+
+
+textarea.input-field {
+  resize: vertical;
+  min-height: 100px;
+  max-height: 200px;
+}
+
+.checkbox-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.checkbox {
+  accent-color: #0039a6;
+}
+
+.label-link {
+  color: #0039a6;
+  text-decoration: none;
+}
+
+.label-link:hover {
+  text-decoration: underline;
+}
+
+.btn-primary {
+  background-color: #0039a6;
+  color: #fff;
+  padding: 15px;
+  width: 90%;
+  border: none;
+  border-radius: 5px;
+  font-size: 1em;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.btn-primary:hover {
+  background-color: #002f8b;
+}
+
+.contact-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+
+.contact-item {
+  flex: 1 1 calc(33.333% - 20px);
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.contact-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.contact-card .card-icon {
+  background-color: #0039a6;
+  color: #fff;
+  font-size: 2em;
+  padding: 15px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s;
+}
+
+.contact-card:hover .card-icon {
+  background-color: #002f8b;
+}
+
+.contact-card .card-title {
+  font-size: 1.2em;
+  font-weight: bold;
+}
+
+.contact-card .card-link {
+  color: #0039a6;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.contact-card .card-link:hover {
+  color: #002f8b;
+}
+.logout-modal {
+  display: none;
+  position: fixed;
+  z-index: 9999;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgb(0,0,0);
+  background-color: rgba(0,0,0,0.4);
+  padding-top: 60px;
+}
+
+.logout-modal-content {
+  background-color: white;
+  margin: 5% auto;
+  top: 30px;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+  max-width: 300px;
+  text-align: center;
+  border-radius: 10px;
+}
+
+.logout-modal-content button {
+  margin: 10px;
+}
+
+.logout-modal-content form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.logout-modal-content form div {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.logout-modal-content form input {
+  width: calc(100% - 120px);
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.logout-modal-content form label {
+  width: 100px;
+  text-align: right;
+  margin-right: 10px;
+}
+
+.logout-modal-content form .button-group {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.logout-modal-content form button {
+  margin-top: 10px;
+  flex: 1;
+  margin-right: 10px;
+}
+button {
+      background-color: #ffffff; /* Blue background */
+      border: 2px solid #0039a6; /* Solid border */
+      border-radius: 15px; /* Rounded corners */
+      color: #0039a6; /* White text */
+      padding: 12px 24px; /* Increased padding for larger size */
+      font-size: 16px;
+      transition: background-color 0.2s, color 0.2s, border-color 0.2s; /* Transition for smooth hover effect */
+      font-weight: bold;
+      cursor: pointer; /* Change cursor to pointer on hover */
+    }
+
+    button:hover {
+      background-color: #0039a6; /* White background on hover */
+      color: #ffffff; /* Blue text on hover */
+      border-color: #0039a6; /* Blue border on hover */
+    }
+
+
+    @media (max-width: 1200px) {
+  #hidden-menu {
+    width: 12%;
+  }
+
+  .main-content {
+    margin-left: 15%;
+    width: 85%;
+  }
+  
+  .contact {
+    margin-left: 5%;
+    width: 90%;
+  }
+  
+  .modal-content, .logout-modal-content {
+    width: 90%;
+  }
+}
+
+@media (max-width: 768px) {
+  #hidden-menu {
+    width: 15%;
+  }
+
+  .main-content {
+    margin-left: 0;
+    width: 100%;
+  }
+  
+  .contact {
+    margin-left: 2%;
+    width: 95%;
+  }
+  
+  .contact-item {
+    flex: 1 1 calc(50% - 10px);
+  }
+  
+  .modal-content, .logout-modal-content {
+    width: 80%;
+  }
+}
+
+@media (max-width: 576px) {
+  #hidden-menu {
+    width: 14%;
+  }
+
+  .main-content {
+    margin-left: 0;
+    padding: 10px;
+    width: 100%;
+  }
+  
+  .contact {
+    margin-left: 1%;
+    width: 98%;
+  }
+  
+  .contact-item {
+    flex: 1 1 100%;
+  }
+  
+  .modal-content, .logout-modal-content {
+    width: 90%;
+  }
+}
+
+@media (max-width: 468px) {
+  #hidden-menu {
+    width: 14%;
+  }
+
+  .main-content {
+    margin-left: 0;
+    margin-right: 0;
+    padding: 10px;
+  }
+
+  #toggleMenuBtn {
+    left: 10px;
+  }
+
+  .contact {
+    width: 100%;
+    padding: 10px;
+  }
+
+  .modal-content, .logout-modal-content {
+    width: 90%;
+  }
+}
+
+</style>
+</head>
+<body>
+    <button id="toggleMenuBtn" class="show" onclick="toggleMenu()">&#9776;</button>
+    <div id="hidden-menu">
+      <br><br><br>
+      <nav>
+        <ul>
+          <br>
+          <li><a href="{% url 'home' %}"><i class="fi fi-br-house-chimney"></i><span class="tooltip-text">Home</span></a></li>
+          <br>
+          <li><a href=""><i class="fi fi-br-dollar"></i><span class="tooltip-text">Pricing</span></a></li>
+          <br>
+          <li><a href="{% url 'fetch_data' %}" id="viewcomponentsbtn"><i class="fi fi-bs-duplicate"></i><span class="tooltip-text">View Papers</span></a></li>
+          <br>
+          <li><a href="{% url 'account_page' %}"><i class="fi fi-br-circle-user"></i><span class="tooltip-text">My Account</span></a></li>
+          <br>
+          <li><a href="#" id="logoutBtn"><i class="fi fi-bs-sign-out-alt"></i><span class="tooltip-text">Log Out</span></a></li>
+          <br>
+          <li><a href="{% url 'help' %}"><i class="fi fi-br-interrogation"></i><span class="tooltip-text">Help Center</span></i></a></li>
+        </ul>
+      </nav>
+    </div>
+    <!-- 
+        - #CONTACT
+      -->
+
+      <section class="section contact" id="contact" aria-label="contact" style="margin-left: 330px;">
+        <div class="container">
+
+          <h2 class="h2 section-title">Contact us to acquire support</h2>
+<br>
+          <form action="" class="contact-form">
+
+            <div class="input-wrapper">
+              <input type="text" name="name" aria-label="name" placeholder="Your name*" required class="input-field">
+
+              <input type="email" name="email_address" aria-label="email" placeholder="Email address*" required
+                class="input-field">
+            </div>
+
+            <div class="input-wrapper">
+              <input type="text" name="subject" aria-label="subject" placeholder="Subject" class="input-field">
+
+              <input type="number" name="phone" aria-label="phone" placeholder="Phone number" class="input-field">
+            </div>
+
+            <textarea name="message" aria-label="message" placeholder="Your message...*" required
+              class="input-field"></textarea>
+
+            <div class="checkbox-wrapper">
+              <input type="checkbox" name="terms_and_policy" id="terms" required class="checkbox">
+
+              <label for="terms" class="label">
+                Accept <a>Terms of Services</a> and <a>Privacy
+                  Policy</a>
+              </label>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Send Message</button>
+
+          </form>
+          <!-- Logout Confirimation Modal -->
+      <!-- Logout Confirmation Modal -->
+   <div id="logoutModal" class="modal">
+    <div class="modal-content">
+      <p>DO YOU WANT TO LOG OUT?</p>
+      <form action="{% url 'logout' %}" method="post">
+        {% csrf_token %}
+        <button id="confirmLogoutBtn" type="submit">Logout</button>
+        <button id="cancelLogoutBtn" type="button">Cancel</button>
+    </form>
+    </div>
+  </div>    
+
+  
+  <script>
+    function toggleMenu() {
+    var hiddenMenu = document.getElementById('hidden-menu');
+    hiddenMenu.classList.toggle('show');
+}
+
+// Display the hidden menu when the page loads
+window.onload = function() {
+    var hiddenMenu = document.getElementById('hidden-menu');
+    hiddenMenu.classList.add('show');
+};
+
+    document.getElementById('toggleEditorBtn').addEventListener('click', function() {
+        var textEditorContainer = document.getElementById('text-editor-container');
+        if (textEditorContainer.style.display === 'none' || textEditorContainer.style.display === '') {
+            textEditorContainer.style.display = 'flex';
+        } else {
+            textEditorContainer.style.display = 'none';
+        }
+    });
+    // Logout confirmation modal logic
+const logoutBtn = document.getElementById('logoutBtn');
+    const logoutModal = document.getElementById('logoutModal');
+    const confirmLogoutBtn = document.getElementById('confirmLogoutBtn');
+    const cancelLogoutBtn = document.getElementById('cancelLogoutBtn');
+
+    logoutBtn.onclick = function() {
+      logoutModal.style.display = 'block';
+    };
+
+    confirmLogoutBtn.onclick = function() {
+      // Redirect to logout URL or perform logout action
+      window.location.href = '/logout/';
+    };
+
+    cancelLogoutBtn.onclick = function() {
+      logoutModal.style.display = 'none';
+    };
+
+    window.onclick = function(event) {
+      if (event.target == logoutModal) {
+        logoutModal.style.display = 'none';
+      }
+    };
+  </script>
+</body>
+</html>

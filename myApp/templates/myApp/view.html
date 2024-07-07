@@ -1,0 +1,691 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ResearchDraft - Documents</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.4.2/uicons-bold-rounded/css/uicons-bold-rounded.css'>
+  <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.4.2/uicons-bold-straight/css/uicons-bold-straight.css'>
+  <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.4.2/uicons-regular-rounded/css/uicons-regular-rounded.css'>
+  <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.4.2/uicons-solid-straight/css/uicons-solid-straight.css'>
+  <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.4.2/uicons-regular-straight/css/uicons-regular-straight.css'>
+    <style>
+    /* Updated CSS with enhanced styling and responsiveness */
+  
+  body {
+      font-family: Arial, sans-serif;
+      font-size: 16px;
+      background-color: white;
+      margin: 0;
+      padding: 0;
+  }
+  
+  #hidden-menu {
+    position: fixed;
+    font-size: large;
+    top: 0;
+    width: 5%;
+    height: 100%;
+    background: white;
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-in-out;
+    z-index: 2;
+    border-right: 1px solid #ccc;
+    left: 0;
+    transform: translateX(-100%);
+}
+
+
+    #hidden-menu.show {
+        transform: translateX(0);
+    }
+
+    nav ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    nav li {
+    padding: 15px;
+    border-bottom: 1px solid #ccc;
+    position: relative; /* Needed for tooltip positioning */
+}
+
+    nav li a {
+        display: flex;
+        align-items: center;
+        margin-left: 5px;
+        color: #0039a6;
+        font-size: x-large;
+        text-decoration: none;
+    }
+
+    nav li:hover {
+        background-color: #e6e6e6;
+    }
+
+    nav i {
+        margin-left: 8px;
+        margin-right: 10px;
+    }
+    nav .tooltip-text {
+    visibility: hidden;
+    width: 80px;
+    background-color: white;
+    color: #0039a6;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px;
+    position: absolute;
+    z-index: 1;
+    top: 50%;
+    left: 100%;
+    margin-left: 10px;
+    transform: translateY(-50%);
+    opacity: 0;
+    transition: opacity 0.3s;
+    font-size: large; /* Set a specific font size for tooltips */
+}
+
+nav li a:hover .tooltip-text {
+    visibility: visible;
+    opacity: 1;
+}
+    #toggleMenuBtn {
+        position: fixed;
+        top: 15px;
+        left: 12px;
+        z-index: 3;
+        background: #0039a6;
+        width: 30px;
+        height: 30px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border: none;
+        color:  white;
+        cursor: pointer;
+    }
+  
+  .main-content {
+      margin-left: 20%;
+      margin-right: 10%;
+      padding: 20px;
+      transition: margin-left 0.3s;
+  }
+  
+  .container {
+      background-color: #f8f8f8;
+      padding: 20px;
+      text-align: center;
+      margin: auto;
+      margin-top: 150px;
+      border-radius: 15px;
+      width: 100%;
+      max-width: 1000px;
+      font-size: medium;
+      font-family: Arial, Helvetica, sans-serif;
+  }
+  
+  #extractedComponents {
+      margin-top: 50px;
+  }
+  
+  button {
+      background-color: #ffffff; /* Blue background */
+      border: 2px solid #0039a6; /* Solid border */
+      border-radius: 15px; /* Rounded corners */
+      color: #0039a6; /* White text */
+      padding: 12px 24px; /* Increased padding for larger size */
+      font-size: 16px;
+      transition: background-color 0.2s, color 0.2s, border-color 0.2s; /* Transition for smooth hover effect */
+      font-weight: bold;
+      cursor: pointer; /* Change cursor to pointer on hover */
+      position: relative;
+  }
+
+  button:hover {
+      background-color: #0039a6; /* White background on hover */
+      color: #ffffff; /* Blue text on hover */
+      border-color: #0039a6; /* Blue border on hover */
+  }
+  button .tooltip-text {
+  visibility: hidden;
+  width: 60px; /* Adjust width as needed */
+  color: #0039a6;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px;
+  position: absolute;
+  z-index: 1;
+  top: -35px; /* Position above the button */
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 0;
+  transition: opacity 0.3s;
+  font-size: 18px; /* Increased font size */
+  margin-bottom: 10px; /* Add space between button and tooltip */
+}
+
+button:hover .tooltip-text {
+  visibility: visible;
+  opacity: 1;
+}
+  
+  h3 {
+      margin-left: 100px;
+  }
+  
+  .options-container {
+      display: none;
+      justify-content: space-between;
+      margin-top: 20px;
+      background-color: #f8f8f8;
+      padding: 10px;
+      border-radius: 10px;
+      width: 300px;
+  }
+  
+  .options-wrapper {
+      margin-top: 0px;
+      padding: 5px;
+      border-radius: 15px;
+      background-color: white;
+      width: 100%;
+  }
+  
+  .options-header {
+      display: flex;
+      position: relative;
+      justify-content: space-between;
+      align-items: center;
+  }
+  
+  .text-container {
+      font-family: 'Times New Roman', Times, serif;
+      font-size: 15px;
+      border: 1px solid #0039a6;
+      text-align: left;
+      background-color: #f8f8f8;
+      white-space: pre-wrap;
+      max-width: 100%;
+      box-sizing: border-box;
+      overflow-x: auto;
+      padding: 10px;
+      margin-top: 10px;
+      border-radius: 10px;
+      display: none;
+      flex-grow: 1;
+      margin-left: 20px;
+      text-align: justify;
+  }
+  
+  .file-header,
+  .text-container {
+      display: flex;
+  }
+  
+  .file-header {
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+  }
+  
+  .file-header h3 {
+      margin: 0;
+      flex-grow: 1;
+  }
+  
+  .file-header .text-option-button {
+      margin-left: auto;
+      position: relative;
+  }
+  
+  .file-header .text-option-button .dropdown-menu {
+    display: none;
+        position: absolute;
+        top: 100%; /* Adjusted to remove the top distance from the button */
+        left: 0;
+        background-color: white;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+        z-index: 30;
+        min-width: 150px;
+  }
+  
+  .file-header .text-option-button li {
+      padding: 10px;
+      cursor: pointer;
+      color: #0039a6;
+  }
+  
+  .file-header .text-option-button .dropdown-menu li:hover {
+      background-color: #f0f0f0;
+  }
+  
+  .file {
+      border: 1px solid #0039a6;
+      border-radius: 10px;
+      padding: 10px;
+      margin-top: 10px;
+  }
+  
+  .file-content {
+      display: flex;
+      justify-content: space-between;
+  }
+  
+  .file p {
+      margin: 0;
+      padding: 5px;
+  }
+  
+  .file-name {
+      flex: 1;
+  }
+  
+  .file-text {
+      flex: 2;
+      text-align: left;
+  }
+  
+  .modal {
+      display: none;
+      position: fixed;
+      z-index: 20;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgb(0,0,0);
+      background-color: rgba(0,0,0,0.4);
+      padding-top: 60px;
+  }
+  
+  .modal-content {
+      background-color: white;
+      margin: 5% auto;
+      top: 30px;
+      padding: 20px;
+      border: 1px solid #888;
+      width: 80%;
+      max-width: 300px;
+      text-align: center;
+      border-radius: 10px;
+  }
+  
+  .modal-content button {
+      margin: 10px;
+  }
+  
+  /* Media Queries for Responsiveness */
+  @media (max-width: 1600px) {
+    .main-content {
+          margin-left: 25%;
+      }
+      .dropdown-menu {
+        position: absolute;
+        width: 20%;
+        left: 700px;
+    }
+  }
+    @media (max-width: 1440px) {
+      .main-content {
+          margin-left: 25%;
+      }
+      .dropdown-menu {
+        position: absolute;
+        width: 30%;
+        left: 660px;
+    }
+    }
+      @media (max-width: 1366px) {
+        .main-content {
+          margin-left: 20%;
+      }
+      .dropdown-menu {
+        position: absolute;
+        width: 20%;
+        left: 570px;
+    }
+      }
+
+
+  @media (max-width: 1200px) {
+      .main-content {
+          margin-left: 20%;
+      }
+      .dropdown-menu {
+        position: absolute;
+        width: 20%;
+        left: 460px;
+    }
+  }
+  
+  @media (max-width: 992px) {
+      .main-content {
+          margin-left: 25%;
+      }
+      #toggleMenuBtn {
+          left: 10px;
+      }
+      .dropdown-menu {
+        position: absolute;
+        width: 20%;
+        left: 350px;
+    }
+  }
+  
+  @media (max-width: 768px) {
+      #hidden-menu {
+          width: 14%;
+      }
+  
+      #toggleMenuBtn {
+          left: 10px;
+      }
+  
+      .main-content {
+          margin-left: 65%;
+      }
+      .dropdown-menu {
+        position: absolute;
+        width: 20%;
+        left: 240px;
+    }
+  }
+  
+  @media (max-width: 600px) {
+      #hidden-menu {
+          width: 14%;
+      }
+  
+      .main-content {
+          margin-left: 75%;
+      }
+  
+      #toggleMenuBtn {
+          left: 10px;
+      }
+      .dropdown-menu {
+        position: absolute;
+        width: 20%;
+        left: 160px;
+    }
+  }
+  
+  @media (max-width: 468px) {
+      #hidden-menu {
+          width: 14%;
+      }
+  
+      #toggleMenuBtn {
+          left: 10px;
+      }
+  
+      .main-content {
+          margin-left: 0;
+          padding: 10px;
+      }
+      .file-header .text-option-button .dropdown-menu {
+          position: absolute;
+          width: 100%;
+      }
+      .dropdown-menu {
+        position: absolute;
+        width: 20%;
+        left: 150px;
+    }
+  }
+  
+  /* Additional Styles for Dropdown Menu Responsiveness */
+  
+  .dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    text-align: left;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+    z-index: 5;
+    min-width: 150px;
+}
+  
+  .dropdown-menu li {
+      padding: 10px;
+      cursor: pointer;
+      color: #0039a6;
+      font-family: 'Times New Roman', Times, serif;
+  }
+  
+  .dropdown-menu .file-button:hover {
+      background-color: #ddd;
+  }
+  
+  .text-container {
+      display: none;
+      margin-top: 10px;
+  }
+  
+  .file-header {
+      position: relative;
+  }
+  
+  .text-option-button {
+      background-color: #ffffff;
+      border: 2px solid #0039a6;
+      border-radius: 15px;
+      color: #0039a6;
+      padding: 12px 24px;
+      font-size: large;
+      font-weight: bold;
+      cursor: pointer;
+      font-family: 'Times New Roman', Times, serif;
+
+  }
+  
+  .text-option-button:hover {
+      background-color: #0039a6;
+      color: #ffffff;
+      border-color: #0039a6;
+  }
+  .text-option-button:hover + .dropdown-menu {
+    display: block;
+}
+  
+  </style>
+    
+
+</head>
+
+<body>
+    {% block content %}
+    <button id="toggleMenuBtn" class="show" onclick="toggleMenu()">&#9776;</button>
+    <div id="hidden-menu">
+      <br>
+      <br>
+      <br>
+      <nav>
+        <ul>
+          <br>
+          <li><a href="{% url 'create_project' %}"><i class="fi fi-br-house-chimney"></i><span class="tooltip-text">Home</span></a></li>
+          <br>
+          <li><a href="{% url 'pricing' %}" id="viewcomponentsbtn"><i class="fi fi-br-dollar"></i><span class="tooltip-text">Pricing</span></a></li>
+          <br>
+          <li><a href="{% url 'chat_view' %}" id="viewcomponentsbtn"><i class="fi fi-ss-microchip-ai"></i><span class="tooltip-text">AI Chat</span></a></li>
+          <br>
+          <li><a href="{% url 'reference_page' %}" id="viewcomponentsbtn"><i class="fi fi-br-add-document"></i><span class="tooltip-text">Add Papers</span></a></li>
+          <br>
+          <li><a href="{% url 'account_page' %}"><i class="fi fi-br-circle-user"></i><span class="tooltip-text">My Account</span></a></li>
+          <br>
+          <li><a href="#" id="logoutBtn"><i class="fi fi-bs-sign-out-alt"></i><span class="tooltip-text">Log Out</span></a></li>
+          <br>
+          <li><a href="{% url 'help' %}"><i class="fi fi-br-interrogation"></i><span class="tooltip-text">Help Center</span></i></a></li>
+        </ul>
+      </nav>
+    </div>
+
+    <div class="main-content">
+      <div class="container">
+          <button id="viewcomponents">View Extracted Content</button>
+          <button id="uploadButton" onclick="redirectToPage()">AI Chat</button>
+      </div>
+      <div class="container" id="extractedComponents" style="display:none;">
+          {% if folder_exists %}
+              {% for folder in folder_data %}
+                  <div class="options-wrapper">
+                      <div class="file-header">
+                          <h3 style="color: black; text-align: left; font-family: 'Times New Roman', Times, serif;">
+                              Paper Title: {{ folder.folder_name }}
+                          </h3>
+                          <button class="text-option-button" data-folder-id="{{ forloop.counter }}"><i class="fi fi-rs-duplicate"></i><span class="tooltip-text">View</span></button>
+                          <ul class="dropdown-menu" id="dropdown-menu-{{ forloop.counter }}">
+                              {% for file in folder.files %}
+                                  <li class="file-button" data-file-id="{{ forloop.parentloop.counter }}-{{ forloop.counter }}">
+                                      {{ file.file_name|slice:"2:-4" }}
+                                  </li>
+                              {% endfor %}
+                          </ul>
+                      </div>
+                      {% for file in folder.files %}
+                          <div class="text-container" id="file-content-{{ forloop.parentloop.counter }}-{{ forloop.counter }}">
+                              <p>{{ file.text_data }}</p>
+                          </div>
+                      {% endfor %}
+                  </div>
+              {% endfor %}
+          {% else %}
+              <p>No documents found for the selected project.</p>
+          {% endif %}
+      </div>
+  </div>
+    
+
+    <!-- Logout Confirmation Modal -->
+    <div id="logoutModal" class="modal">
+        <div class="modal-content">
+            <p>DO YOU WANT TO LOG OUT?</p>
+            <form action="{% url 'logout' %}" method="post">
+                {% csrf_token %}
+                <button id="confirmLogoutBtn" type="submit">Logout</button>
+                <button id="cancelLogoutBtn" type="button">Cancel</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function redirectToPage() {
+          window.location.href = "{% url 'chat_view' %}";
+        }
+    
+        function toggleMenu() {
+          var hiddenMenu = document.getElementById('hidden-menu');
+          hiddenMenu.classList.toggle('show');
+        }
+    
+        window.onload = function() {
+          var hiddenMenu = document.getElementById('hidden-menu');
+          hiddenMenu.classList.add('show');
+        };
+    
+        document.getElementById('viewcomponents').addEventListener('click', function () {
+          var container = document.getElementById('extractedComponents');
+          container.style.display = container.style.display === 'block' ? 'none' : 'block';
+        });
+    
+        document.querySelectorAll('.text-option-button').forEach(function(button) {
+          button.addEventListener('click', function(event) {
+            event.stopPropagation();
+            var folderId = this.getAttribute('data-folder-id');
+            var dropdownMenu = document.getElementById('dropdown-menu-' + folderId);
+            
+            closeAllContentDivs();
+    
+            if (dropdownMenu.style.display === 'block') {
+              dropdownMenu.style.display = 'none';
+            } else {
+              closeAllDropdownMenus();
+              dropdownMenu.style.display = 'block';
+            }
+          });
+        });
+    
+        window.addEventListener('click', function(event) {
+          if (!event.target.matches('.text-option-button')) {
+            closeAllDropdownMenus();
+          }
+          if (!event.target.matches('.file-button')) {
+            closeAllContentDivs();
+          }
+        });
+    
+        document.querySelectorAll('.file-button').forEach(function(button) {
+          button.addEventListener('click', function(event) {
+            event.stopPropagation();
+            var fileId = this.getAttribute('data-file-id');
+            var contentDiv = document.getElementById('file-content-' + fileId);
+    
+            closeAllDropdownMenus();
+            closeAllContentDivs();
+            contentDiv.style.display = 'block';
+          });
+        });
+    
+        function closeAllDropdownMenus() {
+          document.querySelectorAll('.dropdown-menu').forEach(function(menu) {
+            menu.style.display = 'none';
+          });
+        }
+    
+        function closeAllContentDivs() {
+          document.querySelectorAll('.text-container').forEach(function(div) {
+            div.style.display = 'none';
+          });
+        }
+    
+        const logoutBtn = document.getElementById('logoutBtn');
+        const logoutModal = document.getElementById('logoutModal');
+        const confirmLogoutBtn = document.getElementById('confirmLogoutBtn');
+        const cancelLogoutBtn = document.getElementById('cancelLogoutBtn');
+    
+        logoutBtn.addEventListener('click', () => {
+          logoutModal.style.display = 'block';
+        });
+    
+        cancelLogoutBtn.addEventListener('click', () => {
+          logoutModal.style.display = 'none';
+        });
+    
+        confirmLogoutBtn.addEventListener('click', () => {
+          logoutUser();
+        });
+    
+        function logoutUser() {
+          alert('Logged out!');
+          logoutModal.style.display = 'none';
+          window.location.href = "{% url 'login' %}";
+        }
+    
+        window.onclick = function(event) {
+          if (event.target == logoutModal) {
+            logoutModal.style.display = 'none';
+          }
+        };
+    
+        document.querySelectorAll('.dropdown-menu').forEach(function(menu) {
+          menu.addEventListener('click', function(event) {
+            event.stopPropagation();
+          });
+        });
+      </script>
+{% endblock %}
+</body>
+</html>

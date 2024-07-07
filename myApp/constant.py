@@ -1,0 +1,2 @@
+
+APIKEY = "sk-proj-BcFQPiSc2iav2NBU0CE0T3BlbkFJZlMjmnQwUo3qQRfbfD02"

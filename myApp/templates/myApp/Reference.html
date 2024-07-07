@@ -1,0 +1,599 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ResearchDraft - Reference</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.4.2/uicons-bold-rounded/css/uicons-bold-rounded.css'>
+  <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.4.2/uicons-bold-straight/css/uicons-bold-straight.css'>
+  <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.4.2/uicons-regular-rounded/css/uicons-regular-rounded.css'>
+</head>
+<style>
+  body {
+      font-family: 'Times New Roman', Times, serif;
+      font-size: 16px;
+      background-color: white;
+      margin: 0;
+      padding: 0;
+  }
+
+  #hidden-menu {
+    position: fixed;
+    font-size: large;
+    top: 0;
+    width: 5%;
+    height: 100%;
+    background: white;
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-in-out;
+    z-index: 2;
+    border-right: 1px solid #ccc;
+    left: 0;
+    transform: translateX(-100%);
+}
+
+
+    #hidden-menu.show {
+        transform: translateX(0);
+    }
+
+    nav ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    nav li {
+    padding: 15px;
+    border-bottom: 1px solid #ccc;
+    position: relative; /* Needed for tooltip positioning */
+}
+
+    nav li a {
+        display: flex;
+        align-items: center;
+        margin-left: 5px;
+        color: #0039a6;
+        font-size: x-large;
+        text-decoration: none;
+    }
+
+    nav li:hover {
+        background-color: #e6e6e6;
+    }
+
+    nav i {
+        margin-left: 8px;
+        margin-right: 10px;
+    }
+    nav .tooltip-text {
+    visibility: hidden;
+    width: 80px;
+    background-color: white;
+    color: #0039a6;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px;
+    position: absolute;
+    z-index: 1;
+    top: 50%;
+    left: 100%;
+    margin-left: 10px;
+    transform: translateY(-50%);
+    opacity: 0;
+    transition: opacity 0.3s;
+    font-size: large; /* Set a specific font size for tooltips */
+}
+
+nav li a:hover .tooltip-text {
+    visibility: visible;
+    opacity: 1;
+}
+    #toggleMenuBtn {
+        position: fixed;
+        top: 15px;
+        left: 12px;
+        z-index: 3;
+        background: #0039a6;
+        width: 30px;
+        height: 30px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border: none;
+        color:  white;
+        cursor: pointer;
+    }
+
+  .main-content {
+      margin-left: 22%; /* Adjust to make space for the hidden menu */
+      padding: 20px;
+  }
+
+  .container {
+      background-color: #f8f8f8;
+      padding: 20px;
+      text-align: center;
+      margin-top: 80px;
+      margin-left: 10px;
+      margin-right: 250px;
+      border-radius: 15px;
+      position: relative;
+  }
+
+  .input-container {
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+  }
+
+  .input-box {
+      flex: 1;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      margin-right: 10px;
+      width: 130px; /* Adjust width */
+      height: 50px; /* Adjust height */
+  }
+
+  .input-box:focus {
+      outline: none;
+      border-color: #0039a6;
+  }
+
+  .input-icons {
+      display: flex;
+      align-items: center;
+  }
+
+  .delete-icon {
+      font-size: 30px; /* Adjust icon size */
+      cursor: pointer;
+      margin-right: 10px; /* Add margin between icons */
+      color: red;
+  }
+
+  .delete-icon:hover {
+      color: gray;
+  }
+
+  button {
+      background-color: #ffffff; /* Blue background */
+      border: 2px solid #0039a6; /* Solid border */
+      border-radius: 15px; /* Rounded corners */
+      color: #0039a6; /* White text */
+      padding: 12px 24px; /* Increased padding for larger size */
+      font-size: 16px;
+      transition: background-color 0.2s, color 0.2s, border-color 0.2s; /* Transition for smooth hover effect */
+      font-weight: bold;
+      cursor: pointer; /* Change cursor to pointer on hover */
+      position: relative;
+  }
+
+  button:hover {
+      background-color: #0039a6; /* White background on hover */
+      color: #ffffff; /* Blue text on hover */
+      border-color: #0039a6; /* Blue border on hover */
+  }
+  button .tooltip-text {
+  visibility: hidden;
+  width: 60px; /* Adjust width as needed */
+  color: #0039a6;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px;
+  position: absolute;
+  z-index: 1;
+  top: 100%; /* Position below the button */
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 0;
+  transition: opacity 0.3s;
+  font-size: 14px; /* Adjust font size as needed */
+  margin-top: 10px; /* Add space between button and tooltip */
+}
+
+button:hover .tooltip-text {
+  visibility: visible;
+  opacity: 1;
+}
+  .form-buttons {
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 35px;
+    gap: 2px; /* Add some space between the buttons */
+}
+.form-button-icon {
+    font-size: 24px; /* Adjust the size as needed */
+}
+
+
+  #addButton {
+      margin-right: 10px; /* Adjust margin for proper spacing */
+  }
+
+  #referenceContainer {
+      background-color: #f8f8f8;
+      position: relative;
+      padding: 20px;
+      margin-top: 110px; /* Same margin-top as the main container */
+      border-radius: 15px;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Aesthetic font */
+  }
+
+  #referenceContainer p {
+      margin-bottom: 10px; /* Adjust margin between links */
+      font-size: 18px; /* Adjust font size for links */
+      color: #0039a6; /* Link color */
+  }
+
+  #referenceContainer p:last-child {
+      margin-bottom: 0; /* Remove margin-bottom for the last link */
+  }
+
+  #nextPageButton {
+      position: absolute; /* Position the button */
+      bottom: 20px; /* 20px from the bottom */
+      right: 20px; /* 20px from the right */
+  }
+
+  #processingSign {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 999;
+      padding: 10px;
+      border-radius: 10px;
+      text-align: center;
+  }
+
+  #processingSign .loader {
+      border: 8px solid #f3f3f3; /* Light grey */
+      border-top: 8px solid #0039a6; /* Blue */
+      border-radius: 50%;
+      align-items: center;
+      width: 50px;
+      height: 50px;
+      animation: spin 1s linear infinite;
+  }
+
+  @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+  }
+
+  #processingSign p {
+      margin-top: 10px;
+      font-size: 16px;
+      color: #0039a6;
+  }
+
+  .modal {
+      display: none;
+      position: fixed;
+      z-index: 2;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgb(0, 0, 0);
+      background-color: rgba(0, 0, 0, 0.4);
+      padding-top: 60px;
+  }
+
+  .modal-content {
+      background-color: white;
+      margin: 5% auto;
+      padding: 20px;
+      border: 1px solid #888;
+      width: 80%;
+      max-width: 300px;
+      text-align: center;
+      border-radius: 10px;
+  }
+
+  .modal-content button {
+      margin: 10px;
+  }
+    /* Media Queries for Responsiveness */
+
+
+  @media (max-width: 1200px) {
+      .main-content {
+          margin-left: 15%;
+      }
+  }
+
+  @media (max-width: 800px) {
+
+      #toggleMenuBtn {
+          left: 12px;
+      }
+
+      .main-content {
+          margin-left: 0;
+      }
+  }
+
+  @media (max-width: 768px) {
+    #hidden-menu {
+      width: 12%;
+    }
+      #toggleMenuBtn {
+          left: 10px;
+      }
+
+      .main-content {
+          margin-left: 0;
+          padding: 10px;
+      }
+
+      .container,
+      #referenceContainer {
+          margin-left: auto;
+          margin-right: auto;
+          width: 90%;
+      }
+  }
+
+  @media (max-width: 600px) {
+    #hidden-menu {
+      width: 12%;
+    }
+      #toggleMenuBtn {
+          left: 10px;
+      }
+
+      .main-content {
+          margin-left: 0;
+          padding: 10px;
+      }
+
+      .container,
+      #referenceContainer {
+          margin-left: auto;
+          margin-right: auto;
+          width: 90%;
+      }
+  }
+
+  @media (max-width: 468px) {
+      #hidden-menu {
+          width: 14%;
+      }
+
+      #toggleMenuBtn {
+          left: 10px;
+      }
+
+      .container,
+      #referenceContainer {
+          margin-left: auto;
+          margin-right: auto;
+          width: 95%;
+      }
+
+  }
+</style>
+<body>
+  {% block content %}
+  <button id="toggleMenuBtn" class="show" onclick="toggleMenu()">&#9776;</button>
+  <div id="hidden-menu">
+    <br><br><br>
+    <nav>
+      <ul>
+        <br>
+        <li><a href="{% url 'create_project' %}"><i class="fi fi-br-house-chimney"></i><span class="tooltip-text">Home</span></a></li>
+        <br>
+        <li><a href="{% url 'pricing' %}"><i class="fi fi-br-dollar"></i><span class="tooltip-text">Pricing</span></a></li>
+        <br>
+        <li><a href="{% url 'fetch_data' %}" id="viewcomponentsbtn"><i class="fi fi-bs-duplicate"></i><span class="tooltip-text">View Papers</span></a></li>
+        <br>
+        <li><a href="{% url 'account_page' %}"><i class="fi fi-br-circle-user"></i><span class="tooltip-text">My Account</span></a></li>
+        <br>
+        <li><a href="#" id="logoutBtn"><i class="fi fi-bs-sign-out-alt"></i><span class="tooltip-text">Log Out</span></a></li>
+        <br>
+        <li><a href="{% url 'help' %}"><i class="fi fi-br-interrogation"></i><span class="tooltip-text">Help Center</span></i></a></li>
+      </ul>
+    </nav>
+  </div>
+  <div class="main-content">
+    <div class="container">
+      <br>
+      <h3 id="selectedProjectName" style="text-align: left; margin-left: 0%;"></h3>
+      <form id="referenceForm" method="post" action="javascript:void(0);">
+        <div id="inputBoxesContainer">
+          <!-- Input boxes will be added here -->
+        </div>
+        <div class="form-buttons">
+          <button id="addButton" type="button"><i class="fi fi-rr-multiple form-button-icon"></i><span class="tooltip-text">ADD</span>
+          </button>
+          <button id="saveButton" type="button"><i class="fi fi-rr-folder-download form-button-icon"></i><span class="tooltip-text">SAVE</span>
+          </button>
+
+        </div>
+      </form>
+      <div id="processingSign">
+        <div class="loader"></div>
+      </div>
+    </div>
+  </div>
+  <div id="statusMessage" style="display: none; text-align: center; margin-top: 20px;">
+    Scraping data... Please wait.
+  </div>
+  <!-- Logout Confirmation Modal -->
+  <div id="logoutModal" class="modal">
+    <div class="modal-content">
+      <p>DO YOU WANT TO LOG OUT?</p>
+      <form action="{% url 'logout' %}" method="post">
+        {% csrf_token %}
+        <button id="confirmLogoutBtn" type="submit">Logout</button>
+        <button id="cancelLogoutBtn" type="button">Cancel</button>
+      </form>
+    </div>
+  </div>
+  
+  <script>
+    function toggleMenu() {
+      var hiddenMenu = document.getElementById('hidden-menu');
+      hiddenMenu.classList.toggle('show');
+    }
+
+    window.onload = function() {
+      var hiddenMenu = document.getElementById('hidden-menu');
+      hiddenMenu.classList.add('show');
+
+      // Set the selected project name from session or context
+      var selectedProject = "{{ request.session.selected_project }}"; // Assuming you set the selected project in session
+      var selectedProjectName = document.getElementById('selectedProjectName');
+      selectedProjectName.textContent = "Project: " + selectedProject;
+    };
+
+    function getCookie(name) {
+      let cookieValue = null;
+      if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+          const cookie = cookies[i].trim();
+          if (cookie.substring(0, name.length + 1) === (name + '=')) {
+            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+            break;
+          }
+        }
+      }
+      return cookieValue;
+    }
+
+    function createInputBox() {
+      var inputBoxesContainer = document.getElementById('inputBoxesContainer');
+
+      var inputContainer = document.createElement('div');
+      inputContainer.className = 'input-container';
+
+      var inputBox = document.createElement('input');
+      inputBox.type = 'text';
+      inputBox.className = 'input-box';
+      inputBox.placeholder = 'Enter webpage link...';
+      inputBox.setAttribute('pattern', 'https?://.+');
+
+      var inputIcons = document.createElement('div');
+      inputIcons.className = 'input-icons';
+
+      var deleteIcon = document.createElement('i');
+      deleteIcon.className = 'fas fa-times delete-icon';
+      deleteIcon.onclick = function () {
+        inputBox.value = '';
+      };
+
+
+      inputIcons.appendChild(deleteIcon);
+
+      inputContainer.appendChild(inputBox);
+      inputContainer.appendChild(inputIcons);
+
+      inputBoxesContainer.appendChild(inputContainer);
+    }
+
+    for (var i = 0; i < 1; i++) {
+      createInputBox();
+    }
+
+    document.getElementById('addButton').addEventListener('click', function () {
+      createInputBox();
+    });
+
+    function saveData() {
+      showProcessingSign(true);
+
+      var saveButton = document.getElementById('saveButton');
+      saveButton.disabled = true;
+      showStatusMessage(true);
+
+      var projectName = "{{ request.session.selected_project }}"; // Get the project name from session
+      var links = [];
+      var inputBoxes = document.querySelectorAll('.input-box');
+      inputBoxes.forEach(function(inputBox) {
+        if (inputBox.value.trim() !== '') {
+          links.push(inputBox.value.trim());
+        }
+      });
+
+      var csrftoken = getCookie('csrftoken');
+      fetch('/reference/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-Requested-With': 'XMLHttpRequest',
+          'X-CSRFToken': csrftoken
+        },
+        body: JSON.stringify({ project_name: projectName, links: links })
+      })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then(data => {
+        console.log('Success:', data);
+        alert('Links saved successfully!');
+        showStatusMessage(false);
+        // Redirect to view page after saving links successfully
+        window.location.href = "{% url 'fetch_data' %}"; // Change 'view_page' to the name of your view page URL
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        alert('Failed to save links');
+        showStatusMessage(false);
+      })
+      .finally(() => {
+        showProcessingSign(false);
+        saveButton.disabled = false;
+      });
+    }
+
+    function showProcessingSign(show) {
+      var processingSign = document.getElementById('processingSign');
+      processingSign.style.display = show ? 'block' : 'none';
+    }
+
+    function showStatusMessage(show) {
+      var statusMessage = document.getElementById('statusMessage');
+      statusMessage.style.display = show ? 'block' : 'none';
+    }
+
+    document.getElementById('saveButton').addEventListener('click', saveData);
+
+    const logoutBtn = document.getElementById('logoutBtn');
+    const logoutModal = document.getElementById('logoutModal');
+    const confirmLogoutBtn = document.getElementById('confirmLogoutBtn');
+    const cancelLogoutBtn = document.getElementById('cancelLogoutBtn');
+
+    logoutBtn.onclick = function() {
+      logoutModal.style.display = 'block';
+    };
+
+    confirmLogoutBtn.onclick = function() {
+      window.location.href = '/logout/';
+    };
+
+    cancelLogoutBtn.onclick = function() {
+      logoutModal.style.display = 'none';
+    };
+
+    window.onclick = function(event) {
+      if (event.target == logoutModal) {
+        logoutModal.style.display = 'none';
+      }
+    };
+  </script>
+{% endblock %}
+</body>
+</html>

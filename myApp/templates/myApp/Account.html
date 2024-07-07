@@ -1,0 +1,452 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ResearchDraft - My Account</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.4.2/uicons-bold-rounded/css/uicons-bold-rounded.css'>
+  <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.4.2/uicons-bold-straight/css/uicons-bold-straight.css'>
+  <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.4.2/uicons-regular-rounded/css/uicons-regular-rounded.css'>
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif;
+      font-size: 16px;
+      background-color: white;
+      margin: 0;
+      padding: 0;
+    }
+
+    #hidden-menu {
+    position: fixed;
+    font-size: large;
+    top: 0;
+    width: 5%;
+    height: 100%;
+    background: white;
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-in-out;
+    z-index: 2;
+    border-right: 1px solid #ccc;
+    left: 0;
+    transform: translateX(-100%);
+}
+
+
+    #hidden-menu.show {
+        transform: translateX(0);
+    }
+
+    nav ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    nav li {
+    padding: 15px;
+    border-bottom: 1px solid #ccc;
+    position: relative; /* Needed for tooltip positioning */
+}
+
+    nav li a {
+        display: flex;
+        align-items: center;
+        margin-left: 5px;
+        color: #0039a6;
+        font-size: x-large;
+        text-decoration: none;
+    }
+
+    nav li:hover {
+        background-color: #e6e6e6;
+    }
+
+    nav i {
+        margin-left: 8px;
+        margin-right: 10px;
+    }
+    nav .tooltip-text {
+    visibility: hidden;
+    width: 80px;
+    background-color: white;
+    color: #0039a6;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px;
+    position: absolute;
+    z-index: 1;
+    top: 50%;
+    left: 100%;
+    margin-left: 10px;
+    transform: translateY(-50%);
+    opacity: 0;
+    transition: opacity 0.3s;
+    font-size: large; /* Set a specific font size for tooltips */
+}
+
+nav li a:hover .tooltip-text {
+    visibility: visible;
+    opacity: 1;
+}
+    #toggleMenuBtn {
+        position: fixed;
+        top: 15px;
+        left: 12px;
+        z-index: 3;
+        background: #0039a6;
+        width: 30px;
+        height: 30px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border: none;
+        color:  white;
+        cursor: pointer;
+    }
+
+    button {
+      background-color: #ffffff;
+      border: 2px solid #0039a6;
+      border-radius: 15px;
+      color: #0039a6;
+      padding: 12px 24px;
+      font-size: 16px;
+      transition: background-color 0.2s, color 0.2s, border-color 0.2s;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #0039a6;
+      color: #ffffff;
+      border-color: #0039a6;
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 2;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgb(0,0,0);
+      background-color: rgba(0,0,0,0.4);
+      padding-top: 60px;
+    }
+
+    .modal-content {
+      background-color: #f8f8f8;
+      margin: 5% auto;
+      top: 30px;
+      padding: 20px;
+      border: 1px solid #888;
+      width: 80%;
+      max-width: 300px;
+      text-align: center;
+      border-radius: 10px;
+    }
+
+    .modal-content button {
+      margin: 10px;
+    }
+    .modal-content form {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .modal-content form div {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      margin-bottom: 10px;
+    }
+
+    .modal-content form input {
+      width: calc(100% - 120px);
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    .modal-content form label {
+      width: 100px;
+      text-align: right;
+      margin-right: 10px;
+    }
+
+    .modal-content form .button-group {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+    }
+
+    .modal-content form button {
+      margin-top: 10px;
+      flex: 1;
+      margin-right: 10px;
+    }
+
+    .account-container {
+      margin: 60px auto;
+      margin-top: 90px;
+      padding: 20px;
+      max-width: 600px;
+      background-color: #f8f8f8;
+      border-radius: 10px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .account-container h2 {
+      text-align: center;
+      color: #0039a6;
+      margin-bottom: 20px;
+    }
+
+    .account-container label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 5px;
+      color: #333;
+    }
+
+    .account-container .input-wrapper {
+      position: relative;
+      margin-bottom: 20px;
+    }
+
+    .account-container .input-wrapper input {
+      width: 90%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    .account-container .password-input-container {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .account-container .password-input-container input {
+      width: calc(100% - 58px); /* Adjusted width */
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    .account-container .password-input-container .fa-eye {
+      position: absolute;
+      top: 50%;
+      right: 70px; /* Adjusted right position */
+      transform: translateY(-50%);
+      cursor: pointer;
+    }
+
+    .account-container .change-password-link {
+      display: block;
+      margin: 0 auto 20px auto;
+      color: #0039a6;
+      text-align: left;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    @media (max-width: 800px) {
+      #hidden-menu {
+    width: 12%;
+  }
+
+      #toggleMenuBtn {
+        left: 10px;
+      }
+
+      .account-container {
+        width: 90%;
+        padding: 15px;
+      }
+    }
+    @media (max-width: 468px) {
+      #hidden-menu {
+    width: 12%;
+  }
+
+      #toggleMenuBtn {
+        left: 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <button id="toggleMenuBtn" onclick="toggleMenu()">&#9776;</button>
+  <div id="hidden-menu">
+    <br><br><br>
+    <nav>
+      <ul>
+        <br>
+        <li><a href="{% url 'create_project' %}"><i class="fi fi-br-house-chimney"></i><span class="tooltip-text">Home</span></a></li>
+        <br>
+        <li><a href="{% url 'pricing' %}"><i class="fi fi-br-dollar"></i><span class="tooltip-text">Pricing</span></a></li>
+        <br>
+        <li><a href="{% url 'fetch_data' %}" id="viewcomponentsbtn"><i class="fi fi-bs-duplicate"></i><span class="tooltip-text">View Papers</span></a></li>
+        <br>
+        <li><a href="{% url 'account_page' %}"><i class="fi fi-br-circle-user"></i><span class="tooltip-text">My Account</span></a></li>
+        <br>
+        <li><a href="#" id="logoutBtn"><i class="fi fi-bs-sign-out-alt"></i><span class="tooltip-text">Log Out</span></a></li>
+        <br>
+        <li><a href="{% url 'help' %}"><i class="fi fi-br-interrogation"></i><span class="tooltip-text">Help Center</span></i></a></li>
+      </ul>
+    </nav>
+  </div>
+
+  <div class="account-container">
+    <h2>My Account</h2>
+    
+    <form>
+      {% csrf_token %}
+      <div class="input-wrapper">
+        <label for="email">Email Address</label>
+        <input type="email" id="email" name="email" value="{{ email }}" readonly>
+      </div>
+
+
+      <div class="input-wrapper">
+        <label for="first-name">First Name</label>
+        <input type="text" id="first-name" name="first-name" value="{{ first_name }}" readonly>
+      </div>
+
+      <div class="input-wrapper">
+        <label for="last-name">Last Name</label>
+        <input type="text" id="last-name" name="last-name" value="{{ last_name }}" readonly>
+      </div>
+    </form>
+  </div>
+
+
+  <!-- Logout Confirmation Modal -->
+  <div id="logoutModal" class="modal">
+    <div class="modal-content">
+      <p>DO YOU WANT TO LOG OUT?</p>
+      <form action="{% url 'logout' %}" method="post">
+        {% csrf_token %}
+        <button id="confirmLogoutBtn" type="submit">Logout</button>
+        <button id="cancelLogoutBtn" type="button">Cancel</button>
+    </form>
+    </div>
+  </div>
+
+  <script>
+    function toggleMenu() {
+        var hiddenMenu = document.getElementById('hidden-menu');
+        hiddenMenu.classList.toggle('show');
+    }
+
+    // Display the hidden menu when the page loads
+    window.onload = function() {
+        var hiddenMenu = document.getElementById('hidden-menu');
+        hiddenMenu.classList.add('show');
+    };
+
+    // Toggle password visibility
+    document.getElementById('togglePassword').addEventListener('click', function() {
+        const passwordField = document.getElementById('password');
+        const type = passwordField.getAttribute('type') === 'text' ? 'password' : 'text';
+        passwordField.setAttribute('type', type);
+        this.classList.toggle('fa-eye-slash');
+    });
+
+    // Change Password Modal
+    function openChangePasswordModal() {
+        document.getElementById('changePasswordModal').style.display = 'block';
+    }
+
+    function closeChangePasswordModal() {
+        document.getElementById('changePasswordModal').style.display = 'none';
+    }
+
+    document.getElementById('changePasswordForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+        const newPassword = document.getElementById('new-password').value;
+        const confirmPassword = document.getElementById('confirm-password').value;
+
+        // Remove any existing alert message
+        const existingAlert = document.getElementById('password-alert');
+        if (existingAlert) {
+            existingAlert.remove();
+        }
+
+        // Check if the new password is empty
+        if (!newPassword.trim() || !confirmPassword.trim()) {
+            const alertMessage = document.createElement('div');
+            alertMessage.id = 'password-alert';
+            alertMessage.style.color = 'red';
+            alertMessage.textContent = 'Please enter a password.';
+            const passwordInput = document.getElementById('new-password');
+            passwordInput.parentNode.insertBefore(alertMessage, passwordInput.nextSibling);
+            return;
+        }
+
+        // Regular expression to check if the password contains at least one alphabet character
+        const regex = /[a-zA-Z]/;
+
+        if (!regex.test(newPassword) || !regex.test(confirmPassword)) {
+            const alertMessage = document.createElement('div');
+            alertMessage.id = 'password-alert';
+            alertMessage.style.color = 'red';
+            alertMessage.textContent = 'Please enter a password containing at least one alphabet character.';
+            const passwordInput = document.getElementById('new-password');
+            passwordInput.parentNode.insertBefore(alertMessage, passwordInput.nextSibling);
+            return;
+        }
+
+        // Passwords match
+        if (newPassword === confirmPassword) {
+            alert('Password changed successfully!');
+            closeChangePasswordModal();
+            // Update the password field (for demonstration purposes, not secure)
+            document.getElementById('password').value = newPassword;
+        } else {
+            alert('Passwords do not match!');
+        }
+    });
+
+    // Logout confirmation modal logic
+    const logoutBtn = document.getElementById('logoutBtn');
+    const logoutModal = document.getElementById('logoutModal');
+    const confirmLogoutBtn = document.getElementById('confirmLogoutBtn');
+    const cancelLogoutBtn = document.getElementById('cancelLogoutBtn');
+
+    logoutBtn.addEventListener('click', () => {
+        logoutModal.style.display = 'block';
+    });
+
+    cancelLogoutBtn.addEventListener('click', () => {
+        logoutModal.style.display = 'none';
+    });
+
+    confirmLogoutBtn.addEventListener('click', () => {
+        logoutUser();
+    });
+
+    function logoutUser() {
+        alert('Logged out!');
+        logoutModal.style.display = 'none';
+        window.location.href = 'login.html';
+    }
+
+    window.onclick = function(event) {
+        if (event.target == logoutModal || event.target == changePasswordModal) {
+            logoutModal.style.display = 'none';
+            changePasswordModal.style.display = 'none';
+        }
+    }
+</script>
+</body>
+</html>

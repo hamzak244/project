@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Select Project</title>
+    <style>
+        /* Add some basic styling for the modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgb(0,0,0);
+            background-color: rgba(0,0,0,0.4);
+            padding-top: 60px;
+        }
+        .modal-content {
+            background-color: #fefefe;
+            margin: 5% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+        }
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <button type="button" onclick="showPreviousProjectsModal()">Previous Project</button>
+    
+
+    <!-- The Modal -->
+    <div id="previousProjectsModal" class="modal">
+        <div class="modal-content">
+            {% block content %}
+    <h1>Select a Project</h1>
+    <form method="post">
+        {% csrf_token %}
+        <ul>
+            {% for project in projects %}
+                <li>
+                    <label>
+                        <input type="radio" name="project" value="{{ project }}"> {{ project }}
+                    </label>
+                    <button type="button" onclick="deleteProject('{{ project }}')">Delete</button>
+                </li>
+            {% endfor %}
+        </ul>
+        <button type="submit">Select</button>
+        
+    </form>
+    {% endblock %}
+        </div>
+    </div>
+
+    <script>
+        // Get the modal
+        var modal = document.getElementById("previousProjectsModal");
+
+        // Function to open the modal
+        function showPreviousProjectsModal() {
+            modal.style.display = "block";
+        }
+
+        // Function to close the modal
+        function closePreviousProjectsModal() {
+            modal.style.display = "none";
+        }
+
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+
+        function deleteProject(projectName) {
+            if (confirm("Are you sure you want to delete the project: " + projectName + "?")) {
+                fetch('/delete_project/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': getCookie('csrftoken')
+                    },
+                    body: JSON.stringify({
+                        project_name: projectName
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        location.reload(); // Refresh the page to show the updated project list
+                    } else {
+                        alert("Error: " + data.error);
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+            }
+        }
+
+        function submitPreviousProject() {
+            var selectedProject = document.querySelector('input[name="previous_project"]:checked');
+            if (!selectedProject) {
+                alert("Please select a project.");
+                return;
+            }
+
+            fetch('/select_project/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': getCookie('csrftoken')
+                },
+                body: JSON.stringify({
+                    project_name: selectedProject.value
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    window.location.href = '/next_page/'; // Redirect to the next page
+                } else {
+                    alert("Error: " + data.error);
+                }
+            })
+            .catch(error => console.error('Error:', error));
+        }
+
+        // Function to get CSRF token from cookies
+        function getCookie(name) {
+            var cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                var cookies = document.cookie.split(';');
+                for (var i = 0; i < cookies.length; i++) {
+                    var cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+    </script>
+</body>
+</html>

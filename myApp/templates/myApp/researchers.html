@@ -1,0 +1,1915 @@
+{%load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>ResearchDraft - Researchers</title>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+
+  <!-- 
+    - google font link
+  -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@500;700&family=Roboto:wght@400;500;700&display=swap"
+    rel="stylesheet">
+</head>
+<style>
+  
+
+:root {
+
+/**
+ * colors
+ */
+ --boeing-blue: #0039a6;
+ --intel-blue: #0071c5;
+ --denim: #1560bd;
+ --mcdonald-yellow: #FFC72C;
+--eerie-black: hsl(240, 6%, 10%);
+--light-gray: hsl(0, 0%, 80%);
+--cultured-2: hsl(210, 60%, 98%);
+--platinum: hsl(0, 0%, 90%);
+--gray-web: hsl(220, 5%, 49%);
+--cultured: hsl(0, 0%, 93%);
+--black_10: hsla(0, 0%, 0%, 0.1);
+--black_5: hsla(0, 0%, 0%, 0.05);
+--white-1: hsl(0, 0%, 100%);
+--white-2: hsl(0, 14%, 98%);
+--black: hsl(0, 0%, 0%);
+
+/**
+ * gradient color
+ */
+
+--gradient: linear-gradient(to left top, var(--intel-blue), var(--boeing-blue));
+
+/**
+ * typography
+ */
+
+--ff-roboto: 'Roboto', sans-serif;
+--ff-league-spartan: 'League Spartan', sans-serif;
+
+--fs-1: 3.5rem;
+--fs-2: 3rem;
+--fs-3: 2.1rem;
+--fs-4: 1.7rem;
+--fs-5: 1.4rem;
+--fs-6: 1.3rem;
+
+--fw-700: 700;
+--fw-500: 500;
+
+/**
+ * spacing
+ */
+
+--section-padding: 50px;
+
+/**
+ * shadow
+ */
+
+--shadow-1: 0 6px 24px var(--black_5);
+--shadow-2: 0 2px 28px var(--black_10);
+
+/**
+ * border radius
+ */
+
+--radius-2: 2px;
+--radius-5: 5px;
+--radius-8: 8px;
+
+/**
+ * transition
+ */
+
+--transition-1: 0.25s ease;
+--transition-2: 0.5s ease;
+--cubic-out: cubic-bezier(0.33, 0.85, 0.4, 0.96);
+
+}
+
+
+/*-----------------------------------*\
+#RESET
+\*-----------------------------------*/
+
+*,
+*::before,
+*::after {
+margin: 0;
+padding: 0;
+box-sizing: border-box;
+}
+
+li { list-style: none; }
+
+a {
+text-decoration: none;
+color: inherit;
+}
+
+a,
+img,
+span,
+time,
+label,
+input,
+button,
+textarea,
+ion-icon { display: block; }
+
+img { height: auto; }
+
+input,
+button,
+textarea {
+background: none;
+border: none;
+font: inherit;
+}
+
+input,
+textarea { width: 100%; }
+
+button { cursor: pointer; }
+
+ion-icon { pointer-events: none; }
+
+address { font-style: normal; }
+
+html {
+font-family: var(--ff-roboto);
+font-size: 10px;
+scroll-behavior: smooth;
+}
+
+body {
+background-color: var(--white-1);
+color: var(--gray-web);
+font-size: 1.6rem;
+line-height: 1.8;
+}
+
+::-webkit-scrollbar { width: 10px; }
+
+::-webkit-scrollbar-track { background-color: hsl(0, 0%, 98%); }
+
+::-webkit-scrollbar-thumb { background-color: hsl(0, 0%, 80%); }
+
+::-webkit-scrollbar-thumb:hover { background-color: hsl(0, 0%, 70%); }
+
+:focus-visible { outline-offset: 4px; }
+
+
+.container { padding-inline: 15px; }
+
+.btn {
+max-width: max-content;
+color: var(--white-1);
+font-size: var(--fs-6);
+font-weight: var(--fw-700);
+padding: 10px 30px;
+border-radius: var(--radius-5);
+transition: var(--transition-1);
+}
+
+.btn-primary {
+background-image: var(--gradient);
+background-size: 1000%;
+}
+
+.btn-primary:is(:hover, :focus) { background-position: bottom right; }
+
+.btn-secondary {
+background-color: var(--white-1);
+color:#0039a6;
+}
+
+.btn-secondary:is(:hover, :focus) {
+background-color: var(--mcdonald-yellow);
+color: var(--white-1);
+}
+
+.section { padding-block: var(--section-padding); }
+
+.h1,
+.h2,
+.h3 {
+color: var(--eerie-black);
+font-family: var(--ff-league-spartan);
+line-height: 1.2;
+}
+
+.h1 { font-size: var(--fs-1); }
+
+.h2 { font-size: var(--fs-2); }
+
+.h3 { font-size: var(--fs-3); }
+
+.w-100 { width: 100%; }
+
+.section-title,
+.section-text { text-align: center; }
+
+.section-text { font-size: var(--fs-6); }
+
+.grid-list {
+display: grid;
+gap: 30px;
+}
+
+.img-holder {
+aspect-ratio: var(--width) / var(--height);
+background-color: var(--light-gray);
+}
+
+.img-cover {
+width: 100%;
+height: 100%;
+object-fit: cover;
+}
+
+.colored{
+color: #FFC72C;
+}
+
+.section-title.coloredd{
+color: white;
+}
+
+
+/*-----------------------------------*\
+#HEADER
+\*-----------------------------------*/
+
+.header {
+position: fixed;
+top: 0;
+left: 0;
+width: 100%;
+background-color: var(--white-1);
+padding-block: 15px;
+border-block-end: 1px solid var(--cultured);
+z-index: 4;
+transition: var(--transition-1);
+}
+
+.header.active { filter: drop-shadow(var(--shadow-2)); }
+
+.header > .container {
+display: flex;
+justify-content: space-between;
+align-items: center;
+}
+
+.logo {
+font-family: var(--ff-league-spartan);
+color: var(--black);
+font-size: 3.5rem;
+font-weight: var(--fw-700);
+line-height: 1;
+}
+
+.nav-toggle-btn { font-size: 40px; }
+
+.nav-toggle-btn.active .open,
+.nav-toggle-btn .close { display: none; }
+
+.nav-toggle-btn .open,
+.nav-toggle-btn.active .close { display: block; }
+
+.navbar {
+background-color: var(--white-1);
+position: absolute;
+top: 100%;
+left: 50%;
+transform: translateX(-50%);
+max-width: calc(100% - 30px);
+width: 100%;
+padding-inline: 0;
+border: 1px solid var(--cultured);
+transition: 0.3s var(--cubic-out);
+max-height: 0;
+visibility: hidden;
+overflow: hidden;
+}
+
+.navbar.active {
+max-height: 320px;
+visibility: visible;
+transition-duration: 0.5s;
+}
+
+.navbar-list {
+padding: 20px 15px;
+padding-block-start: 10px;
+margin-right: 0%;
+opacity: 0;
+transition: var(--transition-1);
+}
+
+.navbar.active .navbar-list { opacity: 1; }
+
+.navbar-link {
+color: var(--eerie-black);
+font-family: var(--ff-league-spartan);
+font-size: var(--fs-4);
+line-height: 1.2;
+padding-block: 8px;
+transition: var(--transition-1);
+}
+
+.navbar-link:is(:hover, :focus) { color: var(--red-crayola); }
+
+.header .btn { margin-block-start: 10px; }
+
+
+/*-----------------------------------*\
+#HEO
+\*-----------------------------------*/
+
+.hero {
+padding-block-start: calc(var(--section-padding) + 50px);
+text-align: center;
+background-color: #0039a6;
+}
+
+.hero-content {
+margin-block-end: 30px;
+opacity: 0; /* Initially set to invisible */
+transform: translateX(-50px); /* Move the content left by 50px initially */
+transition: opacity 0.7s ease, transform 0.7s ease;
+color: white;
+}
+
+.hero-content.show {
+opacity: 1;
+transform: translateX(0);
+}
+
+.hero-subtitle {
+color: white;
+font-size: var(--fs-5);
+font-weight: var(--fw-500);
+}
+
+.hero-title {
+margin-block: 12px 8px;
+}
+
+.hero-text {
+font-size: var(--fs-5);
+}
+
+.hero .btn {
+margin-inline: auto;
+margin-block-start: 20px;
+}
+
+.hero-banner {
+opacity: 0; /* Initially set to invisible */
+transform: translateX(50px); /* Move the image right by 50px initially */
+transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.hero-banner.show {
+opacity: 1;
+transform: translateX(0);
+}
+/*-----------------------------------*\
+#FEATURES
+\*-----------------------------------*/
+
+.features { padding-block: var(--section-padding); }
+
+.features .section-title { margin-bottom: 40px; }
+
+.features :is(.section-subtitle, .section-title) { text-align: center; }
+
+.features-list {
+display: grid;
+gap: 25px;
+}
+
+.features-card {
+border: 1px solid hsl(0, 0%, 90%);
+padding: 30px;
+text-align: center;
+}
+
+.features-card .card-icon {
+display: flex;
+justify-content: center; /* Center horizontally */
+align-items: center; /* Center vertically */
+height: 100px; /* Set a fixed height to the container */
+}
+
+.features-card .card-icon img {
+max-width: 100%; /* Ensure the image doesn't exceed the container width */
+max-height: 100%; /* Ensure the image doesn't exceed the container height */
+}
+
+
+.features-card .card-title { margin-bottom: 15px; }
+
+.features-card .card-link {
+display: flex;
+justify-content: center;
+align-items: center;
+gap: 5px;
+color: var(--boeing-blue);
+font-size: var(--fs-5);
+font-weight: var(--fw-600);
+transition: var(--transition);
+}
+
+.features-card .card-link:is(:hover, :focus) {
+gap: 10px;
+color: var(--boeing-blue);
+}
+
+/*-----------------------------------*\
+#SERVICE
+\*-----------------------------------*/
+
+.service {
+background: var(--cultured);
+padding-block: var(--section-padding);
+}
+
+.service-banner { margin-bottom: 30px; }
+
+.service-content:first-of-type {
+padding-bottom: 50px;
+border-bottom: 1px solid hsla(0, 0%, 0%, 0.05);
+margin-bottom: 50px;
+}
+
+.service .section-title { margin-bottom: 30px; }
+
+.service-item {
+background: white;
+display: flex;
+align-items: center;
+gap: 15px;
+padding: 12px 20px;
+box-shadow: 0 5px 25px 10px hsla(0, 0%, 0%, 0.02);
+border-radius: var(--radius-8);
+}
+
+.service-item:not(:last-child) { margin-bottom: 20px; }
+
+.service-item-icon {
+background: var(--light-gray);
+color: var(--boeing-blue);
+min-width: 30px;
+height: 30px;
+display: grid;
+place-items: center;
+border-radius: 50%;
+transition: var(--transition);
+}
+
+.service-item-icon ion-icon { --ionicon-stroke-width: 150px; --ionicon-stroke-height: 100px;}
+
+.service-item:hover .service-item-icon {
+background: var(--boeing-blue);
+color: var(--white);
+}
+
+
+
+
+/*-----------------------------------*\
+#Video
+\*-----------------------------------*/
+
+.video { background-color: var(--white-2); }
+
+.video-banner {
+position: relative;
+border-radius: var(--radius-5);
+overflow: hidden;
+margin-block-end: 25px;
+}
+
+.play-btn {
+position: absolute;
+top: 50%;
+left: 50%;
+transform: translate(-50%, -50%);
+background-color: var(--white-1);
+color: var(--red-crayola);
+font-size: 32px;
+padding: 16px;
+border-radius: 50%;
+animation: pulse 1.5s ease-out infinite;
+}
+
+@keyframes pulse {
+0% { box-shadow: 0 0 0 1px var(--white-1); }
+100% { box-shadow: 0 0 0 25px transparent; }
+}
+
+
+/*-----------------------------------*\
+#CTA
+\*-----------------------------------*/
+
+.cta {
+position: relative;
+background-repeat: no-repeat;
+background-size: cover;
+background-position: center;
+background-attachment: fixed;
+z-index: 1;
+}
+
+.cta::after {
+content: "";
+position: absolute;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+background-image: var(--gradient);
+opacity: 0.95;
+z-index: -1;
+}
+
+.cta-subtitle,
+.cta .section-title { color: var(--white-1); }
+
+.cta-subtitle {
+font-size: var(--fs-6);
+font-weight: var(--fw-500);
+text-align: center;
+}
+
+.cta .section-title { margin-block: 12px 18px; }
+
+.cta .btn { margin-inline: auto; }
+
+/*-----------------------------------*\
+#BLOG
+\*-----------------------------------*/
+
+.blog { padding-block: var(--section-padding); }
+
+.blog :is(.section-subtitle, .section-title) { text-align: center; }
+
+.blog .section-title { margin-bottom: 40px; }
+
+.blog-list {
+display: grid;
+gap: 25px;
+}
+
+.blog-card {
+background: var(--white);
+box-shadow: 0 2px 25px 10px hsla(0, 0%, 0%, 0.1);
+border-radius: var(--radius-12);
+overflow: hidden;
+}
+
+.blog-banner {
+aspect-ratio: 2 / 1.3;
+overflow: hidden;
+}
+
+.blog-banner :is(a, img) { height: 100%; }
+
+.blog-banner img {
+object-fit: cover;
+transition: var(--transition-2);
+}
+
+.blog-card:hover .blog-banner img { transform: scale(1.1); }
+
+.blog-content { padding: 20px; }
+
+.blog-meta-list {
+display: flex;
+flex-wrap: wrap;
+justify-content: flex-start;
+align-items: center;
+gap: 15px;
+margin-bottom: 15px;
+}
+
+.blog-meta-item {
+display: flex;
+align-items: center;
+gap: 5px;
+color: var(--black-coral);
+font-size: var(--fs-5);
+text-transform: uppercase;
+}
+
+.blog-meta-item > ion-icon {
+color: var(--red-crayola);
+--ionicon-stroke-width: 45px;
+}
+
+.blog-meta-item .blog-meta-link {
+color: var(--black-coral);
+transition: var(--transition);
+}
+
+.blog-meta-item .blog-meta-link:is(:hover, :focus) { color: var(--red-crayola); }
+
+.blog-title > a {
+color: inherit;
+transition: var(--transition);
+}
+
+.blog-title > a:is(:hover, :focus) { color: var(--red-crayola); }
+
+/*-----------------------------------*\
+#FOOTER
+\*-----------------------------------*/
+
+.footer { padding-block: 40px 20px; }
+
+.section.footer-top { border-block-end: none; }
+
+.footer{
+background-color: #0039a6;
+}
+.footer-top {
+display: grid;
+gap: 20px;
+}
+
+.footer .logo { margin-block-end: 25px; }
+
+.footer-text {
+font-size: var(--fs-5);
+font-weight: var(--fw-500);
+line-height: 1.4;
+color: white;
+}
+
+.footer-list .h5 {
+font-weight: var(--fw-700);
+color: var(--mcdonald-yellow);
+margin-block-end: 15px;
+}
+
+.footer-list-item {
+display: flex;
+align-items: center;
+gap: 8px;
+color: white;
+}
+
+.footer-list-item ion-icon {
+font-size: 18px;
+flex-shrink: 0;
+}
+.footer-list-item:hover ion-icon {
+color: var(--mcdonald-yellow);
+}
+
+.footer-link {
+font-size: var(--fs-7);
+font-weight: var(--fw-500);
+margin-block-start: 8px;
+color: white;
+}
+.footer-link:hover {
+color: var(--mcdonald-yellow);
+}
+
+.copyright {
+font-size: var(--fs-8);
+margin-block-start: 25px;
+color: white;
+}
+
+.copyright-link { display: inline-block; }
+
+.footer-top { grid-template-columns: repeat(3, 1fr); }
+
+.footer-brand { grid-column: 1 / 4; }
+
+.footer-text {
+max-width: 400px;
+margin-block-end: 20px;
+}
+
+.footer-top { grid-template-columns: repeat(4, 1fr); }
+
+.footer-brand { grid-column: 1 / 5; }
+
+.footer-link { --fs-7: 1.7rem; }
+
+.footer-top { grid-template-columns: 1fr 0.4fr 0.4fr 0.4fr 0.4fr; }
+
+.footer-brand {
+  grid-column: auto;
+  padding-inline-end: 100px;
+}
+
+/*-----------------------------------*\
+#BACK TO TOP
+\*-----------------------------------*/
+
+.back-top-btn {
+position: fixed;
+bottom: 10px;
+right: 20px;
+background-color: var(--eerie-black);
+color: var(--white-1);
+padding: 12px;
+border-radius: 50%;
+box-shadow: var(--shadow-2);
+z-index: 4;
+opacity: 0;
+visibility: hidden;
+transition: var(--transition-1);
+}
+
+.back-top-btn.active {
+opacity: 1;
+visibility: visible;
+transform: translateY(-10px);
+}
+
+.back-top-btn:is(:hover, :focus) { opacity: 0.9; }
+
+
+/*-----------------------------------*\
+#MEDIA QUERIES
+\*-----------------------------------*/
+
+/**
+* responsive for larger than 575px screen
+*/
+
+@media (min-width: 575px) {
+
+/**
+ * REUSED STYLE
+ */
+
+.container {
+  max-width: 540px;
+  width: 100%;
+  margin-inline: auto;
+}
+
+.grid-list {
+  grid-template-columns: 1fr 1fr;
+  column-gap: 25px;
+}
+
+/**
+* FEATURES
+*/
+
+.features-list {
+ grid-template-columns: 1fr 1fr;
+ gap: 40px 30px;
+}
+
+.features-card {
+ border: none;
+ padding: 0;
+}
+}
+
+
+/**
+* responsive for larger than 768px screen
+*/
+
+@media (min-width: 768px) {
+
+/**
+ * CUSTOM PROPERTY
+ */
+
+:root {
+
+  /**
+   * typography
+   */
+
+  --fs-1: 4.5rem;
+  --fs-2: 3.7rem;
+  --fs-3: 2.3rem;
+  --fs-4: 1.8rem;
+  --fs-5: 1.5rem;
+  --fs-6: 1.4rem;
+
+}
+
+
+
+/**
+ * REUSED STYLE
+ */
+
+.container { max-width: 720px; }
+
+.section-text {
+  max-width: 65ch;
+  margin-inline: auto;
+}
+
+
+
+/**
+ * HERO
+ */
+
+.hero-text {
+  max-width: 60ch;
+  margin-inline: auto;
+}
+/**
+* FEATURES
+*/
+
+.features-card { text-align: left; }
+
+.features-card .card-icon { margin-inline: 0; }
+
+.features-card .card-icon img { width: 60px; }
+
+.features-card .card-link { justify-content: flex-start; }
+
+
+
+/**
+* SERVICE
+*/
+
+.service-item:not(:last-child) { margin-bottom: 30px; }
+
+.service-list { padding-right: 80px; }
+
+.service-item:nth-child(even) { transform: translateX(80px); }
+
+
+
+/**
+* BLOG
+*/
+
+.blog-list { grid-template-columns: 1fr 1fr; }
+
+}
+
+/**
+* responsive for larger than 992px screen
+*/
+
+@media (min-width: 992px) {
+
+/**
+ * CUSTOM PROPERTY
+ */
+
+:root {
+
+  /**
+   * typography
+   */
+
+  --fs-1: 5rem;
+  --fs-2: 4rem;
+  --fs-3: 2.5rem;
+
+  /**
+   * spacing
+   */
+
+  --section-padding: 100px;
+
+}
+
+
+
+/**
+ * REUSED STYLE
+ */
+
+.container { max-width: 960px; }
+
+.grid-list { grid-template-columns: repeat(3, 1fr); }
+
+
+
+/**
+ * HEADER
+ */
+
+.nav-toggle-btn { display: none; }
+
+.navbar,
+.navbar.active { all: unset; }
+
+.navbar-list {
+  all: unset;
+  display: flex;
+  align-items: center;
+  gap: 30px;
+}
+
+.navbar-link { position: relative; }
+
+.navbar-link:is(:hover, :focus) { color: var(--eerie-black); }
+
+.navbar-link::after {
+  content: "";
+  position: absolute;
+  bottom: 5px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-image: var(--gradient);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: var(--transition-2);
+}
+
+.navbar-link:is(:hover, :focus)::after { transform: scaleX(1); }
+
+.header .btn { margin-block-start: 0; }
+
+
+
+/**
+ * HERO
+ */
+
+.hero .container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: 30px;
+  text-align: left;
+}
+
+.hero-content { margin-block-end: 0; }
+
+.hero-subtitle {
+  position: relative;
+  padding-inline-start: 15px;
+}
+
+.hero-subtitle::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 2px;
+  height: 100%;
+  background-color: var(--red-crayola);
+}
+
+.hero-text,
+.hero .btn { margin-inline: 0; }
+
+
+/**
+* FEATURES
+*/
+
+.features-list { grid-template-columns: repeat(4, 1fr); }
+
+.features-card .card-icon img { width: unset; }
+
+
+
+/**
+* SERVICE
+*/
+
+.service .container {
+ display: grid;
+ grid-template-columns: 1fr 1fr;
+ align-items: center;
+ gap: 100px 40px;
+}
+
+.service-banner { margin-bottom: 0; }
+
+.service-content:first-of-type {
+ padding-bottom: 0;
+ border-bottom: none;
+ margin-bottom: 0;
+}
+
+.service-list { padding-right: 50px; }
+
+.service-item:nth-child(even) { transform: translateX(50px); }
+
+.service-item-icon {
+ min-width: 40px;
+ height: 40px;
+ font-size: 1.125rem;
+}
+
+.service-banner:last-of-type { order: 1; }
+
+/**
+ * video
+ */
+
+.video {
+  width: 50%;
+  max-width: 50%; /* Ensure the video doesn't exceed its container */
+  height: auto; /* Maintain aspect ratio */
+  display: block;
+  margin: 0 auto;
+}
+.video-container {
+  max-width: 100%;
+  overflow: hidden;
+}
+
+.about-banner { margin-block-end: 0; }
+}
+
+/**
+* responsive for larger than 1200px screen
+*/
+
+@media (min-width: 1200px) {
+
+/**
+ * CUSTOM PROPERTY
+ */
+
+:root {
+
+  /**
+   * typography
+   */
+
+  --fs-1: 6.8rem;
+  --fs-2: 4.5rem;
+  --fs-4: 1.9rem;
+  --fs-5: 1.6rem;
+  --fs-6: 1.6rem;
+
+}
+
+
+
+/**
+ * REUSED STYLE
+ */
+
+.container { max-width: 1140px; }
+
+.btn { --fs-6: 1.5rem; }
+
+/**
+* FEATURES
+*/
+
+.features .section-title { margin-bottom: 70px; }
+
+
+
+/**
+* SERVICE
+*/
+
+.service .container { column-gap: 60px; }
+
+.service .section-title { margin-bottom: 50px; }
+
+
+
+/**
+* BLOG
+*/
+
+.blog .section-title { margin-bottom: 70px; }
+
+.blog-list { grid-template-columns: repeat(3, 1fr); }
+
+/**
+ * CTA
+ */
+
+.cta .section-title { margin-block: 15px 24px; }
+}
+
+/**
+ * Footer
+ */
+ ul {
+  margin: 0px;
+  padding: 0px;
+}
+.footer-section {
+  background: #151414;
+  position: relative;
+}
+.footer-cta {
+  border-bottom: 1px solid #373636;
+}
+.single-cta i {
+  color: #ff5e14;
+  font-size: 30px;
+  float: left;
+  margin-top: 8px;
+}
+.cta-text {
+  padding-left: 15px;
+  display: inline-block;
+}
+.cta-text h4 {
+  color: #fff;
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 2px;
+}
+.cta-text span {
+  color: #757575;
+  font-size: 15px;
+}
+.footer-content {
+  position: relative;
+  z-index: 2;
+}
+.footer-pattern img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 330px;
+  background-size: cover;
+  background-position: 100% 100%;
+}
+.footer-logo {
+  margin-bottom: 30px;
+}
+.footer-logo img {
+  max-width: 200px;
+}
+.footer-text p {
+  margin-bottom: 14px;
+  font-size: 14px;
+  color: #7e7e7e;
+  line-height: 28px;
+}
+.footer-social-icon span {
+  color: #fff;
+  display: block;
+  font-size: 20px;
+  font-weight: 700;
+  font-family: "Poppins", sans-serif;
+  margin-bottom: 20px;
+}
+.footer-social-icon a {
+  color: #fff;
+  font-size: 16px;
+  margin-right: 15px;
+}
+.footer-social-icon i {
+  height: 40px;
+  width: 40px;
+  text-align: center;
+  line-height: 38px;
+  border-radius: 50%;
+}
+.facebook-bg {
+  background: #3b5998;
+}
+.twitter-bg {
+  background: #55acee;
+}
+.google-bg {
+  background: #dd4b39;
+}
+.footer-widget-heading h3 {
+  color: #fff;
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 40px;
+  position: relative;
+}
+.footer-widget-heading h3::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -15px;
+  height: 2px;
+  width: 50px;
+  background: #ff5e14;
+}
+.footer-widget ul li {
+  display: inline-block;
+  width: 50%;
+  margin-bottom: 12px;
+}
+.footer-widget ul li a:hover {
+  color: #ff5e14;
+}
+.footer-widget ul li a {
+  color: #878787;
+  text-transform: capitalize;
+}
+.subscribe-form {
+  position: relative;
+  overflow: hidden;
+}
+.subscribe-form input {
+  width: 100%;
+  padding: 14px 28px;
+  background: #2e2e2e;
+  border: 1px solid #2e2e2e;
+  color: #fff;
+}
+.subscribe-form button {
+  position: absolute;
+  right: 0;
+  background: #ff5e14;
+  padding: 13px 20px;
+  border: 1px solid #ff5e14;
+  top: 0;
+}
+.subscribe-form button i {
+  color: #fff;
+  font-size: 22px;
+  transform: rotate(-6deg);
+}
+.copyright-area {
+  background: #202020;
+  padding: 25px 0;
+}
+.copyright-text p {
+  margin: 0;
+  font-size: 14px;
+  color: #878787;
+}
+.copyright-text p a {
+  color: #ff5e14;
+}
+.footer-menu li {
+  display: inline-block;
+  margin-left: 20px;
+}
+.footer-menu li:hover a {
+  color: #ff5e14;
+}
+.footer-menu li a {
+  font-size: 14px;
+  color: #878787;
+}
+
+</style>
+
+<body id="top">
+
+  <!-- 
+    - #HEADER
+  -->
+
+  <header class="header" data-header>
+    <div class="container">
+
+      <a href="{% url 'home'%}"class="logo"><img src='{% static 'images/Logo.png' %}' alt="ResearchDraft"></a>
+
+      <nav class="navbar container" data-navbar>
+        <ul class="navbar-list">
+
+          <li>
+            <a href="{% url 'feature' %}" class="navbar-link" data-nav-link>Features</a>
+          </li>
+
+          <li>
+            <a href="{% url 'pricing'%}" class="navbar-link" data-nav-link>Pricing</a>
+          </li>
+
+          <li>
+            <a href="{% url 'blog' %}" class="navbar-link" data-nav-link>Blog</a>
+          </li>
+
+          <li>
+            <a href="{% url 'login' %}" class="btn btn-primary">Login</a>
+          </li>
+
+          <li>
+            <a href="{% url 'signup' %}" class="btn btn-primary">Get Started</a>
+          </li>
+
+        </ul>
+      </nav>
+
+      <button class="nav-toggle-btn" aria-label="Toggle menu" data-nav-toggler>
+        <ion-icon name="menu-outline" class="open"></ion-icon>
+        <ion-icon name="close-outline" class="close"></ion-icon>
+      </button>
+
+    </div>
+  </header>
+
+  <main>
+    <article>
+
+      <!-- 
+        - #HERO
+      -->
+
+      <section class="section hero" id="home" aria-label="hero">
+        <div class="container">
+          <div class="hero-content">
+            <p class="hero-subtitle">ResearchDraft for Researchers</p>
+            <h1 class="h1 hero-title"> <span class="colored" style="display: inline;">The Perfect writing assistant for researchers</span></h1>
+            <p class="hero-text">Empower your research journey with our comprehensive writing companion. From ideation to publication, streamline your workflow with our advanced features.</p>
+            <a href="{% url 'signup' %}" class="btn btn-secondary">Join Now</a>
+          </div>
+          <figure class="hero-banner">
+            <img src='{% static 'images/researchersbanner.jpg' %}' width="650" height="673" alt="hero banner" class="w-100">
+          </figure>
+        </div>
+      </section>
+      
+     <!-- 
+        - #FEATURES
+      -->
+
+      <section class="features" id="features">
+        <div class="container">
+
+          <p class="section-subtitle">How Can ResearchDraft Help You</p>
+
+          <h2 class="h2 section-title">We’re helping <span style="color: #0039a6; display: inline;">researchers</span> do their best work</h2>
+
+          <ul class="features-list">
+
+            <li>
+              <div class="features-card">
+
+                <div class="card-icon">
+                  <img src='{% static 'images/document.png' %}' alt="document icon">
+                </div>
+
+                <h3 class="h3 card-title" style="text-align: center;">Contextual<br>Writing</h3>
+                </a>
+
+              </div>
+            </li>
+
+            <li>
+              <div class="features-card">
+
+                <div class="card-icon">
+                  <img src='{% static 'images/document.png' %}' alt="document icon">
+                </div>
+
+                <h3 class="h3 card-title"  style="text-align: center;">Structure<br>Optimization</h3>
+                </a>
+
+              </div>
+            </li>
+
+            <li>
+              <div class="features-card">
+
+                <div class="card-icon">
+                  <img src='{% static 'images/document.png' %}' alt="document icon">
+                </div>
+
+                <h3 class="h3 card-title"  style="text-align: center;">Style<br>Enhancement</h3>
+                </a>
+
+              </div>
+            </li>
+
+            <li>
+              <div class="features-card">
+
+                <div class="card-icon">
+                  <img src='{% static 'images/document.png' %}' alt="document icon">
+                </div>
+
+                <h3 class="h3 card-title" style="text-align: center;">Language<br>Polishing</h3>
+                </a>
+
+              </div>
+            </li>
+
+          </ul>
+
+        </div>
+      </section>
+
+        <!-- 
+        - #SERVICE
+      -->
+
+      <section class="service" id="service">
+        <div class="container">
+
+          <figure class="service-banner">
+            <br>
+            <br>
+            <img src='{% static 'images/document11.png' %}' alt="document icon" loading="lazy" class="w-100">
+          </figure>
+
+          <div class="service-content">
+
+            <h2 class="h2 section-title">Improve your academic writing skills with<span style="color: #0039a6;">Research Draft</span></h2>
+
+            <ul class="service-list">
+
+              <li class="service-item">
+
+                <div class="service-item-icon">
+                  <ion-icon name="checkmark-outline"></ion-icon>
+                </div>
+
+                <h3 class="h3 service-item-title">Professional Quality</h3>
+
+              </li>
+
+              <li class="service-item">
+
+                <div class="service-item-icon">
+                  <ion-icon name="checkmark-outline"></ion-icon>
+                </div>
+
+                <h3 class="h3 service-item-title">Personalized content</h3>
+
+              </li>
+
+              <li class="service-item">
+
+                <div class="service-item-icon">
+                  <ion-icon name="checkmark-outline"></ion-icon>
+                </div>
+
+                <h3 class="h3 service-item-title">Research Paper Structuring Assistance</h3>
+
+              </li>
+
+              <li class="service-item">
+
+                <div class="service-item-icon">
+                  <ion-icon name="checkmark-outline"></ion-icon>
+                </div>
+
+                <h3 class="h3 service-item-title">10x Faster Writing</h3>
+
+              </li>
+
+            </ul>
+
+          </div>
+
+          <figure class="service-banner">
+            <br>
+            <br>
+            <br>
+            <img src='{% static 'images/document12.png' %}' alt="document icon" loading="lazy" style="width: 60%; margin-left: 150px;">
+          </figure>
+
+          <div class="service-content">
+
+            <h2 class="h2 section-title">Cultivating Academic Excellence:<span style="color: #0039a6; display: inline;"> Unveiling the Benefits</span></h2>
+
+            <ul class="service-list" style="color: grey;">
+
+              <li class="service-item">
+
+                <div class="service-item-icon">
+                  <ion-icon name="checkmark-outline"></ion-icon>
+                </div>
+
+                <h3 class="h3 service-item-title">Using Reputable References</h3>
+
+              </li>
+
+              <li class="service-item">
+
+                <div class="service-item-icon">
+                  <ion-icon name="checkmark-outline"></ion-icon>
+                </div>
+
+                <h3 class="h3 service-item-title">AI-driven Suggestions
+                </h3>
+
+              </li>
+
+              <li class="service-item">
+
+                <div class="service-item-icon">
+                  <ion-icon name="checkmark-outline"></ion-icon>
+                </div>
+
+                <h3 class="h3 service-item-title">Grammar and Style Enhancement</h3>
+
+              </li>
+
+              <li class="service-item">
+
+                <div class="service-item-icon">
+                  <ion-icon name="checkmark-outline"></ion-icon>
+                </div>
+
+                <h3 class="h3 service-item-title">Clarity and Coherence
+                </h3>
+
+              </li>
+
+            </ul>
+
+          </div>
+
+        </div>
+      </section>
+      <!-- 
+        - #CTA
+      -->
+
+      <section class="section cta" aria-label="cta" style="background-image: url('./assets/images/cta-bg.jpg')">
+        <div class="container">
+
+          <h2 class="h2 section-title">Want smart tips and suggestions to
+            help you write and edit better, faster?</h2>
+<br>
+          <a href="{% url 'signup' %}" class="btn btn-secondary">Get Started</a>
+
+        </div>
+      </section>
+
+      <!-- 
+        - #BLOG
+      -->
+
+      <section class="blog" id="blog">
+        <div class="container">
+
+          <p class="section-subtitle">Latest News</p>
+
+          <h2 class="h2 section-title">Our latest articles & resources</h2>
+
+          <ul class="blog-list">
+
+            <li>
+              <div class="blog-card">
+
+                <figure class="blog-banner">
+                  <a href="#">
+                    <img src='{% static 'images/blog-1.jpg' %}' alt="Facing Difficulties in Research Paper Writing? A Guide for Research Paper Authors."
+                      loading="lazy" class="w-100">
+                  </a>
+                </figure>
+
+                <div class="blog-content">
+
+                  <ul class="blog-meta-list">
+
+                    <li class="blog-meta-item">
+                      <ion-icon name="pricetag-outline"></ion-icon>
+
+                      <a href="{% url 'blog' %}" class="blog-meta-link">BLOG</a>
+                    </li>
+
+                    <li class="blog-meta-item">
+                      <ion-icon name="calendar-number-outline"></ion-icon>
+
+                      <time class="blog-meta-time" datetime="2024-08-03">08 Mar, 2024</time>
+                    </li>
+
+                  </ul>
+
+                  <h3 class="h3 blog-title">
+                    <a href="#">Facing Difficulties in Research Paper Writing? A Guide for Research Paper Authors.</a>
+                  </h3>
+
+                </div>
+
+              </div>
+            </li>
+
+            <li>
+              <div class="blog-card">
+
+                <figure class="blog-banner">
+                  <a href="#">
+                    <img src='{% static 'images/blog-2.jpg' %}' alt="How Can AI Transform Your Research Paper Writing Process?"
+                      loading="lazy" class="w-100">
+                  </a>
+                </figure>
+
+                <div class="blog-content">
+
+                  <ul class="blog-meta-list">
+
+                    <li class="blog-meta-item">
+                      <ion-icon name="pricetag-outline"></ion-icon>
+
+                      <a href="{% url 'blog' %}" class="blog-meta-link">Blog</a>
+                    </li>
+
+                    <li class="blog-meta-item">
+                      <ion-icon name="calendar-number-outline"></ion-icon>
+
+                      <time class="blog-meta-time" datetime="2024-02-03">02 Mar, 2024</time>
+                    </li>
+
+                  </ul>
+
+                  <h3 class="h3 blog-title">
+                    <a href="#">How Can AI Transform Your Research Paper Writing Process?</a>
+                  </h3>
+
+                </div>
+
+              </div>
+            </li>
+
+            <li>
+              <div class="blog-card">
+
+                <figure class="blog-banner">
+                  <a href="#">
+                    <img src='{% static 'images/blog-3.jpg' %}' alt="The Do’s & Don’ts of Using Generative AI Tools Ethically in Academia" loading="lazy"
+                      class="w-100">
+                  </a>
+                </figure>
+
+                <div class="blog-content">
+
+                  <ul class="blog-meta-list">
+
+                    <li class="blog-meta-item">
+                      <ion-icon name="pricetag-outline"></ion-icon>
+
+                      <a href="{% url 'blog' %}" class="blog-meta-link">Blog</a>
+                    </li>
+
+                    <li class="blog-meta-item">
+                      <ion-icon name="calendar-number-outline"></ion-icon>
+
+                      <time class="blog-meta-time" datetime="2024-20-02">20 Feb, 2024</time>
+                    </li>
+
+                  </ul>
+
+                  <h3 class="h3 blog-title">
+                    <a href="#">The Do’s & Don’ts of Using Generative AI Tools Ethically in Academia</a>
+                  </h3>
+
+                </div>
+
+              </div>
+            </li>
+
+          </ul>
+
+        </div>
+      </section>
+
+    </article>
+  </main>
+
+  <!-- 
+    - #FOOTER
+  -->
+  <footer class="footer">
+    <div class="container">
+
+      <div class="footer-top section">
+
+        <div class="footer-brand">
+
+          <a href="#" class="logo">
+            <img src='{% static 'images/white logo.png' %}' width="200" height="100" alt="ResearchDraft logo">
+          </a>
+
+          <p class="footer-text">
+            Elevate your academic writing with AI driven sugestions. Start your writing journey today!
+          </p>
+
+        </div>
+
+        <ul class="footer-list">
+
+          <li>
+            <p class="h5">Social</p>
+          </li>
+
+          <li class="footer-list-item">
+            <ion-icon name="logo-facebook"></ion-icon>
+
+            <a href="#" class="footer-link">Facebook</a>
+          </li>
+
+          <li class="footer-list-item">
+            <ion-icon name="logo-twitter"></ion-icon>
+
+            <a href="#" class="footer-link">Twitter</a>
+          </li>
+
+          <li class="footer-list-item">
+            <ion-icon name="logo-linkedin"></ion-icon>
+
+            <a href="#" class="footer-link">LinkedIn</a>
+          </li>
+
+          <li class="footer-list-item">
+            <ion-icon name="logo-instagram"></ion-icon>
+
+            <a href="#" class="footer-link">Instagram</a>
+          </li>
+
+        </ul>
+
+        <ul class="footer-list">
+
+          <li>
+            <p class="h5">About</p>
+          </li>
+
+          <li>
+            <a href="#" class="footer-link">Contact</a>
+          </li>
+
+          <li>
+            <a href="#" class="footer-link ">Terms</a>
+          </li>
+
+          <li>
+            <a href="#" class="footer-link">Privacy Policy</a>
+          </li>
+
+          <li>
+            <a href="#" class="footer-link">Cookies</a>
+          </li>
+
+          <li>
+            <a href="#" class="footer-link">Sitemap</a>
+          </li>
+
+        </ul>
+
+        <ul class="footer-list">
+
+          <li>
+            <p class="h5">Useful Links</p>
+          </li>
+
+          <li>
+            <a href="{% url 'home' %}" class="footer-link">Home</a>
+          </li>
+
+          <li>
+            <a href="{% url 'pricing'%}" class="footer-link">Pricing</a>
+          </li>
+
+          <li>
+            <a href="{% url 'feature' %}" class="footer-link">Features</a>
+          </li>
+
+          <li>
+            <a href="#" class="footer-link">FAQ's</a>
+          </li>
+
+          <li>
+            <a href="{% url 'blog' %}" class="footer-link">Blogs</a>
+          </li>
+        </ul>
+      </div>
+        <p class="copyright">
+          &copy; All rights reserved. 2024 <a href="#" class="copyright-link hover:underline">ResearchDraft</a>.
+        </p>
+    </div>
+  </footer>
+  
+  <!-- 
+    - #BACK TO TOP
+  -->
+
+  <a href="#top" aria-label="back to top" data-back-top-btn class="back-top-btn">
+    <ion-icon name="chevron-up" aria-hidden="true"></ion-icon>
+  </a>
+
+  <!-- 
+    - custom js link
+  -->
+  <script src="./assets/js/script.js" defer></script>
+  <!-- 
+    - ionicon link
+  -->
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+</body>
+<script>
+  'use strict';
+
+
+const addEventOnElem = function (elem, type, callback) {
+if (elem.length > 1) {
+  for (let i = 0; i < elem.length; i++) {
+    elem[i].addEventListener(type, callback);
+  }
+} else {
+  elem.addEventListener(type, callback);
+}
+}
+
+
+
+/**
+* toggle navbar
+*/
+
+const navbar = document.querySelector("[data-navbar]");
+const navbarLinks = document.querySelectorAll("[data-nav-link]");
+const navToggler = document.querySelector("[data-nav-toggler]");
+
+const toggleNavbar = function () {
+navbar.classList.toggle("active");
+navToggler.classList.toggle("active");
+}
+
+addEventOnElem(navToggler, "click", toggleNavbar);
+
+const closeNavbar = function () {
+navbar.classList.remove("active");
+navToggler.classList.remove("active");
+}
+
+addEventOnElem(navbarLinks, "click", closeNavbar);
+
+
+
+/**
+* header
+*/
+
+const header = document.querySelector("[data-header]");
+const backTopBtn = document.querySelector("[data-back-top-btn]");
+
+window.addEventListener("scroll", function () {
+if (window.scrollY > 100) {
+  header.classList.add("active");
+  backTopBtn.classList.add("active");
+} else {
+  header.classList.remove("active");
+  backTopBtn.classList.remove("active");
+}
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+// Wait for the DOM to be fully loaded
+// Add a class to show the content and image with the transition effect
+document.querySelector('.hero-content').classList.add('show');
+document.querySelector('.hero-banner').classList.add('show');
+});
+
+/**
+* FAQ
+*/
+const toggles = document.querySelectorAll('.faq-toggle')
+
+toggles.forEach((toggle) => {
+  toggle.addEventListener('click', () => {
+      toggle.parentNode.classList.toggle('active')
+  })
+})
+
+let currentSlide = 1;
+
+function changeSlide(n) {
+  showSlide(currentSlide += n);
+}
+
+function showSlide(n) {
+  const slides = document.querySelectorAll('.carousel-slide');
+
+  if (n > slides.length) {
+      currentSlide = 1;
+  }
+  if (n < 1) {
+      currentSlide = slides.length;
+  }
+
+  const translateValue = -(currentSlide - 1) * 100;
+  document.querySelector('.carousel-slide').style.transform = `translateX(${translateValue}%)`;
+}
+
+</script>
+
+</html>

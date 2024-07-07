@@ -1,0 +1,265 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ResearchDraft - Sign up</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #f8f8f8;
+            font-family: Arial, sans-serif;
+        }
+
+        #container {
+            position: fixed;
+            top: 0;
+            width: 21.5%; /* Set the width to less than a quarter of the page */
+            height: 100%;
+            background: white;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        
+        h1 {
+            text-align: center;
+            margin: 0;
+            overflow: hidden;
+            margin-top: 220px;
+            white-space: nowrap;
+            animation: typing 2s steps(40, end);
+            font-family: 'Times New Roman', Times, serif;
+        }
+        .colored {
+            color: #0039a6;
+        }
+
+        @keyframes typing {
+            from {
+                width: 0;
+            }
+            to {
+                width: 70%;
+            }
+        }
+
+        #create-account-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin-top: 100px; 
+            margin-left: 300px;
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        p {
+            text-align: center;
+            margin-top: 10px;
+            color: grey; 
+            font-size: medium; 
+        
+        }
+        pp{
+            font-size: x small;
+        }
+
+        form {
+            width: 80%;
+            max-width: 400px; 
+            margin-top: 20px;
+        }
+
+        label {
+            display: block;
+            margin-top: 10px;
+        }
+        labell {
+            display: block;
+            margin-top: 10px;
+            color: grey;
+            text-align: center;
+            font-size: medium;
+        }
+
+        input{
+            border-radius: 10px;
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+
+        }
+        .checkbox-container {
+            display: flex;
+            align-items: center;
+        }
+
+        button {
+            background-color: #0039a6; 
+            color: white;
+            cursor: pointer;
+            width: 100%;
+            font-weight: bold;
+            font-size: medium;
+            border-radius: 10px;
+            padding: 10px;
+
+
+        }
+        .logo {
+           text-align: center;
+           padding: 20px;
+        }
+
+        .login-text {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .login-link {
+            color: #007bff; 
+            text-decoration: none;
+            margin-left: 5px;
+        }
+        /* Media queries for responsiveness */
+@media (max-width: 1200px) {
+    #container {
+        width: 25%;
+    }
+
+    h1 {
+        font-size: 1.4em;
+        margin-top: 50px;
+    }
+}
+
+@media (max-width: 992px) {
+    #container {
+        width: 100%;
+        height: auto;
+        position: static;
+        box-shadow: none;
+    }
+
+    h1 {
+        font-size: 1.3em;
+        margin-top: 80px;
+    }
+
+    #create-account-container {
+        margin-left: 10%;
+        margin-right: 10%;
+    }
+}
+
+@media (max-width: 768px) {
+    #container {
+        width: 100%;
+        height: auto;
+        position: static;
+        box-shadow: none;
+    }
+
+    h1 {
+        font-size: 1.2em;
+        margin-top: 100px;
+    }
+
+    #create-account-container {
+        margin-left: 5%;
+        margin-right: 5%;
+    }
+}
+
+@media (max-width: 576px) {
+    #container {
+        width: 100%;
+        height: auto;
+        position: static;
+        box-shadow: none;
+    }
+
+    h1 {
+        font-size: 1.1em;
+        margin-top: 20px;
+    }
+
+    #create-account-container {
+        width: 90%;
+        margin: 0 auto;
+    }
+
+    form {
+        width: 100%;
+    }
+
+    button {
+        width: 100%;
+    }
+}
+
+@media (max-width: 468px) {
+    h1 {
+        font-size: 1em;
+        margin-top: 10px;
+    }
+
+    p, labell {
+        font-size: small;
+    }
+
+    input, button {
+        padding: 8px;
+    }
+
+    button {
+        font-size: small;
+    }
+}
+
+    </style>
+</head>
+<body>
+    
+<div id="container">
+        <div class="logo">
+            <a href="{% url 'home'%}" class="logo"><img src='{% static 'images/Logo.png' %}' alt="Your Website Logo"></a>
+        </div>
+    <h1>Embark on your<br><span class="colored">writing journey</span><br>from today!</h1>
+</div>
+
+<div id="create-account-container">
+    <h2>Create Your Account</h2>
+    <p>Start using ResearchDraft for free.</p>
+    <form method="post" action="{% url 'signup' %}">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <label for="email">Email:</label>
+        <input name="email" type="email" placeholder="Enter your email" required> 
+
+        <label for="password">Password:</label>
+        <div class="password-container">
+            <input name="password" type="password" placeholder="Enter your password" required> 
+        </div>
+        
+        <label for="firstName">First Name:</label>
+        <input name="first_name" type="text" placeholder="Enter your First Name" required> 
+
+        <label for="lastName">Last Name:</label>
+        <input name="last_name" type="text" placeholder="Enter your Last Name" required><br><br><br>
+        <button type="submit">Create Account</button>
+    </form>
+    <labell>
+        By clicking, you agree to the terms of use,<br>cookie policy and privacy policy<br>
+    </labell>
+    <p class="login-text">Already have an account?<a href="{% url 'login'%}" class="login-link">Log in</a></p>
+</div>
+
+</body>
+</html>

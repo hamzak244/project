@@ -1,0 +1,70 @@
+2024-05-19 16:26:49,345 - INFO - Title: Experimental and numerical simulation dataset of a ferrocement wall subjected to fully-reversed cyclic load test
+2024-05-19 16:26:49,438 - INFO - Section 'Value of the Data' content saved to file: C:\Users\HP\Desktop\django\myProject\user_data\3\Experimental and numerical simulation dataset of a ferrocement wall subjected to fully-reversed cyclic load test\Value of the Data.txt
+2024-05-19 16:26:49,522 - INFO - Section 'Background' content saved to file: C:\Users\HP\Desktop\django\myProject\user_data\3\Experimental and numerical simulation dataset of a ferrocement wall subjected to fully-reversed cyclic load test\Background.txt
+2024-05-19 16:26:49,629 - INFO - Section 'Data Description' content saved to file: C:\Users\HP\Desktop\django\myProject\user_data\3\Experimental and numerical simulation dataset of a ferrocement wall subjected to fully-reversed cyclic load test\Data Description.txt
+2024-05-19 16:26:49,705 - INFO - Section 'Experimental Design, Materials and Methods' content saved to file: C:\Users\HP\Desktop\django\myProject\user_data\3\Experimental and numerical simulation dataset of a ferrocement wall subjected to fully-reversed cyclic load test\Experimental Design, Materials and Methods.txt
+2024-05-19 16:26:49,778 - INFO - Section 'Description of the ferrocement wall' content saved to file: C:\Users\HP\Desktop\django\myProject\user_data\3\Experimental and numerical simulation dataset of a ferrocement wall subjected to fully-reversed cyclic load test\Description of the ferrocement wall.txt
+2024-05-19 16:26:49,874 - INFO - Section 'Test Setup' content saved to file: C:\Users\HP\Desktop\django\myProject\user_data\3\Experimental and numerical simulation dataset of a ferrocement wall subjected to fully-reversed cyclic load test\Test Setup.txt
+2024-05-19 16:26:50,068 - INFO - Section 'Nonlinear Numerical Model' content saved to file: C:\Users\HP\Desktop\django\myProject\user_data\3\Experimental and numerical simulation dataset of a ferrocement wall subjected to fully-reversed cyclic load test\Nonlinear Numerical Model.txt
+2024-05-19 16:26:50,145 - INFO - Section 'Limitations' content saved to file: C:\Users\HP\Desktop\django\myProject\user_data\3\Experimental and numerical simulation dataset of a ferrocement wall subjected to fully-reversed cyclic load test\Limitations.txt
+2024-05-19 16:26:50,216 - INFO - Section 'Ethics Statement' content saved to file: C:\Users\HP\Desktop\django\myProject\user_data\3\Experimental and numerical simulation dataset of a ferrocement wall subjected to fully-reversed cyclic load test\Ethics Statement.txt
+2024-05-19 16:27:10,720 - ERROR - An error occurred while scraping section sec0011: Message: 
+Stacktrace:
+	GetHandleVerifier [0x00007FF6AB9C22C2+60002]
+	(No symbol) [0x00007FF6AB93CA59]
+	(No symbol) [0x00007FF6AB7F7EDA]
+	(No symbol) [0x00007FF6AB8476E6]
+	(No symbol) [0x00007FF6AB8477AC]
+	(No symbol) [0x00007FF6AB88E9D7]
+	(No symbol) [0x00007FF6AB86C2CF]
+	(No symbol) [0x00007FF6AB88BCC7]
+	(No symbol) [0x00007FF6AB86C033]
+	(No symbol) [0x00007FF6AB839657]
+	(No symbol) [0x00007FF6AB83A251]
+	GetHandleVerifier [0x00007FF6ABCD3E2D+3278285]
+	GetHandleVerifier [0x00007FF6ABD20190+3590448]
+	GetHandleVerifier [0x00007FF6ABD161D0+3549552]
+	GetHandleVerifier [0x00007FF6ABA71DE6+779654]
+	(No symbol) [0x00007FF6AB947ACF]
+	(No symbol) [0x00007FF6AB942EE4]
+	(No symbol) [0x00007FF6AB943072]
+	(No symbol) [0x00007FF6AB932C4F]
+	BaseThreadInitThunk [0x00007FFA009E257D+29]
+	RtlUserThreadStart [0x00007FFA02A6AA48+40]
+
+2024-05-19 17:09:03,901 - INFO - C:\Users\HP\Desktop\django\myProject\myApp\views.py changed, reloading.
+2024-05-19 17:47:23,509 - INFO - Title: Experimental and numerical simulation dataset of a ferrocement wall subjected to fully-reversed cyclic load test
+2024-05-19 17:47:23,629 - INFO - Section 'Value of the Data' content saved to file: C:\Users\HP\Desktop\django\myProject\user_data\3\Experimental and numerical simulation dataset of a ferrocement wall subjected to fully-reversed cyclic load test\Value of the Data.txt
+2024-05-19 17:47:23,811 - INFO - Section 'Background' content saved to file: C:\Users\HP\Desktop\django\myProject\user_data\3\Experimental and numerical simulation dataset of a ferrocement wall subjected to fully-reversed cyclic load test\Background.txt
+2024-05-19 17:47:23,982 - INFO - Section 'Data Description' content saved to file: C:\Users\HP\Desktop\django\myProject\user_data\3\Experimental and numerical simulation dataset of a ferrocement wall subjected to fully-reversed cyclic load test\Data Description.txt
+2024-05-19 17:47:24,100 - INFO - Section 'Experimental Design, Materials and Methods' content saved to file: C:\Users\HP\Desktop\django\myProject\user_data\3\Experimental and numerical simulation dataset of a ferrocement wall subjected to fully-reversed cyclic load test\Experimental Design, Materials and Methods.txt
+2024-05-19 17:47:24,216 - INFO - Section 'Description of the ferrocement wall' content saved to file: C:\Users\HP\Desktop\django\myProject\user_data\3\Experimental and numerical simulation dataset of a ferrocement wall subjected to fully-reversed cyclic load test\Description of the ferrocement wall.txt
+2024-05-19 17:47:24,373 - INFO - Section 'Test Setup' content saved to file: C:\Users\HP\Desktop\django\myProject\user_data\3\Experimental and numerical simulation dataset of a ferrocement wall subjected to fully-reversed cyclic load test\Test Setup.txt
+2024-05-19 17:47:24,486 - INFO - Section 'Nonlinear Numerical Model' content saved to file: C:\Users\HP\Desktop\django\myProject\user_data\3\Experimental and numerical simulation dataset of a ferrocement wall subjected to fully-reversed cyclic load test\Nonlinear Numerical Model.txt
+2024-05-19 17:47:24,574 - INFO - Section 'Limitations' content saved to file: C:\Users\HP\Desktop\django\myProject\user_data\3\Experimental and numerical simulation dataset of a ferrocement wall subjected to fully-reversed cyclic load test\Limitations.txt
+2024-05-19 17:47:24,663 - INFO - Section 'Ethics Statement' content saved to file: C:\Users\HP\Desktop\django\myProject\user_data\3\Experimental and numerical simulation dataset of a ferrocement wall subjected to fully-reversed cyclic load test\Ethics Statement.txt
+2024-05-19 17:47:45,035 - ERROR - An error occurred while scraping section sec0011: Message: 
+Stacktrace:
+	GetHandleVerifier [0x00007FF6AB9C22C2+60002]
+	(No symbol) [0x00007FF6AB93CA59]
+	(No symbol) [0x00007FF6AB7F7EDA]
+	(No symbol) [0x00007FF6AB8476E6]
+	(No symbol) [0x00007FF6AB8477AC]
+	(No symbol) [0x00007FF6AB88E9D7]
+	(No symbol) [0x00007FF6AB86C2CF]
+	(No symbol) [0x00007FF6AB88BCC7]
+	(No symbol) [0x00007FF6AB86C033]
+	(No symbol) [0x00007FF6AB839657]
+	(No symbol) [0x00007FF6AB83A251]
+	GetHandleVerifier [0x00007FF6ABCD3E2D+3278285]
+	GetHandleVerifier [0x00007FF6ABD20190+3590448]
+	GetHandleVerifier [0x00007FF6ABD161D0+3549552]
+	GetHandleVerifier [0x00007FF6ABA71DE6+779654]
+	(No symbol) [0x00007FF6AB947ACF]
+	(No symbol) [0x00007FF6AB942EE4]
+	(No symbol) [0x00007FF6AB943072]
+	(No symbol) [0x00007FF6AB932C4F]
+	BaseThreadInitThunk [0x00007FFA009E257D+29]
+	RtlUserThreadStart [0x00007FFA02A6AA48+40]
+
+2024-05-19 17:48:21,336 - INFO - C:\Users\HP\Desktop\django\myProject\myApp\views.py changed, reloading.

@@ -1,0 +1,341 @@
+{%load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ResearchDraft - Login</title>
+</head>
+<style>
+    
+    body {
+            margin: 0;
+            padding: 0;
+            background-color: #f8f8f8;
+            font-family: Arial, sans-serif;
+        }
+
+        #container {
+            position: fixed;
+            top: 0;
+            width: 21.5%; /* Set the width to less than a quarter of the page */
+            height: 100%;
+            background: white;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .logo {
+            text-align: center;
+            padding: 20px;
+         }
+
+        h1 {
+            text-align: center;
+            margin: 0;
+            overflow: hidden;
+            margin-top: 160px;
+            white-space: nowrap;
+            animation: typing 2s steps(40, end);
+            font-family: 'Times New Roman', Times, serif;
+        }
+        .colored {
+            color: #0039a6;
+        }
+
+        @keyframes typing {
+            from {
+                width: 0;
+            }
+            to {
+                width: 70%;
+            }
+        }
+
+        #create-account-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin-top: 100px;
+            margin-left: 300px;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 5px; 
+            font-size: x-large;
+        }
+
+        p {
+            text-align: center;
+            margin-top: 10px;
+            color: grey; 
+            font-size: medium; 
+        }
+
+        form {
+            width: 80%;
+            max-width: 400px; 
+            margin-top: 20px;
+        }
+
+        label {
+            display: block;
+            margin-top: 10px;
+        }
+
+        input,
+        button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border-radius: 10px;
+        }
+
+        input[type="password"] {
+            margin-bottom: 30px;
+        }
+
+        .checkbox-container {
+            display: flex;
+            align-items: center;
+        }
+
+        button {
+            background-color: #0039a6; 
+            color: white;
+            cursor: pointer;
+            align-items: center;
+            width: 100%;
+            font-weight: bold;
+            font-size: medium;
+            border-radius: 10px;
+        }
+
+        .login-text {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .login-text a.login-link {
+            margin-top: 0;
+        }
+
+        .login-link {
+            color: #007bff; 
+            text-decoration: none;
+            margin-left: 5px;
+        }
+        .modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+  
+  .modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 30%;
+    text-align: center;
+  }
+  #emailInput {
+  width: 80%; /* Set to 100% to fill the width of the modal content */
+  box-sizing: border-box; /* Include padding and border in the width calculation */
+  margin-bottom: 10px;
+}
+.modal-content button {
+  width: 80%; /* Set to 100% to fill the width of the modal content */
+}
+  
+  .close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+  }
+  
+  .close:hover,
+  .close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  /* Media queries for responsiveness */
+@media (max-width: 1200px) {
+    #container {
+        width: 25%;
+    }
+
+    h1 {
+        font-size: 1.5em;
+        margin-top: 100px;
+    }
+
+    #create-account-container {
+        margin-left: 200px;
+    }
+}
+
+@media (max-width: 992px) {
+    #container {
+        width: 30%;
+    }
+
+    h1 {
+        font-size: 1.4em;
+        margin-top: 80px;
+    }
+
+    #create-account-container {
+        margin-left: 150px;
+    }
+}
+
+@media (max-width: 768px) {
+  #container {
+        width: 100%;
+        height: auto;
+        position: static;
+    }
+
+    h1 {
+        font-size: 1.3em;
+        margin-top: 60px;
+    }
+
+    #create-account-container {
+        margin-left: 100px;
+    }
+}
+
+@media (max-width: 576px) {
+  #container {
+        width: 100%;
+        height: auto;
+        position: static;
+    }
+
+    h1 {
+        font-size: 1.2em;
+        margin-top: 40px;
+    }
+
+    #create-account-container {
+        margin-left: 50px;
+    }
+}
+
+@media (max-width: 468px) {
+    #container {
+        width: 100%;
+        height: auto;
+        position: static;
+    }
+
+    h1 {
+        font-size: 1em;
+        margin-top: 20px;
+    }
+
+    #create-account-container {
+        margin: 0 auto;
+        width: 90%;
+    }
+
+    form {
+        width: 100%;
+    }
+
+    button {
+        width: 100%;
+    }
+
+    .modal-content {
+        width: 90%;
+    }
+
+    #emailInput,
+    .modal-content button {
+        width: 100%;
+    }
+}
+
+</style>
+
+<body>
+<div id="container">
+  <div class="logo">
+    <a href="{% url 'home'%}" class="logo"><img src='{% static 'images/Logo.png' %}' alt="Your Website Logo"></a>
+  </div>
+<h1>Unlock your<br>academic journey:<br>Log in to elevate<br>your <span class="colored">research<br>paper</span> writing <br>experience. </h1>
+</div>
+
+<div id="create-account-container">
+    <h2>Welcome Back</h2>
+    <p>Login into ResearchDraft</p>
+    <form method="post" action="{% url 'login' %}">
+      {% csrf_token %}
+      {{ form.as_p }}
+        <label for="email">Email:</label>
+        <input type="email" name="username" placeholder="Enter your email" required> 
+
+        <label for="password">Password:</label>
+        <input type="password" name="password" placeholder="Enter your password" required> 
+
+        <button type="submit">LOG IN</a></button>
+    </form>
+
+
+    <p class="login-text">Don't have an account?<a href="{% url 'signup' %}" class="login-link">Sign up</a></p>
+    
+    <div id="forgotPasswordModal" class="modal">
+        <div class="modal-content">
+            <span class="close" id="closeModal">&times;</span>
+            <p>Enter your email address to reset password:</p>
+            <input type="email" id="emailInput" placeholder="Enter your email" required>
+            <button id="submitEmail">Submit</button>
+            <div id="responseMessage"></div>
+        </div>
+    </div>
+
+<script>
+      var modal = document.getElementById("forgotPasswordModal");
+        var link = document.getElementById("forgotPasswordLink");
+        var closeModal = document.getElementById("closeModal");
+        
+        link.onclick = function() {
+          modal.style.display = "block";
+        }
+        
+        closeModal.onclick = function() {
+          modal.style.display = "none";
+        }
+        
+        window.onclick = function(event) {
+          if (event.target == modal) {
+            modal.style.display = "none";
+          }
+        }
+        
+        function submitEmail() {
+          var emailInput = document.getElementById("emailInput").value;
+          console.log("Email submitted:", emailInput);
+          modal.style.display = "none";
+        }
+
+
+        
+</script>
+</div>
+</body>
+</html>
