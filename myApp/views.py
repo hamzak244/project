@@ -351,7 +351,13 @@ def extract_content_and_save(sec_element, folder_path, section_name):
     print(f"Section '{section_name}' content saved to file: {file_path}")
 
 def scrape_ieeeexplore(url, project_folder):
-    driver = webdriver.Chrome()
+    chrome_options = Options()
+    chrome_options.add_argument("--headless")
+    chrome_options.add_argument("--disable-gpu")
+    chrome_options.add_argument("--no-sandbox")
+    chrome_options.add_argument("--disable-dev-shm-usage")
+    
+    driver = webdriver.Chrome(options=chrome_options)
 
     try:
         driver.get(url)
