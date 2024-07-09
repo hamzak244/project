@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 *.log
 *.tmp
 *.bak
@@ -11,3 +12,18 @@ bower_components/
 docs/
 tests/
 staticfiles/
+=======
+*.log
+*.tmp
+*.bak
+*.swp
+*.pyc
+*.pyo
+__pycache__/
+node_modules/
+bower_components/
+.git/
+docs/
+tests/
+staticfiles/
+>>>>>>> b5e5f045fc56af5d0af5b1402755d75e46fe2110
