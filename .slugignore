@@ -1,0 +1,13 @@
+*.log
+*.tmp
+*.bak
+*.swp
+*.pyc
+*.pyo
+__pycache__/
+node_modules/
+bower_components/
+.git/
+docs/
+tests/
+staticfiles/

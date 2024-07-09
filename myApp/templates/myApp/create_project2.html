@@ -258,7 +258,6 @@ nav li a:hover .tooltip-text {
   }
 #projectsList .project-item {
   display: flex;
-  position: relative;
   width: 100%;
   box-sizing: border-box;
   justify-content: space-between;
@@ -269,7 +268,7 @@ nav li a:hover .tooltip-text {
 
 #projectsList .project-item div {
     border-right: 1px solid #000; /* Adjust the color and width as needed */
-    padding-right: 50px; /* Adjust padding for spacing */
+    padding-right: 10px; /* Adjust padding for spacing */
   }
   #projectsList .project-item.headings div:last-child,
   #projectsList .project-item div:last-child {
@@ -293,7 +292,7 @@ nav li a:hover .tooltip-text {
   text-align: left; /* Ensure all content is aligned to the left */
   padding-left: 20px; /* Add padding to push content to the right */
   display: flex; /* Add flex display to align buttons properly */
-  gap: 5px; /* Add gap between buttons */
+  gap: 10px; /* Add gap between buttons */
 }
 
 #projectsList .project-item .right button {
@@ -757,10 +756,10 @@ document.getElementById('closeWelcomeModal').onclick = function() {
             <div class="center"><p>${project.created_date}</p></div>
             <div class="right">
               <button onclick="deleteProject('${project.name}')">
-                <i class="fa fa-trash" aria-hidden="true"></i>
+                <i class="fa fa-trash" aria-hidden="true"></i><span class="tooltip-text">Delete Project</span>
               </button>
               <button onclick="selectProject('${project.name}')">
-                <i class="fa fa-file" aria-hidden="true"></i>
+                <i class="fa fa-file" aria-hidden="true"></i><span class="tooltip-text">View Project</span>
               </button>
             </div>
           `;

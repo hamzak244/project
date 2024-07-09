@@ -1,10 +1,6 @@
 import os
 from myApp.forms import UploadFileForm,SignupForm
-from django.shortcuts import render
 from django.conf import settings
-import os
-from PyPDF2 import PdfReader
-from bson import Binary
 from django.shortcuts import render, redirect
 from .models import *
 from django.contrib.auth.models import User
@@ -12,44 +8,34 @@ from django.contrib.auth import authenticate, login
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
 import logging
-import os
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-import json 
-from django.shortcuts import render
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from .forms import LoginForm
 from django.contrib.auth import logout
-from django.shortcuts import redirect, render
-from django.http import HttpResponse
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.common.exceptions import TimeoutException
-from selenium.common.exceptions import NoSuchElementException
 from django.shortcuts import render, redirect
 from .forms import SignupForm
-import os
-from selenium import webdriver
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
 from bs4 import BeautifulSoup
 from django.contrib.auth.models import User
-from django.http import HttpResponse
 from django.http import HttpResponseBadRequest
-import os
 import re
 from selenium import webdriver
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-from bs4 import BeautifulSoup
 import string
-
+from django.conf import settings
+from django.contrib.auth.decorators import login_required
+import json
+import os
+from django.urls import reverse
+from selenium.webdriver.chrome.options import Options
+import shutil
+from langchain.chains import ConversationalRetrievalChain
+from langchain_community.document_loaders import TextLoader
+from langchain_openai import OpenAIEmbeddings, ChatOpenAI
+from langchain.indexes import VectorstoreIndexCreator
+from langchain_community.vectorstores import Chroma
 
 
 logger = logging.getLogger(__name__)
@@ -88,7 +74,7 @@ def pricing(request):
     return render(request, "myApp/pricing.html", context)
 
 
-from django.contrib.auth.decorators import login_required
+
 
 @login_required
 def account_page(request):
@@ -136,10 +122,6 @@ def login_page(request):
     return render(request, "myApp/login.html")
 
 
-from django.http import JsonResponse
-from django.contrib.auth.forms import PasswordResetForm
-
-
 
 
 def logout_page(request):
@@ -150,14 +132,6 @@ def logout_page(request):
         return HttpResponseBadRequest("Invalid request method.") 
 
 
-
-from django.conf import settings
-from django.http import JsonResponse
-from django.contrib.auth.decorators import login_required
-from django.shortcuts import render
-import json
-import os
-from django.urls import reverse
 
 @login_required
 def create_project(request):
@@ -231,9 +205,6 @@ def select_project(request):
 
 
 
-import shutil
-from django.views.decorators.csrf import csrf_exempt
-
 @login_required
 @csrf_exempt
 def delete_project(request):
@@ -301,9 +272,6 @@ def reference_page(request):
         return redirect('select_project')
 
 
-
-
-from selenium.webdriver.chrome.options import Options
 
 def sanitize_title(title):
     valid_characters = "-_.() %s%s" % (re.escape(string.ascii_letters), re.escape(string.digits))
@@ -488,9 +456,6 @@ def parser(user_id, project_folder, urls):
 
 
 
-import os
-from django.shortcuts import render, redirect
-from django.contrib.auth.decorators import login_required
 
 @login_required
 def fetch_data(request):
@@ -550,17 +515,7 @@ def accept_cookies(driver):
         pass
 
 
-import os
-import json
-import logging
-from django.shortcuts import render, redirect
-from django.http import JsonResponse
-from django.contrib.auth.decorators import login_required
-from langchain.chains import ConversationalRetrievalChain
-from langchain_community.document_loaders import TextLoader
-from langchain_openai import OpenAIEmbeddings, ChatOpenAI
-from langchain.indexes import VectorstoreIndexCreator
-from langchain_community.vectorstores import Chroma
+
 from dotenv import load_dotenv
 
 load_dotenv()

@@ -118,7 +118,7 @@ nav li a:hover .tooltip-text {
       text-align: center;
       margin-top: 150px;
       margin-left: 100px;
-      margin-right: 170px;
+      margin-right: 100px;
       border-radius: 15px;
     }
 
@@ -220,7 +220,7 @@ nav li a:hover .tooltip-text {
 .subscription-status {
   position: absolute;
   top: 140px;
-  right: 170px;
+  right: 100px;
   color: #333; /* Dark grey color */
   font-size: 14px;
   font-style: italic; /* Italicize the text */
@@ -252,30 +252,20 @@ nav li a:hover .tooltip-text {
   font-weight: bold;
   border-bottom: 2px solid #0039a6;
 }
-#projectsList .project-item.headings div {
-    border-right: 1px solid #000; /* Adjust the color and width as needed */
-    padding-right: 30px; /* Adjust padding for spacing */
-  }
+
 #projectsList .project-item {
   display: flex;
-  position: relative;
   width: 100%;
   box-sizing: border-box;
   justify-content: space-between;
-  align-items: center; /* Ensure items are aligned in the center */
-  border-bottom: 1px solid #ccc; /* Add margin line between headings and columns */
 }
 
-
 #projectsList .project-item div {
-    border-right: 1px solid #000; /* Adjust the color and width as needed */
-    padding-right: 50px; /* Adjust padding for spacing */
-  }
-  #projectsList .project-item.headings div:last-child,
-  #projectsList .project-item div:last-child {
-    border-right: none;
-    padding-right: 0;
-  }
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  box-sizing: border-box;
+}
 
 #projectsList .project-item .left {
   flex: 2 1 auto;
@@ -284,21 +274,22 @@ nav li a:hover .tooltip-text {
 
 #projectsList .project-item .center {
   flex: 1 1 auto;
-  text-align: left; /* Ensure all content is aligned to the left */
-  padding-left: 20px; /* Add padding to push content to the right */
+  text-align: left; /* Changed from center to left */
+  padding-left: 95px; /* Add padding to push content to the right */
 }
 
 #projectsList .project-item .right {
   flex: 1 1 auto;
-  text-align: left; /* Ensure all content is aligned to the left */
-  padding-left: 20px; /* Add padding to push content to the right */
-  display: flex; /* Add flex display to align buttons properly */
-  gap: 5px; /* Add gap between buttons */
+  text-align: left; /* Changed from right to left */
+  padding-left: -605px;
+  margin-right: 0;
 }
 
 #projectsList .project-item .right button {
-  margin: 0; /* Remove margins from buttons */
-  padding: 5px 10px; /* Add padding to buttons for better appearance */
+  margin-left: 0px; /* Adjusted space between buttons */
+  gap: -10px;
+  padding-left: 5px;
+  margin-right: 0px; /* Add margin to both sides for better control */
 }
 
 #projectsList .project-item button {
@@ -362,37 +353,6 @@ nav li a:hover .tooltip-text {
   color: #666666;
 }
 
-.logoutModal .modal {
-      display: none;
-      position: fixed;
-      z-index: 2;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 100%;
-      overflow: auto;
-      background-color: rgb(0, 0, 0);
-      background-color: rgba(0, 0, 0, 0.4);
-      padding-top: 60px;
-  }
-
-  .logoutModal .modal-content {
-      background-color: white;
-      margin: 5% auto;
-      padding: 20px;
-      border: 1px solid #888;
-      width: 80%;
-      max-width: 300px;
-      text-align: center;
-      border-radius: 10px;
-  }
-
-  .logoutModal .modal-content button {
-  width: auto;
-  display: inline-block;
-  margin: 10px 5px; /* Adjust margin to give some space between buttons */
-  padding: 8px 16px; /* Adjust padding as needed */
-}
 
 
 @keyframes fadeIn {
@@ -546,9 +506,7 @@ nav li a:hover .tooltip-text {
     <nav>
       <ul>
         <br>
-        <li><a href="{% url 'home' %}" id="newProjectMenuLink"><i class="fi fi-sr-add-folder"></i><span class="tooltip-text">New Project</span></a></li>
-        <br>
-        <li><a href="" id="viewcomponentsbtn"><i class="fi fi-br-dollar"></i><span class="tooltip-text">Pricing</span></a></li>
+        <li><a href="{% url 'pricing' %}" id="viewcomponentsbtn"><i class="fi fi-br-dollar"></i><span class="tooltip-text">Pricing</span></a></li>
         <br>
         <li><a href="{% url 'account_page' %}"><i class="fi fi-br-circle-user"></i><span class="tooltip-text">My Account</span></a></li>
         <br>
@@ -560,7 +518,7 @@ nav li a:hover .tooltip-text {
   </div>
   <div class="main-content">
     <div class="subscription-status">
-      You are currently on the free plan, <a href="#" class="prime-link">Get premium</a>
+      You are currently on the free plan, <a href="{% url 'pricing' %}" class="prime-link">Get prime</a>
     </div>
     <br>
     <div class="container">
@@ -577,7 +535,7 @@ nav li a:hover .tooltip-text {
               <div>Project Name</div>
               <div>Project Domain</div>
               <div>Project Creation Date</div>
-              <div style="margin-right: 85px;">Actions</div>
+              <div>Actions</div>
             </div>
             <!-- Projects will be dynamically loaded here -->
           </div>
@@ -727,11 +685,6 @@ document.getElementById('closeWelcomeModal').onclick = function() {
     var today = new Date().toISOString().split('T')[0];
     document.getElementById("projectStartDateInput").setAttribute('min', today);
   }
-  document.getElementById('newProjectMenuLink').onclick = function() {
-    event.preventDefault(); // Prevent the default link behavior
-  document.getElementById('projectNameModal').style.display = "block";
-  document.getElementById('overlay').style.display = "block"; // Show overlay
-}
     // Load Projects
     function loadProjects() {
   fetch('{% url "fetch_projects" %}')
