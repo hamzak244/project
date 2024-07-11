@@ -114,6 +114,7 @@ def login_page(request):
             user = authenticate(request, username=username, password=password)
             if user is not None:
                 login(request, user)
+                request.session['show_welcome_modal'] = True
                 return redirect('create_project')  # Redirect to dashboard or any other page
             else:
                 form.add_error(None, "Invalid username or password")
@@ -121,8 +122,15 @@ def login_page(request):
         form = LoginForm()
     return render(request, "myApp/login.html")
 
+def reset_welcome_modal(request):
+    if request.method == "POST":
+        request.session['show_welcome_modal'] = False
+        return JsonResponse({'success': True})
+    return JsonResponse({'success': False, 'error': 'Invalid request method'})
 
-
+def check_welcome_modal(request):
+    show_welcome_modal = request.session.get('show_welcome_modal', False)
+    return JsonResponse({'show_welcome_modal': show_welcome_modal})
 
 def logout_page(request):
     if request.method == 'POST':

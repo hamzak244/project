@@ -118,7 +118,7 @@ nav li a:hover .tooltip-text {
       text-align: center;
       margin-top: 150px;
       margin-left: 100px;
-      margin-right: 170px;
+      margin-right: 160px;
       border-radius: 15px;
     }
 
@@ -220,7 +220,7 @@ nav li a:hover .tooltip-text {
 .subscription-status {
   position: absolute;
   top: 140px;
-  right: 170px;
+  right: 160px;
   color: #333; /* Dark grey color */
   font-size: 14px;
   font-style: italic; /* Italicize the text */
@@ -252,64 +252,70 @@ nav li a:hover .tooltip-text {
   font-weight: bold;
   border-bottom: 2px solid #0039a6;
 }
-#projectsList .project-item.headings div {
-    border-right: 1px solid #000; /* Adjust the color and width as needed */
-    padding-right: 30px; /* Adjust padding for spacing */
-  }
+
 #projectsList .project-item {
   display: flex;
-  position: relative;
-  width: 100%;
-  box-sizing: border-box;
   justify-content: space-between;
-  align-items: center; /* Ensure items are aligned in the center */
-  border-bottom: 1px solid #ccc; /* Add margin line between headings and columns */
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid #ccc;
+  box-sizing: border-box;
 }
-
 
 #projectsList .project-item div {
-    border-right: 1px solid #000; /* Adjust the color and width as needed */
-    padding-right: 50px; /* Adjust padding for spacing */
-  }
-  #projectsList .project-item.headings div:last-child,
-  #projectsList .project-item div:last-child {
-    border-right: none;
-    padding-right: 0;
-  }
-
-#projectsList .project-item .left {
-  flex: 2 1 auto;
+  flex: 1;
   text-align: left;
+  padding: 0 10px;
 }
 
-#projectsList .project-item .center {
-  flex: 1 1 auto;
-  text-align: left; /* Ensure all content is aligned to the left */
-  padding-left: 20px; /* Add padding to push content to the right */
+#projectsList .project-item .project-name {
+  flex: 2;
+  
 }
 
+#projectsList .project-item .project-domain,
+#projectsList .project-item .project-date {
+  flex: 2;
+}
+
+#projectsList .project-item.headings .project-actions {
+    margin-left: auto; /* Move Actions to the right end */
+    text-align: right;
+  }
+#projectsList .project-item .project-actions {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+}
 #projectsList .project-item .right {
-  flex: 1 1 auto;
-  text-align: left; /* Ensure all content is aligned to the left */
-  padding-left: 20px; /* Add padding to push content to the right */
-  display: flex; /* Add flex display to align buttons properly */
-  gap: 5px; /* Add gap between buttons */
-}
-
-#projectsList .project-item .right button {
-  margin: 0; /* Remove margins from buttons */
-  padding: 5px 10px; /* Add padding to buttons for better appearance */
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 10px; /* Adjust as needed for spacing between buttons */
 }
 
 #projectsList .project-item button {
   border: none;
   background: none;
   cursor: pointer;
+  margin: 0; /* Remove all margins */
+  padding: 0; /* Remove any padding */
 }
-
 #projectsList .project-item button i {
   color: #0039a6;
   font-size: 20px;
+}
+.custom-tooltip {
+  position: absolute;
+  background-color: transparent; /* Remove background color */
+  color: #0039a6; /* Set text color */
+  padding: 5px;
+  white-space: nowrap;
+  z-index: 1000;
+  pointer-events: none;
+  transform: translate(-50%, -20px); /* Adjust transform for below the buttons */
+  top: calc(100% + 15px); /* Position below the buttons */
+  left: 50%; /* Center horizontally */
 }
 /* Welcome Modal Styling */
 /* Welcome Modal Styling */
@@ -362,37 +368,6 @@ nav li a:hover .tooltip-text {
   color: #666666;
 }
 
-.logoutModal .modal {
-      display: none;
-      position: fixed;
-      z-index: 2;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 100%;
-      overflow: auto;
-      background-color: rgb(0, 0, 0);
-      background-color: rgba(0, 0, 0, 0.4);
-      padding-top: 60px;
-  }
-
-  .logoutModal .modal-content {
-      background-color: white;
-      margin: 5% auto;
-      padding: 20px;
-      border: 1px solid #888;
-      width: 80%;
-      max-width: 300px;
-      text-align: center;
-      border-radius: 10px;
-  }
-
-  .logoutModal .modal-content button {
-  width: auto;
-  display: inline-block;
-  margin: 10px 5px; /* Adjust margin to give some space between buttons */
-  padding: 8px 16px; /* Adjust padding as needed */
-}
 
 
 @keyframes fadeIn {
@@ -560,7 +535,7 @@ nav li a:hover .tooltip-text {
   </div>
   <div class="main-content">
     <div class="subscription-status">
-      You are currently on the free plan, <a href="#" class="prime-link">Get premium</a>
+      You are currently on the free plan, <a href="{% url 'pricing' %}" class="prime-link">Get premium</a>
     </div>
     <br>
     <div class="container">
@@ -574,15 +549,25 @@ nav li a:hover .tooltip-text {
           <div id="projectsList" style="display: flex; flex-direction: column; align-items: stretch;">
             <!-- Column Headings -->
             <div class="project-item headings">
-              <div>Project Name</div>
-              <div>Project Domain</div>
-              <div>Project Creation Date</div>
-              <div style="margin-right: 85px;">Actions</div>
+              <div class="project-name">Project Name</div>
+              <div class="project-domain">Project Domain</div>
+              <div class="project-date">Project Creation Date</div>
+            </div>
+            <!-- Example Project Item -->
+            <div class="project-item">
+              <div class="project-name">ABC</div>
+              <div class="project-domain">Domain</div>
+              <div class="project-date">2024-07-10</div>
+              <div class="project-actions">
+                <button style="margin-right: -20px;"><i class="fas fa-plus"></i></button>
+                <button style="margin-right: 30px;"><i class="fas fa-trash-alt"></i></button>
+              </div>
             </div>
             <!-- Projects will be dynamically loaded here -->
           </div>
         </div>
       </div>
+
 
   <!-- The Modal for creating project -->
   <div id="projectNameModal" class="modal">
@@ -594,7 +579,7 @@ nav li a:hover .tooltip-text {
         <input type="text" id="projectNameInput" placeholder="Type your project name here" name="project_name" required>
         <label for="projectDomainInput" style="display: block; margin-top: 10px;">Project Domain</label> <!-- Added label -->
         <input type="text" id="projectDomainInput" placeholder="Type your project domain here" name="project_domain" required>
-        <label for="projectStartDateInput" style="display: block; margin-top: 10px;">Project Creation Date</label> <!-- Added label -->
+        <label for="projectStartDateInput" style="display: block; margin-top: 10px;">Project Start Date</label> <!-- Added label -->
         <input type="date" id="projectStartDateInput" placeholder="Project Start Date" name="project_start_date" required>        <br>
         <button type="submit">Submit</button>
       </form>
@@ -604,7 +589,7 @@ nav li a:hover .tooltip-text {
 <div id="welcomeModal" class="modal">
     <div class="modal-content">
       <h2>Welcome to Research Draft !</h2>
-      <p>We are glad to have you here. As a new user, you can follow these steps:</p>
+      <p>We are glad to have you here. Don't forget to follow these steps:</p>
       <p><span style="color: #0039a6; font-weight: bold;">1.</span> Create New Project.</p>
       <p><span style="color: #0039a6; font-weight: bold;">2.</span> Paste webpage links of reference research papers (IEEE).</p>
       <p><span style="color: #0039a6; font-weight: bold;">3.</span> View Extracted Content from the uploaded reference papers.</p>
@@ -628,23 +613,36 @@ nav li a:hover .tooltip-text {
   <div id="overlay" class="overlay"></div>
 
   <script>
-    // Toggle Menu
     function toggleMenu() {
-      var hiddenMenu = document.getElementById('hidden-menu');
-      hiddenMenu.classList.toggle('show');
-    }
+  var hiddenMenu = document.getElementById('hidden-menu');
+  hiddenMenu.classList.toggle('show');
+}
 
-    window.onload = function() {
-      var hiddenMenu = document.getElementById('hidden-menu');
-      hiddenMenu.classList.add('show');
-      loadProjects(); // Load projects when the page loads
-    };
-// Show the welcome modal when the page loads
 window.onload = function() {
-  document.getElementById('welcomeModal').style.display = 'block';
   var hiddenMenu = document.getElementById('hidden-menu');
   hiddenMenu.classList.add('show');
   loadProjects(); // Load projects when the page loads
+
+  // Check the session variable to show the welcome modal
+  fetch('/check_welcome_modal/')
+    .then(response => response.json())
+    .then(data => {
+      if (data.show_welcome_modal) {
+        document.getElementById('welcomeModal').style.display = 'block';
+        // Reset the session variable so it doesn't show again until the next login
+        fetch('{% url "reset_welcome_modal" %}', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': getCookie('csrftoken')
+          }
+        });
+      }
+    });
+};
+// Close the welcome modal when the "Got It!" button is clicked
+document.getElementById('closeWelcomeModal').onclick = function() {
+  document.getElementById('welcomeModal').style.display = 'none';
 };
 
 // Close the welcome modal when the "Got It!" button is clicked
@@ -732,8 +730,8 @@ document.getElementById('closeWelcomeModal').onclick = function() {
   document.getElementById('projectNameModal').style.display = "block";
   document.getElementById('overlay').style.display = "block"; // Show overlay
 }
-    // Load Projects
-    function loadProjects() {
+  // Load Projects
+function loadProjects() {
   fetch('{% url "fetch_projects" %}')
     .then(response => response.json())
     .then(data => {
@@ -743,8 +741,7 @@ document.getElementById('closeWelcomeModal').onclick = function() {
           <div class="project-item headings">
             <div>Project Name</div>
             <div>Project Domain</div>
-            <div>Project Creation Date</div>
-            <div>Actions</div>
+            <div style="margin-right: 215px;">Project Creation Date</div>
           </div>
         `;
         data.projects.forEach(project => {
@@ -756,15 +753,25 @@ document.getElementById('closeWelcomeModal').onclick = function() {
             <div class="center"><p>${project.domain}</p></div>
             <div class="center"><p>${project.created_date}</p></div>
             <div class="right">
-              <button onclick="deleteProject('${project.name}')">
-                <i class="fa fa-trash" aria-hidden="true"></i>
+              <button data-tooltip="Add paper" onclick="addProject('${project.name}')">
+                <i class="fa fa-add" aria-hidden="true"></i>
               </button>
-              <button onclick="selectProject('${project.name}')">
+              <button data-tooltip="View paper" onclick="selectProject('${project.name}')">
                 <i class="fa fa-file" aria-hidden="true"></i>
+              </button>
+              <button data-tooltip="Delete" onclick="deleteProject('${project.name}')">
+                <i class="fa fa-trash" aria-hidden="true"></i>
               </button>
             </div>
           `;
           projectsList.appendChild(projectDiv);
+        });
+
+        // Add event listeners for tooltip display
+        const buttons = document.querySelectorAll('button[data-tooltip]');
+        buttons.forEach(button => {
+          button.addEventListener('mouseenter', showTooltip);
+          button.addEventListener('mouseleave', hideTooltip);
         });
       } else {
         console.error("Failed to fetch projects:", data.error);
@@ -775,11 +782,59 @@ document.getElementById('closeWelcomeModal').onclick = function() {
     });
 }
 
+function showTooltip(event) {
+  const tooltipText = event.target.getAttribute('data-tooltip');
+  const tooltip = document.createElement('div');
+  tooltip.className = 'custom-tooltip';
+  tooltip.innerText = tooltipText;
+  document.body.appendChild(tooltip);
+
+  const rect = event.target.getBoundingClientRect();
+  tooltip.style.left = `${rect.left + window.scrollX + rect.width / 2}px`;
+  tooltip.style.top = `${rect.top + window.scrollY - rect.height / 2}px`;
+
+  event.target._tooltipElement = tooltip;
+}
+
+function hideTooltip(event) {
+  const tooltip = event.target._tooltipElement;
+  if (tooltip) {
+    tooltip.remove();
+    event.target._tooltipElement = null;
+  }
+}
 
 
     // Select Project
 function selectProject(projectName) {
   console.log("Selecting project:", projectName); // Debug statement
+  fetch('{% url "select_project" %}', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'X-CSRFToken': getCookie('csrftoken')  // Function to get CSRF token
+    },
+    body: JSON.stringify({ project: projectName }),
+  })
+  .then(response => {
+    console.log("Response received:", response); // Debug statement
+    return response.json();
+  })
+  .then(data => {
+    console.log("Response data:", data); // Debug statement
+    if (data.success) {
+      window.location.href = "{% url 'fetch_data' %}"; // Redirect to fetch data page
+    } else {
+      console.error("Failed to select project:", data.error);
+    }
+  })
+  .catch(error => {
+    console.error('Error:', error);
+  });
+}
+
+function addProject(projectName) {
+  console.log(" add project:", projectName); // Debug statement
   fetch('{% url "select_project" %}', {
     method: 'POST',
     headers: {

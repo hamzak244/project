@@ -315,18 +315,17 @@ nav li a:hover .tooltip-text {
     }
 
     .modal {
-        display: none;
-        position: fixed;
-        z-index: 2;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        overflow: auto;
-        background-color: rgb(0,0,0);
-        background-color: rgba(0,0,0,0.4);
-        padding-top: 60px;
-    }
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
 
     .modal-content {
         background-color: white;
@@ -343,6 +342,58 @@ nav li a:hover .tooltip-text {
     .modal-content button {
         margin: 10px;
     }
+    
+   
+/* Information Modal Styling */
+#infoModal {
+  display: none;
+  position: fixed;
+  z-index: 10;
+  left: 0;
+  top: 0; /* Align it with the top of the page */
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.819);
+}
+
+/* Enhanced styling for the I Modal */
+#infoModal .modal-content {
+  position: relative;
+  border-radius: 15px; /* Add rounded corners */
+  top: 10px; /* Adjust this value to move the modal higher */
+  background-color: #ffffff;
+  border: 1px solid #0039a6;
+  padding: 10px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  animation: fadeIn 0.5s ease;
+  width: 70%;
+  box-sizing: border-box;
+  margin: 15% auto; /* 15% from the top and centered */
+  max-width: 700px; /* Set a max width to ensure it doesn't get too wide */
+  text-align: left;
+}
+
+
+#infoModal h2 {
+  font-size: 30px;
+  color: #0039a6;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+#infoModal p {
+  font-size: 16px;
+  color: #333333;
+  margin-bottom: 10px;
+  text-align: left;
+}
+#infoModal button{
+    width: 30%;
+    align-items: center;
+    margin-left: 35%;
+}
+
 
     /* Media Queries for Responsiveness */
 
@@ -487,7 +538,7 @@ nav li a:hover .tooltip-text {
         <br>
         <li><a href="{% url 'create_project' %}"><i class="fi fi-br-house-chimney"></i><span class="tooltip-text">Home</span></a></li>
         <br>
-        <li><a href="{% url 'pricing' %}"><i class="fi fi-br-dollar"></i><span class="tooltip-text">Pricing</span></a></li>
+        <li><a href=""><i class="fi fi-br-dollar"></i><span class="tooltip-text">Pricing</span></a></li>
         <br>
         <li><a href="{% url 'fetch_data' %}" id="viewcomponentsbtn"><i class="fi fi-bs-duplicate"></i><span class="tooltip-text">View Papers</span></a></li>
         <br>
@@ -533,7 +584,22 @@ nav li a:hover .tooltip-text {
       </div>
     </div>
   </div>
+  <!-- Information Modal -->
 
+<div id="infoModal" class="modal">
+    <div class="modal-content">
+      <h2>Research Draft - AI</h2>
+      <p><span style="color: #0039a6; font-weight: bold;">1.</span> If your prompt is related to the uploaded research papers, ResearchDraft-AI will 
+        give suggestions based on that data.</p>
+      <p><span style="color: #0039a6; font-weight: bold;">2.</span> If your prompt isn't related to the uploaded data, 
+        ResearchDraft-AI will provide general responses.</p>
+        <p><span style="color: #0039a6; font-weight: bold;">3.</span> The more clear and specific your prompt, the better the ResearchDraft-AI's 
+            response will be.</p>
+        <p><span style="color: #0039a6; font-weight: bold;">4.</span> While ResearchDraft - AI strives for accuracy, it's important to cross-check or 
+            verify the content.</p>
+      <button id="gotItBtn">Got It!</button>
+    </div>
+  </div>
 <!-- Logout Confirmation Modal -->
 <div id="logoutModal" class="modal">
     <div class="modal-content">
@@ -542,9 +608,9 @@ nav li a:hover .tooltip-text {
         {% csrf_token %}
         <button id="confirmLogoutBtn" type="submit">Logout</button>
         <button id="cancelLogoutBtn" type="button">Cancel</button>
-    </form>
+      </form>
     </div>
-</div>
+  </div>
 
   <script>
     function toggleMenu() {
@@ -553,11 +619,19 @@ nav li a:hover .tooltip-text {
 }
 
 // Display the hidden menu when the page loads
+
 window.onload = function() {
     var hiddenMenu = document.getElementById('hidden-menu');
     hiddenMenu.classList.add('show');
+
+    var infoModal = document.getElementById('infoModal');
+    infoModal.style.display = 'block';
 };
 
+document.getElementById('gotItBtn').addEventListener('click', function() {
+    var infoModal = document.getElementById('infoModal');
+    infoModal.style.display = 'none';
+});
 document.getElementById('toggleEditorBtn').addEventListener('click', function() {
     var textEditorContainer = document.getElementById('text-editor-container');
     if (textEditorContainer.style.display === 'none' || textEditorContainer.style.display === '') {
@@ -659,26 +733,28 @@ document.getElementById('textEditor').addEventListener('input', function() {
     
 
 //logout modal
-document.addEventListener('DOMContentLoaded', function() {
-    const logoutBtn = document.getElementById('logoutBtn');
+const logoutBtn = document.getElementById('logoutBtn');
     const logoutModal = document.getElementById('logoutModal');
     const confirmLogoutBtn = document.getElementById('confirmLogoutBtn');
     const cancelLogoutBtn = document.getElementById('cancelLogoutBtn');
 
     logoutBtn.onclick = function() {
-        logoutModal.style.display = 'block';
+      logoutModal.style.display = 'block';
+    };
+
+    confirmLogoutBtn.onclick = function() {
+      window.location.href = '/logout/';
     };
 
     cancelLogoutBtn.onclick = function() {
-        logoutModal.style.display = 'none';
+      logoutModal.style.display = 'none';
     };
 
     window.onclick = function(event) {
-        if (event.target == logoutModal) {
-            logoutModal.style.display = 'none';
-        }
+      if (event.target == logoutModal) {
+        logoutModal.style.display = 'none';
+      }
     };
-});
 
     document.getElementById('textEditor').addEventListener('input', function() {
         if (this.textContent.trim() === '') {
