@@ -281,92 +281,94 @@ def reference_page(request):
 
 
 
+
+
+import os
+from playwright.sync_api import sync_playwright, TimeoutError
+from bs4 import BeautifulSoup
+
 def sanitize_title(title):
-    valid_characters = "-_.() %s%s" % (re.escape(string.ascii_letters), re.escape(string.digits))
-    sanitized_title = ''.join(c for c in title if c in valid_characters)
-    return sanitized_title[:255]
+    sanitized_title = title.replace('/', '_').replace('\\', '_')
+    return sanitized_title
 
-def preprocess_text(text):
-    patterns_to_remove = [
-        r'\\begin{equation}.?\\end{equation}|\\\[.?\\\]|\\\(.+?\\\)',
-        r'\$.*?\$',
-        r'P\s*[A-Z]+\s*=\s*\⎛.?\⎠\s\⎟',
-        r'Fig\. \d+.*?View Large Image Download',
-        r'(\n\s*)•\s*',
-        r'([A-Z].*?)\n'
-    ]
-    
-    for pattern in patterns_to_remove:
-        text = re.sub(pattern, '', text, flags=re.DOTALL)
-    
-    soup = BeautifulSoup(text, 'html.parser')
-    clean_text = soup.get_text(separator='\n')
-    clean_text = re.sub(r'\s+', ' ', clean_text).strip()
+def preprocess_content(content):
+    """
+    Preprocess the content by breaking lines at the end of paragraphs and headings,
+    and removing equations.
+    """
+    soup = BeautifulSoup(content, 'html.parser')
 
-    return clean_text
+    # Add line space after paragraphs
+    paragraphs = soup.find_all('p')
+    for p in paragraphs:
+        p.append('\n\n')
 
-def extract_content_and_save(sec_element, folder_path, section_name):
-    section_content = f"{section_name}\n\n"
-    paragraphs = sec_element.find_elements(By.TAG_NAME, 'p')
-    for paragraph in paragraphs:
-        section_content += preprocess_text(paragraph.text) + "\n\n"
+    # Add line space after headings (assuming <h1>, <h2>, ..., <h6> tags are used)
+    for i in range(1, 7):
+        headings = soup.find_all(f'h{i}')
+        for heading in headings:
+            heading.append('\n\n')
 
-    tables = sec_element.find_elements(By.TAG_NAME, 'table')
-    for j, table in enumerate(tables, start=1):
-        table_content = table.text
-        table_file_name = f"{section_name} Table {j}.txt"
-        with open(os.path.join(folder_path, table_file_name), "w", encoding="utf-8") as file:
-            file.write(table_content)
-        print(f"Table {j} under section '{section_name}' saved to file")
+    # Remove equations (assuming equations are within <math> tags or similar)
+    for equation in soup.find_all(['math', 'equation']):
+        equation.decompose()
 
-    file_name = f"{section_name.replace('_', ' ')}.txt"
-    file_path = os.path.join(folder_path, file_name)
-    with open(file_path, "w", encoding="utf-8") as file:
-        file.write(section_content)
+    # Extract and return text
+    return soup.get_text()
 
-    print(f"Section '{section_name}' content saved to file: {file_path}")
+def extract_content_and_save(content, folder, section_name):
+    preprocessed_content = preprocess_content(content)
+    file_path = os.path.join(folder, f"{section_name}.txt")
+    with open(file_path, 'w', encoding='utf-8') as file:
+        file.write(preprocessed_content)
 
 def scrape_ieeeexplore(url, project_folder):
-    driver = webdriver.Chrome()
+    with sync_playwright() as p:
+        browser = p.chromium.launch(headless=False)  # Launch browser in non-headless mode
+        context = browser.new_context()
+        context.set_default_timeout(60000)
+        page = context.new_page()
 
-    try:
-        driver.get(url)
+        try:
+            page.goto(url)
+            page.wait_for_load_state('networkidle')
 
-        title_element = WebDriverWait(driver, 20).until(
-            EC.presence_of_element_located((By.CSS_SELECTOR, '.document-title'))
-        )
-        title = title_element.text.strip()
-        sanitized_title = sanitize_title(title)
+            title_element = page.wait_for_selector('.document-title')
+            title = title_element.inner_text().strip()
+            sanitized_title = sanitize_title(title)
 
-        paper_folder = os.path.join(project_folder, sanitized_title)
-        os.makedirs(paper_folder, exist_ok=True)
+            paper_folder = os.path.join(project_folder, sanitized_title)
+            os.makedirs(paper_folder, exist_ok=True)
 
-        print(f"Title of the document for URL: {url}")
-        print(sanitized_title)
-        print("-" * 50)
+            print(f"Title of the document for URL: {url}")
+            print(sanitized_title)
+            print("-" * 50)
 
-        i = 1
-        while True:
-            sec_id = f"sec{i}"
-            try:
-                sec_element = WebDriverWait(driver, 20).until(
-                    EC.presence_of_element_located((By.ID, sec_id))
-                )
+            i = 1
+            while True:
+                sec_id = f"#sec{i}"
+                try:
+                    sec_element = page.wait_for_selector(sec_id)
+                    h2_element = sec_element.query_selector('h2')
+                    section_name = f"{i:02d} {h2_element.inner_text().strip().replace('_', ' ')}"
 
-                h2_element = sec_element.find_element(By.TAG_NAME, 'h2')
-                section_name = f"{i:02d} {h2_element.text.strip().replace('_', ' ')}"
+                    content = sec_element.inner_html()  # Use inner_html to get the full content including tags
+                    extract_content_and_save(content, paper_folder, section_name)
 
-                extract_content_and_save(sec_element, paper_folder, section_name)
+                    i += 1
+                except TimeoutError:
+                    print(f"Section {sec_id} not found or took too long to load.")
+                    break
 
-                i += 1
-            except:
-                break
+        except TimeoutError as e:
+            page.screenshot(path='screenshot.png')  # Capture screenshot on timeout
+            print(f"An error occurred for URL {url}: {e}")
 
-    except Exception as e:
-        print(f"An error occurred for URL {url}: {e}")
+        finally:
+            browser.close()
 
-    finally:
-        driver.quit()
+
+
 
 
 def add_line_breaks_after_headings(text):
