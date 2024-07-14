@@ -368,65 +368,6 @@ def scrape_ieeeexplore(url, project_folder):
     finally:
         driver.quit()
 
-def scrape_data_in_brief(url, document_folder):
-    driver = webdriver.Chrome()
-    try:
-        driver.get(url)
-        accept_cookies(driver)
-        
-        title_element = WebDriverWait(driver, 20).until(
-            EC.presence_of_element_located((By.CLASS_NAME, 'article-header__title.smaller'))
-        )
-        title = title_element.text.strip()
-        print(f"Title: {title}")
-        
-        sanitized_title = sanitize_title(title)
-        folder_path = os.path.join(document_folder, sanitized_title)
-        os.makedirs(folder_path, exist_ok=True)
-        
-        i = 2
-        section_counter = 1
-        
-        while True:
-            sec_id = f"sec{i:04d}"
-            try:
-                sec_element = WebDriverWait(driver, 20).until(
-                    EC.presence_of_element_located((By.ID, sec_id))
-                )
-                section_name_element = sec_element.find_element(By.CLASS_NAME, 'top__text')
-                section_name = section_name_element.text.strip()
-                section_html = sec_element.get_attribute('innerHTML')
-                section_content = preprocess_text(section_html)
-                
-                if section_content.strip():
-                    file_name = f"{section_counter:02d}{section_name.replace(' ', '')}"
-                    text_file_path = os.path.join(folder_path, f"{file_name}.txt")
-                    
-                    with open(text_file_path, "w", encoding="utf-8") as text_file:
-                        text_file.write(section_content)
-                    
-                    print(f"Section '{section_name}' content saved to file: {text_file_path}")
-                else:
-                    file_name = f"{section_counter:02d}{section_name.replace(' ', '')}_empty"
-                    text_file_path = os.path.join(folder_path, f"{file_name}.txt")
-                    
-                    with open(text_file_path, "w", encoding="utf-8") as text_file:
-                        text_file.write("[No Content]")
-                    
-                    print(f"Section '{section_name}' has no content, empty file created: {text_file_path}")
-                
-                section_counter += 1
-                i += 1
-                
-            except Exception as e:
-                print(f"Error processing section {sec_id}: {e}")
-                break
-
-    except Exception as e:
-        print(f"An error occurred: {e}")
-
-    finally:
-        driver.quit()
 
 def add_line_breaks_after_headings(text):
     lines = text.split('\n')
@@ -441,8 +382,6 @@ def add_line_breaks_after_headings(text):
 def scrape_url(url, document_folder):
     if url.startswith("https://ieeexplore.ieee.org"):
         scrape_ieeeexplore(url, document_folder)
-    elif url.startswith("https://www.data-in-brief.com/"):
-        scrape_data_in_brief(url, document_folder)
     else:
         print(f"Unsupported website: {url}")
 

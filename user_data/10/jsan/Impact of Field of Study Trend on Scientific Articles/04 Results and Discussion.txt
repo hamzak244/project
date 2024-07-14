@@ -1,0 +1,40 @@
+04 Results and Discussion
+
+This section presents detailed analysis of the FoS that are selected as trendy FoS by FoM method using graph centrality measures. By analyzing the constructed FoM, we found the FoS with the highest degree, closeness, and betweenness to understand the trends of FoS over the time. Figure 7 shows the top-ten trendy FoS with degree centrality. Artificial Intelligence, Machine Learning, and Computer Networks have a maximum degree in 2007. Artificial Intelligence, Machine Learning, and Data Mining have achieved a high degree in 2008.
+
+Top-10 Trendy FoS degree, closeness, betweenness.
+
+Show All
+
+
+
+Artificial Intelligence, Computer Vision and Data Mining have a high degree in 2009. Machine Learning, Computer Vision and Data Mining have a maximum high degree in 2010. However, Artificial Intelligence, Machine Learning, and Data Mining attained a high degree in 2011. Closeness centrality shows the top-10 trendy FoS as shown in Figure 7 Artificial Intelligence, Theoretical Computer Science, and Algorithm has a maximum value in 2007. Artificial Intelligence, Machine Learning, and Data Mining have a maximum value in 2008. Algorithm, Database, and Data Mining in 2009 has revealed the high value. Artificial Intelligence, Algorithm, and Database have achieved a maximum value in 2010. Whereas, Operating System, Computer Networks, and the World Wide Web has a maximum value in 2011.
+
+Betweenness centrality shows the top-10 trendy FoS as shown in Figure 7. Artificial Intelligence and Machine Learning, World Wide Web has maximum betweenness value in 2007. World Wide Web, Theoretical Computer Science and Machine Learning have the highest value in 2008. World Wide Web, Machine Learning, and Database has a maximum value in 2009. Data Mining, Machine Learning, and World Wide Web achieved high value in 2010. Computer Vision, Artificial Intelligence, and Theoretical Computer Science have a maximum value in 2011.
+
+Bibliometric analysis is used to identify citation trends from various aspects. Citation analysis is a bibliometric method used to reveal different patterns of the scientific community. Researchers can measure the significance of their publications with the help of citation analysis. They may gain facts about that paper’s effect on its field by calculating the number of times it has been cited in research publications. Additionally, the citation trend is a good measure to analyze the impact of a research publication as high count of citation specifies usefulness and effectiveness.
+
+A citation trend [Math Processing Error] is the collection of citation sequences sharing a common pattern of evolution of citation count. Citation sequences of various citation trends show different evolutions of citation count [26]. A citation-sequence of a research paper [Math Processing Error] , indicated as, [Math Processing Error] [[Math Processing Error] is a sequence of citation count [Math Processing Error] over a period of time 1,2,3,…t, where [Math Processing Error] is the citation count of the [Math Processing Error] year after [Math Processing Error] gets published. For a collection of research papers, given a paper [Math Processing Error] , its citation count c ([Math Processing Error] ) is the number of papers that cite [Math Processing Error] , denoted by, c([Math Processing Error] {[Math Processing Error] .
+
+An FoS receiving high citation count may be considered the most influential FoS in its discipline [26]. Here, the goal of bibliometric classification is to evaluate the citation trend of top-10 FoS in the Computer Science area. Counting the number of citations for each paper (where top FoS appears) and then calculate total citations of top-10 FoS gives the FoS citation trend, as shown in figure 8. This exposes the impact and worth of the scientific research field. Machine Learning, Data Mining, and Computer Vision have the highest citation trend in 2007, 2008, and 2010. Machine Learning, Artificial Intelligence, and Computer Networks have achieved maximum citation trend in 2009. Whereas, Machine Learning, Data Mining, and Artificial Intelligence have the highest citation trend in 2011.
+
+Top-10 trendy FoS citation trend.
+
+Show All
+
+
+
+This section explains the FoS that are selected as trendy FoS by FoM method using graph centrality measures and frequency. The measure Rand Index to compute the similarity between two data clustering i.e., FoS, and citations clusters. An interesting fact that has been noticed while analyzing the values of different metrics is that the top-10 FoS across multiple metrics are the same, however, their order among the top-10 values is different. Table 12 below shows the ordering of top-10 trendy FoS across multiple metrics.
+
+
+
+After this, we have applied our clustering experiments for each of the three centrality measures as done previously for the frequency of FoS, mentioned in the previous section. Then, we computed RI for each case and compared the resulting values for each other. The RI values of four metrics are illustrated in table 13 below and are shown in the form of a graph in figure 9.
+
+Rand index of frequency, degree, betweenness, and closeness.
+
+Show All
+
+
+
+The RI results show a reasonable level of similarity between clustering based on FoS and four different measures, i.e., frequency, degree, betweenness, closeness. Frequency and degree centrality have relatively higher values of RI as compared to the other two and out of these two- degree centralities has the highest RI values across multiple years. As results indicate that degree has achieved the highest RI value 0.69. The results indicate that if the papers belong to the same FoS, then there are 66% of chances, they have the same citation trend. This proves that a field of study has a certain impact on citation count of a paper and researchers should also contemplate on the trend of a field of study while selecting a particular research area. Also, the degree centrality is a more suitable metric to measure the trend of an FoS than a simple citation count.
+

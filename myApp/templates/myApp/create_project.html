@@ -696,7 +696,7 @@ document.getElementById('closeWelcomeModal').onclick = function() {
     .then(data => {
         if (data.success) {
             // Redirect to the fetch_data page
-            window.location.href = data.redirect_url;
+            window.location.href = "{% url 'reference_page' %}";
         } else {
             console.error("Failed to create project:", data.error);
         }
@@ -741,7 +741,7 @@ function loadProjects() {
           <div class="project-item headings">
             <div>Project Name</div>
             <div>Project Domain</div>
-            <div style="margin-right: 215px;">Project Creation Date</div>
+            <div style="margin-right: 215px;">Project Start Date</div>
           </div>
         `;
         data.projects.forEach(project => {
