@@ -1,17 +1,29 @@
 from django import forms
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import get_user_model
 from .widgets import MultipleFileInput
-from .models import User
 
 class UploadFileForm(forms.Form):
     documents = forms.FileField(widget=MultipleFileInput)
 
-class SignupForm(forms.ModelForm):
-    password = forms.CharField(widget=forms.PasswordInput)
-
+class RegisterForm(UserCreationForm):
+    email = forms.EmailField(widget=forms.EmailInput(attrs={
+        "placeholder": "Enter email address", 
+        "class": "form-control"
+    }))
+    username = forms.CharField(widget=forms.TextInput(attrs={
+        "placeholder": "Enter username", 
+        "class": "form-control"
+    }))
+    password1 = forms.CharField(label="Password", widget=forms.PasswordInput(attrs={
+        "placeholder": "Enter password", 
+        "class": "form-control"
+    }))
+    password2 = forms.CharField(label="Confirm Password", widget=forms.PasswordInput(attrs={
+        "placeholder": "Confirm password", 
+        "class": "form-control"
+    }))
+    
     class Meta:
-        model = User
-        fields = ['email', 'first_name', 'last_name', 'password']
-class LoginForm(forms.Form):
-    username = forms.CharField(max_length=150)
-    password = forms.CharField(widget=forms.PasswordInput)
-
+        model = get_user_model()
+        fields = ["email", "username", "password1", "password2"]

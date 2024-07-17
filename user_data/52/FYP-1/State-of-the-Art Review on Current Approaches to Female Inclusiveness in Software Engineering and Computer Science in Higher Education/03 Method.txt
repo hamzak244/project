@@ -1,0 +1,40 @@
+03 Method
+
+In this study, the SMS method to five large-scale academic publication indexes/databases (Association of Computing Machinery [ACM], Institute of Electrical and Electronics Engineers [IEEE], Scopus, Web of Science, and Science Direct) was applied to examine the current academic literature on female inclusiveness in SE at the tertiary education level. These databases were selected based on the following criteria: they represent the biggest academic metadata and index databases globally; they are well-known and reputed; their content aligns with the study scope; these databases are highly utilized in SMS, SLR, and similar studies in general.
+
+SMS is a tool for structuring a specific research area [29]. The general SMS process consists of the following stages: source selection, exclusion, classification, and mapping [29], [30], [31], [32]. To determine the framework for the search criteria, the study goal was to map the state of research on female-inclusive SE and CS tertiary-education-level study programs. The process was initiated by generating a keyword list and dividing it into three logical groups: “gender keywords,” “educational level,” and “SE and CS.” The terms suitable for each group were defined and tested in the search query. Each group was modified based on the search results. The educational group underwent the greatest changes in the keyword-testing process. First, the keywords “education,” “course,” and “program” were used. This query produced a broad and unsuitable dataset. To make the search more specific by limiting the results to higher education, several modifications were made, ending up with the “higher education” and “university” keywords. For the SE and CS keywords group, general terms such as “technology,” “engineering,” “STEM,” and “information technology” were excluded, leaving “software engineering,” “ICT,” and “computer science.” The final keyword set is presented in Figure 2.
+
+Keywords.
+
+Show All
+
+
+
+As the goal was to map the academic research on the topic area, one of the filtering rules was the exclusion of non-peer-reviewed literature. The publications were collected from the following major research indexes/databases: ACM, IEEE, Scopus, Web of Science, and Science Direct. An example of a search string from the Scopus database is presented in Figure 3. The search results and filtering steps for the collection process are presented in Figure 4.
+
+Keyword-based search string for the Scopus database.
+
+Show All
+
+Database search.
+
+Show All
+
+
+
+Given that global societies are rapidly developing through digitalization, that CS and SE education is constantly changing, and that the recent pandemic has accelerated the transition from classrooms to distance and online teaching, the search was limited to the literature published between 2015 and 2022. In addition, only literature in English was selected. After the exclusion of duplicates, the total number of unique studies from the five databases was 882.
+
+The selection and exclusion process for the 882 academic publications consisted of the following steps: identification of the inclusion criteria, the first round of evaluation based on publication titles, revision of exclusion/inclusion criteria, the second round of title evaluation, an evaluation based on abstracts, and finally full-text evaluation. The inclusion criteria, along with the reasoning for the criteria, are presented in Table 1.
+
+
+
+At each evaluation step, the publications were labeled as “include,” “uncertain,” or “exclude.” The results of each step are presented in Table 2. During the evaluation, 163 publications were selected for the final list. However, when the full texts were evaluated, 20 further publications were either unavailable as full text or were unsuitable to be considered peer-reviewed academic work. Therefore, the final selection contained 143 studies.
+
+
+
+With the 143 publications selected, the classification and mapping phase were processed. According to Petersen, SMS may include a “snowballing” phase [29]. However, due to the high number of publications, the number of duplicates reached hundreds by the end of the analysis steps.
+
+To map the studies, the following main literature characteristics and descriptive statistics were collected: publication year, citations, research region, and research methods. The publication year may indicate the development of the study direction, the citations help identify the most widely read papers, research regions reveal the global distribution of the research, and research methods may show the most popular approaches when researching this topic. All studies were classified using the codification scheme defined in Table 3.
+
+
+

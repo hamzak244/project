@@ -1,0 +1,66 @@
+04 Mapping Study Results and Classification
+
+The included academic publications comprised 105 conference papers, 34 journal articles, and two books, with the annual distribution illustrated in Figure 5.
+
+Database search.
+
+Show All
+
+
+
+Analyzing the annual number of publications, one can notice a decline from 2020 onwards. It is not clear how to interpret this change, but a few hypotheses can be made based on widely known facts. First, in 2015 the United Nations Sustainability Development Goals (SDGs) could have boosted academic research on inclusiveness and gender neutrality at different educational levels. The publication of studies takes time, which could explain the spike around 2018 and 2019. Most likely, however, the decline is related to the COVID-19 pandemic and its effect on academic work and research. First, many research units and universities had to close in 2020 [33]. Second, staff resources had to be diverted toward pedagogical issues and other urgent tasks, such as transferring education to the online mode and modifying face-to-face intensive courses to an online format [34], [35]. All of these changes, along with sick leave impacting available resources, could influence the postponement of gender-related studies. At the same time, these hypotheses require further research to establish a clear correlation between the suggested factors. It is also possible that the amount of research remained at the 2018 and 2019 levels while the count of unique publications dropped because the amount of data and depth of the work per publication increased, and the output in total was quite stable. In other words, the latest studies have become more extended and deeper.
+
+With the quantitative and descriptive data about the collected sample, the process of establishing an understanding of the publications’ quality and general relevance for the research goals was initiated. More specifically, in this mapping study, the tools to analyze the selected literature were used. One of the most common tools is VOSviewer, which helps with keyword- and terminology-based analysis. Using VOSviewer, the keywords of the entire set of publications were analyzed and visualized. The results of the analysis-based visualization are presented in Figure 6. Based on the analysis, the major keyword groups were computer science, education, and gender. A comparison of the results with the search criteria indicated good correspondence between the selected literature and the study goals, which provided an initial validation of the quality of the selected keyword in the SMS process [36].
+
+Literature keyword analysis.
+
+Show All
+
+
+
+Next, based on citation numbers, the perceived academic quality/contribution value of the selected studies was analyzed. The total citation count was collected from the Google Scholar citation index [37]. Then, the count was converted to citation per year values to fairly compare publications with different amounts of publicity time (see Figure 7).
+
+Citations per year.
+
+Show All
+
+
+
+More than half of the papers (116) had at least one citation, and six were cited more than ten times yearly. Only 27 papers were not cited. To evaluate the quality of the citation rates, the Google Scholar citation rates of the most-cited publications were compared with the rates on Scopus and the Web of Science (WOS) databases. Table 4 presents 19 papers with the highest citation (HC) rates yearly. The number of citations in Scopus exceeded half of the Google Scholar results, while the Web of Science rate was lower. This finding corresponds to the study of Happonen and Ghoreishi [38]. These results indicated that the sample had the necessary quality for the research.
+
+
+
+After the citation count analysis, the regions of the studies were analyzed. Figure 8 shows that the main contributors to this research area (49% of papers) came from the USA.
+
+Country distribution.
+
+Show All
+
+
+
+The authors investigated female experiences at different stages of the education process. Different initiatives can be implemented in the enrollment procedure and the learning process in general to increase female interest, motivation, and persistence in the field. Figure 9 shows that the majority (64) of the publications considered the learning process to be the main study focus area. Perhaps such popularity is related to the fact that in the learning process, both major and minor changes can be made, and the result can be tested quickly enough, for example, during a specific course. A little less common (47) were studies of women’s motivation and interest in general. However, persistence in the field was weakly studied, although the core task of higher education is to prepare specialists for the industry. Therefore, additional research is needed on female persistence in SE and CS education as well as in the industry.
+
+Women’s inclusiveness subarea distribution.
+
+Show All
+
+
+
+The publications considered different perspectives, from in-class activities to society in general. The focus area analysis showed that the majority (81) of the papers focused on higher education in general, 46 considered a particular course or initiative, and only 16 adopted a broader perspective. Figure 10 shows that the smaller the focus area, the more practical tests researchers make. It is easier to check whether a measure works in the classroom context than in the university or society.
+
+Focus area distribution by the results.
+
+Show All
+
+
+
+For the literature analysis, different publication groups may be analyzed separately. Table 5 shows the reference list for each group. For instance, publications in the Practical Implementations group considered already working recommendations that may be implemented at the university. The Proposals group addressed ideas of what could be tested in an educational context, while Observations and Explanations provided grounds for reflection and additional insights and designed portraits of potential CS female students to facilitate the design of approach for attracting them.
+
+
+
+Five papers with the highest citation rates from each group were reviewed to test whether these groups’ expectations were correct. Based on the observations, a portrait of a female CS student could be drawn. The study by Lehman et al. [64] shows that CS female students rate their abilities lower than male students do. The main concern is related to their computing skills: 56.9% of the women assessed their skills as higher than average compared to 82.3% of the men. Moreover, women majoring in CS are more undecided about their future careers than men. Another study highlighted higher computer identity among male students than female ones [67]. Lewis et al. [22] interviewed CS students to study their sense of belonging. They found that the students who could provide examples of non-stereotypical computer scientists easily rejected stereotypes. This proves the importance of having different role models and a diverse media picture. One aspect of external involvement (e.g., of parents and teachers) was covered in the work of Wang and Moghadam [93]. They found that 39% and 47% of the boys were encouraged to major in CS by teachers and parents, respectively, compared to 26% and 27% of the girls.
+
+As expected, the proposals suggested ideas for improving CS and SE programs. For example, the study by Michell et al. [121] suggested providing networking opportunities for women by organizing meetings in libraries, excluding stereotypes from marketing campaigns, and implementing gender studies in the university program. Acknowledging male and female differences may help educators show their intentions of supporting every student and maintaining a healthy climate in the classroom [98]. University visits from women working in CS to the school and discussing CS opportunities may increase female interest in this study field [97]. Babes-Vroman and colleagues recommended dividing CS classes based on students’ prior experiences to make everyone feel comfortable and have the same opportunities in the classroom [100].
+
+Practical implementations presented the results of actions implemented in practice. For instance, studies by Ying et al. [179] and Kuttal et al. [154] both investigated the effect of pair programming on different genders. They found that pair programming increased the confidence of both female and male students and helped them understand the topic. However, they noticed that same-gender pairs had higher work satisfaction and a fairer work division. The authors recommended considering individuals’ characteristics when creating pairs and implementing an automatic role-transfer system. Brady et al. [134] introduced physical computing practices in short-term introduction courses for women to help female students explore the vast opportunities that CS can provide and raise their awareness of their career perspectives. Burnette et al. [135] implemented growth mindset interventions in CS classes to convince students that they are capable of computing and that computing abilities can be improved.
+

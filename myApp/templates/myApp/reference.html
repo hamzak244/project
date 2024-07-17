@@ -92,21 +92,30 @@ nav li a:hover .tooltip-text {
     visibility: visible;
     opacity: 1;
 }
-    #toggleMenuBtn {
+#toggleMenuBtn {
         position: fixed;
         top: 15px;
         left: 12px;
         z-index: 3;
-        background: #0039a6;
-        width: 30px;
-        height: 30px;
+        width: 50px;
+        height: 50px;
         display: flex;
         justify-content: center;
         align-items: center;
         border: none;
-        color:  white;
+        color:  #0039a6;
         cursor: pointer;
     }
+    
+    #toggleMenuBtn:hover {
+      background-color: #e6e6e6; /* White background on hover */
+      color: #0039a6; /* Blue text on hover */
+      border-color: #0039a6; /* Blue border on hover */
+  }
+  #toggleMenuBtn i {
+    font-size: 24px; /* Adjust this value to increase/decrease size */
+    line-height: 1;
+}
 
   .main-content {
       margin-left: 22%; /* Adjust to make space for the hidden menu */
@@ -384,7 +393,7 @@ button:hover .tooltip-text {
 </style>
 <body>
   {% block content %}
-  <button id="toggleMenuBtn" class="show" onclick="toggleMenu()">&#9776;</button>
+  <button id="toggleMenuBtn" class="show" onclick="toggleMenu()"><i class="fi fi-br-menu-burger"></i></button>
   <div id="hidden-menu">
     <br><br><br>
     <nav>
@@ -446,153 +455,204 @@ button:hover .tooltip-text {
       hiddenMenu.classList.toggle('show');
     }
 
-    window.onload = function() {
-      var hiddenMenu = document.getElementById('hidden-menu');
-      hiddenMenu.classList.add('show');
+      window.onload = function() {
+  var hiddenMenu = document.getElementById('hidden-menu');
+  hiddenMenu.classList.add('show');
 
-      // Set the selected project name from session or context
-      var selectedProject = "{{ request.session.selected_project }}"; // Assuming you set the selected project in session
-      var selectedProjectName = document.getElementById('selectedProjectName');
-      selectedProjectName.textContent = "Project: " + selectedProject;
-    };
+  // Set the selected project name from session or context
+  var selectedProject = "{{ request.session.selected_project }}"; // Assuming you set the selected project in session
+  var selectedProjectName = document.getElementById('selectedProjectName');
+  selectedProjectName.textContent = "Project: " + selectedProject;
 
-    function getCookie(name) {
-      let cookieValue = null;
-      if (document.cookie && document.cookie !== '') {
-        const cookies = document.cookie.split(';');
-        for (let i = 0; i < cookies.length; i++) {
-          const cookie = cookies[i].trim();
-          if (cookie.substring(0, name.length + 1) === (name + '=')) {
-            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-            break;
-          }
-        }
+  // Disable save button initially
+  updateSaveButtonState();
+};
+
+function createInputBox() {
+  var inputBoxesContainer = document.getElementById('inputBoxesContainer');
+
+  var inputContainer = document.createElement('div');
+  inputContainer.className = 'input-container';
+
+  var inputBox = document.createElement('input');
+  inputBox.type = 'text';
+  inputBox.className = 'input-box';
+  inputBox.placeholder = 'Enter webpage link...';
+
+  var inputIcons = document.createElement('div');
+  inputIcons.className = 'input-icons';
+
+  var deleteIcon = document.createElement('i');
+  deleteIcon.className = 'fas fa-times delete-icon';
+  deleteIcon.onclick = function () {
+    inputBox.value = '';
+    updateSaveButtonState(); // Check button state when input is cleared
+  };
+
+  // Add event listener to update save button state on input change
+  inputBox.addEventListener('input', updateSaveButtonState);
+
+  inputContainer.appendChild(inputBox);
+  inputContainer.appendChild(inputIcons);
+  inputIcons.appendChild(deleteIcon);
+  inputBoxesContainer.appendChild(inputContainer);
+
+  // Update save button state after adding a new input box
+  updateSaveButtonState();
+}
+
+function updateSaveButtonState() {
+  var inputBoxes = document.querySelectorAll('.input-box');
+  var saveButton = document.getElementById('saveButton');
+  var isAnyInputFilled = false;
+
+  inputBoxes.forEach(function(inputBox) {
+    if (inputBox.value.trim() !== '') {
+      isAnyInputFilled = true;
+    }
+  });
+
+  saveButton.disabled = !isAnyInputFilled;
+}
+
+// Initial call to create the first input box
+createInputBox();
+
+document.getElementById('addButton').addEventListener('click', function () {
+  createInputBox();
+});
+
+function getCookie(name) {
+  let cookieValue = null;
+  if (document.cookie && document.cookie !== '') {
+    const cookies = document.cookie.split(';');
+    for (let i = 0; i < cookies.length; i++) {
+      const cookie = cookies[i].trim();
+      if (cookie.substring(0, name.length + 1) === (name + '=')) {
+        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+        break;
       }
-      return cookieValue;
     }
+  }
+  return cookieValue;
+}
 
-    function createInputBox() {
-      var inputBoxesContainer = document.getElementById('inputBoxesContainer');
+// Function to validate the webpage link
+function validateLink(link) {
+  if (!link.startsWith('https://ieeexplore.ieee.org/')) {
+    alert('Webpage links are incorrect');
+  }
+}
 
-      var inputContainer = document.createElement('div');
-      inputContainer.className = 'input-container';
+// Function to validate the webpage link
+function validateLink(link) {
+  if (!link.startsWith('https://ieeexplore.ieee.org/')) {
+    alert('Webpage links are incorrect');
+    return false;
+  }
+  return true;
+}
 
-      var inputBox = document.createElement('input');
-      inputBox.type = 'text';
-      inputBox.className = 'input-box';
-      inputBox.placeholder = 'Enter webpage link...';
-      inputBox.setAttribute('pattern', 'https?://.+');
+// Function to save data
+function saveData() {
+  showProcessingSign(true);
 
-      var inputIcons = document.createElement('div');
-      inputIcons.className = 'input-icons';
+  var saveButton = document.getElementById('saveButton');
+  saveButton.disabled = true;
+  showStatusMessage(true);
 
-      var deleteIcon = document.createElement('i');
-      deleteIcon.className = 'fas fa-times delete-icon';
-      deleteIcon.onclick = function () {
-        inputBox.value = '';
-      };
+  var projectName = "{{ request.session.selected_project }}"; // Get the project name from session
+  var links = [];
+  var inputBoxes = document.querySelectorAll('.input-box');
+  var allLinksValid = true;
 
-
-      inputIcons.appendChild(deleteIcon);
-
-      inputContainer.appendChild(inputBox);
-      inputContainer.appendChild(inputIcons);
-
-      inputBoxesContainer.appendChild(inputContainer);
-    }
-
-    for (var i = 0; i < 1; i++) {
-      createInputBox();
-    }
-
-    document.getElementById('addButton').addEventListener('click', function () {
-      createInputBox();
-    });
-
-    function saveData() {
-      showProcessingSign(true);
-
-      var saveButton = document.getElementById('saveButton');
-      saveButton.disabled = true;
-      showStatusMessage(true);
-
-      var projectName = "{{ request.session.selected_project }}"; // Get the project name from session
-      var links = [];
-      var inputBoxes = document.querySelectorAll('.input-box');
-      inputBoxes.forEach(function(inputBox) {
-        if (inputBox.value.trim() !== '') {
-          links.push(inputBox.value.trim());
-        }
-      });
-
-      var csrftoken = getCookie('csrftoken');
-      fetch('/reference/', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'X-Requested-With': 'XMLHttpRequest',
-          'X-CSRFToken': csrftoken
-        },
-        body: JSON.stringify({ project_name: projectName, links: links })
-      })
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        return response.json();
-      })
-      .then(data => {
-        console.log('Success:', data);
-        alert('Links saved successfully!');
-        showStatusMessage(false);
-        // Redirect to view page after saving links successfully
-        window.location.href = "{% url 'fetch_data' %}"; // Change 'view_page' to the name of your view page URL
-      })
-      .catch(error => {
-        console.error('Error:', error);
-        alert('Failed to save links');
-        showStatusMessage(false);
-      })
-      .finally(() => {
-        showProcessingSign(false);
-        saveButton.disabled = false;
-      });
-    }
-
-    function showProcessingSign(show) {
-      var processingSign = document.getElementById('processingSign');
-      processingSign.style.display = show ? 'block' : 'none';
-    }
-
-    function showStatusMessage(show) {
-      var statusMessage = document.getElementById('statusMessage');
-      statusMessage.style.display = show ? 'block' : 'none';
-    }
-
-    document.getElementById('saveButton').addEventListener('click', saveData);
-
-    const logoutBtn = document.getElementById('logoutBtn');
-    const logoutModal = document.getElementById('logoutModal');
-    const confirmLogoutBtn = document.getElementById('confirmLogoutBtn');
-    const cancelLogoutBtn = document.getElementById('cancelLogoutBtn');
-
-    logoutBtn.onclick = function() {
-      logoutModal.style.display = 'block';
-    };
-
-    confirmLogoutBtn.onclick = function() {
-      window.location.href = '/logout/';
-    };
-
-    cancelLogoutBtn.onclick = function() {
-      logoutModal.style.display = 'none';
-    };
-
-    window.onclick = function(event) {
-      if (event.target == logoutModal) {
-        logoutModal.style.display = 'none';
+  inputBoxes.forEach(function(inputBox) {
+    var link = inputBox.value.trim();
+    if (link !== '') {
+      if (!validateLink(link)) {
+        allLinksValid = false;
+        return; // Stop checking further links
       }
-    };
+    }
+    links.push(link);
+  });
+
+  if (!allLinksValid) {
+    showProcessingSign(false);
+    showStatusMessage(false);
+    saveButton.disabled = false;
+    return; // Stop the function if any link is invalid
+  }
+
+  var csrftoken = getCookie('csrftoken');
+  fetch('/reference/', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'X-Requested-With': 'XMLHttpRequest',
+      'X-CSRFToken': csrftoken
+    },
+    body: JSON.stringify({ project_name: projectName, links: links })
+  })
+  .then(response => {
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    return response.json();
+  })
+  .then(data => {
+    console.log('Success:', data);
+    alert('Links saved successfully!');
+    showStatusMessage(false);
+    // Redirect to view page after saving links successfully
+    window.location.href = "{% url 'fetch_data' %}"; // Change 'view_page' to the name of your view page URL
+  })
+  .catch(error => {
+    console.error('Error:', error);
+    alert('Failed to save links');
+    showStatusMessage(false);
+  })
+  .finally(() => {
+    showProcessingSign(false);
+    saveButton.disabled = false;
+  });
+}
+
+function showProcessingSign(show) {
+  var processingSign = document.getElementById('processingSign');
+  processingSign.style.display = show ? 'block' : 'none';
+}
+
+function showStatusMessage(show) {
+  var statusMessage = document.getElementById('statusMessage');
+  statusMessage.style.display = show ? 'block' : 'none';
+}
+
+document.getElementById('saveButton').addEventListener('click', saveData);
+
+const logoutBtn = document.getElementById('logoutBtn');
+const logoutModal = document.getElementById('logoutModal');
+const confirmLogoutBtn = document.getElementById('confirmLogoutBtn');
+const cancelLogoutBtn = document.getElementById('cancelLogoutBtn');
+
+logoutBtn.onclick = function() {
+  logoutModal.style.display = 'block';
+};
+
+confirmLogoutBtn.onclick = function() {
+  window.location.href = '/logout/';
+};
+
+cancelLogoutBtn.onclick = function() {
+  logoutModal.style.display = 'none';
+};
+
+window.onclick = function(event) {
+  if (event.target == logoutModal) {
+    logoutModal.style.display = 'none';
+  }
+};
+
   </script>
 {% endblock %}
 </body>

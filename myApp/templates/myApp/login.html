@@ -11,7 +11,7 @@
     body {
             margin: 0;
             padding: 0;
-            background-color: #f8f8f8;
+            background-color: white;
             font-family: Arial, sans-serif;
         }
 
@@ -283,59 +283,52 @@
 <div id="create-account-container">
     <h2>Welcome Back</h2>
     <p>Login into ResearchDraft</p>
-    <form method="post" action="{% url 'login' %}">
-      {% csrf_token %}
-      {{ form.as_p }}
+    <form method="POST" action="{% url 'login' %}">
+        {% csrf_token %}
         <label for="email">Email:</label>
-        <input type="email" name="username" placeholder="Enter your email" required> 
-
+        <input type="email" id="email" name="email" required>
+        
         <label for="password">Password:</label>
-        <input type="password" name="password" placeholder="Enter your password" required> 
-
-        <button type="submit">LOG IN</a></button>
+        <input type="password" id="password" name="password" required>
+        
+        <button type="submit">Login</button>
     </form>
 
 
     <p class="login-text">Don't have an account?<a href="{% url 'signup' %}" class="login-link">Sign up</a></p>
     
-    <div id="forgotPasswordModal" class="modal">
+    <div id="loginErrorModal" class="modal">
         <div class="modal-content">
-            <span class="close" id="closeModal">&times;</span>
-            <p>Enter your email address to reset password:</p>
-            <input type="email" id="emailInput" placeholder="Enter your email" required>
-            <button id="submitEmail">Submit</button>
-            <div id="responseMessage"></div>
+            <span class="close" id="closeLoginErrorModal">&times;</span>
+            <p>Invalid credentials. Please try again.</p>
         </div>
     </div>
 
-<script>
-      var modal = document.getElementById("forgotPasswordModal");
-        var link = document.getElementById("forgotPasswordLink");
-        var closeModal = document.getElementById("closeModal");
-        
-        link.onclick = function() {
-          modal.style.display = "block";
-        }
-        
-        closeModal.onclick = function() {
-          modal.style.display = "none";
-        }
-        
-        window.onclick = function(event) {
-          if (event.target == modal) {
-            modal.style.display = "none";
-          }
-        }
-        
-        function submitEmail() {
-          var emailInput = document.getElementById("emailInput").value;
-          console.log("Email submitted:", emailInput);
-          modal.style.display = "none";
-        }
 
-
-        
-</script>
 </div>
-</body>
+<script>
+    document.addEventListener('DOMContentLoaded', (event) => {
+        const loginErrorModal = document.getElementById('loginErrorModal');
+        const closeLoginErrorModal = document.getElementById('closeLoginErrorModal');
+
+        // Show the modal if login failed
+        const loginFailed = "{{ login_failed|yesno:'true,false' }}";
+        if (loginFailed === 'true') {
+            loginErrorModal.style.display = 'block';
+        }
+
+        // Close the modal without reloading the page when the close button is clicked
+        closeLoginErrorModal.onclick = function() {
+            loginErrorModal.style.display = 'none';
+        }
+
+        // Close the modal if the user clicks outside of it
+        window.onclick = function(event) {
+            if (event.target == loginErrorModal) {
+                loginErrorModal.style.display = 'none';
+            }
+        }
+    });
+</script>
+    </body>
 </html>

@@ -1,5 +1,5 @@
 import os
-from myApp.forms import UploadFileForm,SignupForm
+#from myApp.forms import UploadFileForm,SignupForm
 from django.conf import settings
 from django.shortcuts import render, redirect
 from .models import *
@@ -14,10 +14,10 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
-from .forms import LoginForm
+#from .forms import LoginForm
 from django.contrib.auth import logout
 from django.shortcuts import render, redirect
-from .forms import SignupForm
+#from .forms import SignupForm
 from bs4 import BeautifulSoup
 from django.contrib.auth.models import User
 from django.http import HttpResponseBadRequest
@@ -36,9 +36,21 @@ from langchain_community.document_loaders import TextLoader
 from langchain_openai import OpenAIEmbeddings, ChatOpenAI
 from langchain.indexes import VectorstoreIndexCreator
 from langchain_community.vectorstores import Chroma
+from django.shortcuts import render, redirect
+from .forms import RegisterForm
+from .models import OtpToken
+from django.contrib import messages
+from django.contrib.auth import get_user_model
+from django.utils import timezone
+from django.core.mail import send_mail
+from django.contrib.auth import authenticate, login, logout
 
+from django.http import JsonResponse
+
+import logging
 
 logger = logging.getLogger(__name__)
+
 
 
 def home(request):
@@ -88,39 +100,107 @@ def account_page(request):
     }
     return render(request, "myApp/Account.html", context)
 
+
+
+
 def signup_page(request):
+    form = RegisterForm()
     if request.method == 'POST':
-        form = SignupForm(request.POST)
+        form = RegisterForm(request.POST)
         if form.is_valid():
-            new_user = User.objects.create_user(
-                username=form.cleaned_data['email'],
-                email=form.cleaned_data['email'],
-                password=form.cleaned_data['password'],
-                first_name=form.cleaned_data['first_name'],
-                last_name=form.cleaned_data['last_name']
+            user = form.save(commit=False)
+            user.is_active = False  # Set the user as inactive until they verify their email
+            user.save()
+            
+            # Generate OTP
+            otp = OtpToken.objects.create(user=user, otp_expires_at=timezone.now() + timezone.timedelta(minutes=5))
+            
+            # Send OTP email
+            subject = "Email Verification"
+            message = f"""
+            Dear {user.username}, 
+            Welcome to Research Draft, your gateway to seamless research paper writing! We're delighted to have you on board.
+
+            To start exploring all that Research Draft has to offer, please take a moment to activate your account by using the One-Time Password (OTP) provided below. This OTP will expire in 5 
+            minutes.
+
+            Your OTP Code: {otp.otp_code}
+             
+            If you have any questions or need assistance, our support team is here to help. Feel free to reach out to us at [info.researchdraft@gmail.com] for prompt assistance.
+
+            Thank you once again for choosing Research Draft. We look forward to supporting you in your research paper writing journey!
+
+            Best regards,
+
+            Research Draft Team
+            """
+            sender = "info.researchdraft@gmail.com"
+            receiver = [user.email, ]
+        
+            send_mail(
+                subject,
+                message,
+                sender,
+                receiver,
+                fail_silently=False,
             )
-            # new_user.save()
-            return redirect('login')  # Redirect to login page after successful signup
-    else:
-        form = SignupForm()
-    return render(request, "myApp/signup.html")
+            
+            return JsonResponse({"success": True, "username": user.username})
+        else:
+            return JsonResponse({"success": False, "errors": form.errors})
+    
+    context = {"form": form}
+    return render(request, "myApp/signup.html", context)
+
+
+from django.urls import reverse
+
+def verify_email(request, username):
+    user = get_user_model().objects.get(username=username)
+    user_otp = OtpToken.objects.filter(user=user).last()
+    
+    if request.method == 'POST':
+        if user_otp and user_otp.otp_code == request.POST['otp_code']:
+            if user_otp.otp_expires_at > timezone.now():
+                user.is_active = True
+                user.save()
+                login_url = reverse('login')  # Generate the login URL
+                return JsonResponse({"success": True, "message": "Account activated successfully!", "redirect_url": login_url})
+            else:
+                return JsonResponse({"success": False, "message": "The OTP has expired, get a new OTP!"})
+        else:
+            return JsonResponse({"success": False, "message": "Invalid OTP entered, enter a valid OTP!"})
+    
+        
+    
+
+from django.shortcuts import render, redirect
+from django.contrib.auth import authenticate, login
+from django.contrib import messages
+from django.http import JsonResponse
+
+from django.shortcuts import render, redirect
+from django.contrib.auth import authenticate, login
+from django.contrib import messages
 
 def login_page(request):
+    login_failed = False
     if request.method == 'POST':
-        form = LoginForm(request.POST)
-        if form.is_valid():
-            username = form.cleaned_data['username']
-            password = form.cleaned_data['password']
-            user = authenticate(request, username=username, password=password)
-            if user is not None:
-                login(request, user)
-                request.session['show_welcome_modal'] = True
-                return redirect('create_project')  # Redirect to dashboard or any other page
-            else:
-                form.add_error(None, "Invalid username or password")
-    else:
-        form = LoginForm()
-    return render(request, "myApp/login.html")
+        email = request.POST['email']
+        password = request.POST['password']
+        user = authenticate(request, username=email, password=password)
+        
+        if user is not None:
+            login(request, user)
+            request.session['show_welcome_modal'] = True
+            messages.success(request, f"Hi {request.user.username}, you are now logged-in")
+            return redirect("create_project")
+        else:
+            login_failed = True
+            messages.warning(request, "Invalid credentials")
+        
+    return render(request, "myApp/login.html", {'login_failed': login_failed})
+
 
 def reset_welcome_modal(request):
     if request.method == "POST":
@@ -131,6 +211,8 @@ def reset_welcome_modal(request):
 def check_welcome_modal(request):
     show_welcome_modal = request.session.get('show_welcome_modal', False)
     return JsonResponse({'show_welcome_modal': show_welcome_modal})
+
+
 
 def logout_page(request):
     if request.method == 'POST':
@@ -368,7 +450,7 @@ def scrape_ieeeexplore(url, project_folder):
     finally:
         driver.quit()
 
-
+    
 def add_line_breaks_after_headings(text):
     lines = text.split('\n')
     updated_lines = []
@@ -467,22 +549,22 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-openai_api_key = os.getenv("OPENAI_API_KEY", "sk-proj-BcFQPiSc2iav2NBU0CE0T3BlbkFJZlMjmnQwUo3qQRfbfD02")
+openai_api_key = os.getenv("OPENAI_API_KEY", "sk-None-J4IpD8DrhMBNH6phIyLMT3BlbkFJ5sw2CeaeSc3lk5PVLqfK")
 os.environ["OPENAI_API_KEY"] = openai_api_key
 
 logging.basicConfig(level=logging.INFO)
 
 class Document:
-    def __init__(self, page_content, doc_id, metadata=None):
+    def _init_(self, page_content, doc_id, metadata=None):
         self.page_content = page_content
         self.doc_id = doc_id
         self.metadata = metadata if metadata is not None else {}
 
-    def __repr__(self):
+    def _repr_(self):
         return f"Document(doc_id={self.doc_id}, metadata={self.metadata})"
 
 class UTF8TextLoader(TextLoader):
-    def __init__(self, file_path):
+    def _init_(self, file_path):
         self.file_path = file_path
 
     def load(self):

@@ -90,21 +90,30 @@ nav li a:hover .tooltip-text {
     visibility: visible;
     opacity: 1;
 }
-    #toggleMenuBtn {
+#toggleMenuBtn {
         position: fixed;
         top: 15px;
         left: 12px;
         z-index: 3;
-        background: #0039a6;
-        width: 30px;
-        height: 30px;
+        width: 50px;
+        height: 50px;
         display: flex;
         justify-content: center;
         align-items: center;
         border: none;
-        color:  white;
+        color:  #0039a6;
         cursor: pointer;
     }
+    
+    #toggleMenuBtn:hover {
+      background-color: #e6e6e6; /* White background on hover */
+      color: #0039a6; /* Blue text on hover */
+      border-color: #0039a6; /* Blue border on hover */
+  }
+  #toggleMenuBtn i {
+    font-size: 24px; /* Adjust this value to increase/decrease size */
+    line-height: 1;
+}
 .main-content {
   margin-left: 20%;
   padding: 20px;
@@ -476,18 +485,18 @@ button {
 </style>
 </head>
 <body>
-    <button id="toggleMenuBtn" class="show" onclick="toggleMenu()">&#9776;</button>
+  <button id="toggleMenuBtn" class="show" onclick="toggleMenu()"><i class="fi fi-br-menu-burger"></i></button>
     <div id="hidden-menu">
       <br><br><br>
       <nav>
         <ul>
           <br>
-          <li><a href="{% url 'home' %}"><i class="fi fi-br-house-chimney"></i><span class="tooltip-text">Home</span></a></li>
           <br>
-          <li><a href=""><i class="fi fi-br-dollar"></i><span class="tooltip-text">Pricing</span></a></li>
+          
+          <li><a href="{% url 'create_project' %}"><i class="fi fi-br-house-chimney"></i><span class="tooltip-text">Home</span></a></li>
           <br>
-          <li><a href="{% url 'fetch_data' %}" id="viewcomponentsbtn"><i class="fi fi-bs-duplicate"></i><span class="tooltip-text">View Papers</span></a></li>
-          <br>
+          <li><a href="{% url 'pricing' %}"><i class="fi fi-br-dollar"></i><span class="tooltip-text">Pricing</span></a></li>
+          <br>          
           <li><a href="{% url 'account_page' %}"><i class="fi fi-br-circle-user"></i><span class="tooltip-text">My Account</span></a></li>
           <br>
           <li><a href="#" id="logoutBtn"><i class="fi fi-bs-sign-out-alt"></i><span class="tooltip-text">Log Out</span></a></li>
@@ -561,38 +570,37 @@ window.onload = function() {
     hiddenMenu.classList.add('show');
 };
 
-    document.getElementById('toggleEditorBtn').addEventListener('click', function() {
-        var textEditorContainer = document.getElementById('text-editor-container');
-        if (textEditorContainer.style.display === 'none' || textEditorContainer.style.display === '') {
-            textEditorContainer.style.display = 'flex';
-        } else {
-            textEditorContainer.style.display = 'none';
+     // Logout Confirmation Modal
+     document.addEventListener('DOMContentLoaded', function() {
+      var logoutBtn = document.getElementById("logoutBtn");
+      var logoutModal = document.getElementById("logoutModal");
+      var cancelLogoutBtn = document.getElementById("cancelLogoutBtn");
+  
+      if (logoutBtn) {
+        logoutBtn.onclick = function() {
+          console.log("Logout button clicked");
+          logoutModal.style.display = "block";
         }
-    });
-    // Logout confirmation modal logic
-const logoutBtn = document.getElementById('logoutBtn');
-    const logoutModal = document.getElementById('logoutModal');
-    const confirmLogoutBtn = document.getElementById('confirmLogoutBtn');
-    const cancelLogoutBtn = document.getElementById('cancelLogoutBtn');
-
-    logoutBtn.onclick = function() {
-      logoutModal.style.display = 'block';
-    };
-
-    confirmLogoutBtn.onclick = function() {
-      // Redirect to logout URL or perform logout action
-      window.location.href = '/logout/';
-    };
-
-    cancelLogoutBtn.onclick = function() {
-      logoutModal.style.display = 'none';
-    };
-
-    window.onclick = function(event) {
-      if (event.target == logoutModal) {
-        logoutModal.style.display = 'none';
+      } else {
+        console.log("Logout button not found");
       }
-    };
+  
+      if (cancelLogoutBtn) {
+        cancelLogoutBtn.onclick = function() {
+          console.log("Cancel button clicked");
+          logoutModal.style.display = "none";
+        }
+      } else {
+        console.log("Cancel button not found");
+      }
+  
+      window.onclick = function(event) {
+        if (event.target == logoutModal) {
+          console.log("Clicked outside the modal");
+          logoutModal.style.display = "none";
+        }
+      }
+    });
   </script>
 </body>
 </html>

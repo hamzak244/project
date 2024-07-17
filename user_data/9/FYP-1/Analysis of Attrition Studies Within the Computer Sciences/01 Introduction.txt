@@ -1,0 +1,24 @@
+01 Introduction
+
+Within Computer Science (CS), student attrition continues to be a long-standing problem and remains a significant challenge for the major [1], [2], [3], [4]. Student attrition affects institutions of higher learning globally and can be damaging to their reputation [5], [6], [7]. Several significant reasons have emerged for the high rate of attrition within CS: poor project management skills, lack of understanding of the material, not identifying with the career path, cultural issues, lack of assistance and feedback, poorly designed courses, personal problems, and more [8], [9], [10]. As a result, CS education researchers have extensively studied this problem, using various tools and techniques to make early interventions before students drop out. However, academic publications on this topic are growing exponentially.
+
+Researchers have applied quantitative, qualitative, or mixed methods to understand attrition [11], [12], [13], [14]. For example, Kinnunen and Malmi [8] performed a quantitative survey to understand root causes behind attrition in CS. Sharmin [15] examined the potential of teaching creativity as a skill for retaining undergraduate students in CS. The study explored Keller’s Attention, Relevance, Confidence, Satisfaction (ARCS) motivational model [16], which advocates for open-ended assignments, collaborative learning, and other strategies to reduce attrition. A recent review advocated for diversity in computer science programs as a means of reducing attrition [1]. The study noted that tackling attrition issues is necessary to increase diversity. Despite the impact of these studies, bibliometric analysis can provide a systematic and reproducible background of this topic. Given the overwhelming amount of literature on this topic and various intervention strategies and techniques, bibliometric analysis is useful in presenting findings related to the theme of the study, trends over time, the most prolific scholars and institutions, and the perspective of different countries [17], [18], [19], [20].
+
+According to Godin [20], bibliometric analysis is a subfield that measures the output side of science. Bibliometric methods have been used in various forms, and are often used interchangeably with broader terms, such as scientometrics or infometrics [21], [22], [23], [24]. Bibliometric analysis is becoming a popular method for providing quantitative descriptions of published articles [22], [23], [25]. This method has found applications in several areas, such as CS education [18], [26], medical [27], [28] and engineering [29], and international entrepreneurship [30]. It uses statistical and geometrical methods in diverse analysis and mapping tools to measure knowledge domains. These tools are primarily used on bibliographic databases, such as Google Scholar (GS), Microsoft Academic (MA), Web of Science (WoS), and Scopus [17], [31]. Additionally, these tools require little or no programming skills to use [17]. Most of these tools exist to analyze the impact of a scientific topic and its structure, while some are no longer maintained [17], [32], [33], [34]. Examples include Bibliometrix R-package [17], SciMAT [32], and CitNetExplorer [35], VOSviewer [33], [34], [36].
+
+Our analysis shows that publications on CS attrition are growing exponentially. To the best of our knowledge, no study has examined bibliometric analysis to analyze trends of publications and research constructs in this area, especially using the Scopus and Web of Science databases. Our study provides a blueprint for young and emerging researchers who want to focus their research on attrition in CS studies. By analyzing publication trends, collaborative networks, and popular keywords in this domain, our study can provide useful information to these scholars. Therefore, our study aims to answer the following questions:
+
+What is the number of publications on this topic over the past twenty-two years?
+
+Which are the top publication venues on this topic?
+
+How has the keyword usage grown over these years?
+
+What are the commonly used themes in studies on student attrition within computer science?
+
+What are the commonly used keywords by authors in this research field during this period?
+
+
+
+These questions aim to provide insights to deepen our understanding of attrition research within the computer science discipline, identify commonly used keywords in this field, and highlight gaps to be addressed in future studies by young and emerging scholars. The remainder of this study is organized as follows: Section II presents the methods used in this study, Section III presents the results of the bibliometric analysis, Section IV discusses the results, and Section V concludes the study and suggests areas for future research.
+

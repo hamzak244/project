@@ -1,0 +1,106 @@
+
+                                SECTION III.Results
+
+A.
+Results of the Cross-Subject and Within-Amplifier/Cross-Amplifier Offline Analysis
+
+As mentioned in Section II-D, the training sets only contained data averaged over 10 flash rounds, while the number of flash rounds for the test data was set to different values to show the change in performance.
+The average accuracies with standard deviations with respect to the number of flash rounds for the independent test set are shown in Table II.
+Incidentally, the first four columns of the results are based on offline analyses in which the training set in each column contains data collected by only one amplifier, while the fifth and sixth columns are based on offline analyses in which the training sets contain data collected by both amplifiers.
+The last column presents the averages and standard deviations of the average accuracies over the 6 training and test set situations.
+Among the first four columns, the first and fourth columns are based on the offline analysis in which the training set and the independent test set were collected by the same amplifier, while the second and third columns show the results of the cross-amplifier offline analyses.
+If the number of flash rounds was small, then the accuracies were low, typically only approximately 20% after one flash round, due to the low SNR of EEG and the short ISI of the stimulation system.
+Adding rounds of button flashes improved the average accuracies in all 6 training and test sets.
+After 10 rounds of button flashes, the average accuracies reached above 80%.
+Specifically, compared with situations in which training sets contain data collected by only one amplifier, training on data collected by both amplifiers achieved better results, with accuracies of 89.19% and 81.12% on the independent test sets collected by the NuAmps and SynAmps2 amplifiers, respectively.
+This result might due to the larger size of the training set containing data from both amplifiers.
+Surprisingly, when the training set contained data collected by both amplifiers and the independent test set contained data collected by only the NuAmps amplifier, the average accuracy reached 89.19% after 10 flash rounds.
+The 2nd and 3rd columns indicated that our method was suitable for learning on cross-amplifier data.
+
+TABLE II 
+Average Accuracies With Standard Deviations (%) With Respect to the Number of Flash Rounds for the Independent Test Set
+
+In addition to the independent test, we also investigated the cross-subject and within-amplifier/cross-amplifier performance of our method on the training and validation sets TrV-S-150, TrV-N-150 and TrV-SN-150 using leave-one-subject-out cross-validation.
+The results are shown in Table V in Appendix A.
+
+B.
+Results of the Simulated Online Test
+
+We conducted a simulated online test with the collected data.
+The parameter settings in Section II-H were as follows.
+The minimum and maximum numbers of flash rounds for making a decision were set as Nrmin=4
+ and Nrmax=10
+.
+We did not consider nr<4
+ because we empirically found that the performance was unacceptably low in this case, and nr>10
+ was not considered because of the low speed.
+To set the threshold Qth(nr)
+, we mainly considered the reliability of the decision, i.e., we used a higher threshold to guarantee confident decisions for cases with few flash rounds, and we used a lower threshold for cases with more flash rounds since having more rounds of flashes could improve the reliability of the decision.
+The value of Qth(nr)
+ was selected by referring to the results of leave-one-subject-out cross-validation on the training and validation sets, i.e., the minimum values of the top 5% C(ns,nr)∣∣nr=4
+ and 20% C(ns,nr)∣∣nr=7
+ were set as the thresholds for nr=4,5,6
+ and nr=7,8,9
+, respectively.
+Here, C(ns,nr)
+ is the average maximum probability of subject ns
+ after nr
+ flash rounds, averaged over all trials, as mentioned in Section II-H.
+For example, for training set TrV-SN-150, when nr=4
+, 5% of the subjects in the training and validation set had C
+ values higher than 0.992, and when nr=7
+, 20% of the subjects had C
+ values higher than 0.979.
+Thus, in this situation, we set Qth(nr)=0.992
+ for nr=4,5,6
+, and Qth(nr)=0.979
+ for nr=7,8,9
+.
+Note that no threshold was needed for nr=10
+ since a decision must be made regardless of the probability value Q(ns,nt,nr)
+ (see Section II-H).
+
+We calculated the average accuracies and number of flash rounds for the independent test set, and the results are presented in Table III.
+In all training and independent test set situations, the average accuracies were above 70% or even above 80% after approximately 6 flash rounds.
+Specifically, when the training set and the independent test set were both collected by the NuAmps amplifier, the 50 subjects achieved an average accuracy of 82.33% in an average of 6.07 flash rounds.
+
+TABLE III 
+Results of the Simulated Online Test for the Independent Test Set
+
+C.
+Comparison With Other Methods
+
+To provide a comparison, we applied two linear methods, i.e., SVM (based on LIBLINEAR, a library for large linear classification [39]) and LDA to our big data and performed data analysis similar to that performed for our CNN.
+The corresponding results are shown in the first three columns of Table IV, where each average accuracy with the standard deviation was obtained by averaging the accuracies across the 6 training and test settings, as in Table II.
+We can see from the table that these methods had comparable performances for cross-subject and within-amplifier/cross-amplifier tests for our data.
+The performances of another CNN model, EEGNet [26], were also evaluated, and an average accuracy of 82.48% was achieved after 10 rounds of button flashes, which is also comparable to that of our proposed CNN model.
+
+TABLE IV 
+Average Accuracies With Standard Deviations (%) With Respect to the Number of Flash Rounds Obtained With Different Methods, Averaged Over the 6 Training and Independent Test Settings, as in Table II
+
+While our CNN-based method showed comparable performance to traditional methods like SVM and LDA as above, CNN-based methods have two merits: (1) They are more scalable than traditional methods.
+Specifically, if the dataset is too large (e.g., much larger than the dataset in this study) or has an extremely high number of dimensions, then SVM and LDA are not applicable due to the involvement of solving a large-scale optimization problem or inverting a very large matrix; (2) Their performances can be remarkably boosted by using just a very limited amount of calibration data to fine-tune the pretrained model, while this is infeasible for traditional methods.
+
+To verify the second point above, we further carry out another comparative experiment.
+Concretely, we compare with the following two settings on the independent test sets:
+
+1) LimitedCal:
+
+The models were trained from scratch with a small amount (5 trials in this study) of calibration data collected from the test subject and then evaluated with the remaining data.
+
+2) Pretrain + FT:
+
+The models trained with data from the training and validation sets TrV-S-150, TrV-N-150 and TrV-SN-150, whose performances had been evaluated in Section III-A, were adopted as pretrained models.
+Then, for each test subject, a small amount (5 trials in this study) of data was used as calibration data to fine-tune the pretrained models, and the remaining data were used to evaluate the retrained models.
+
+We studied the method LimitedCal with 3 models (i.e., SVM, LDA, and the proposed CNN), while for the method Pretrain + FT, only the CNN was studied since the other two models are inapplicable to this method.
+For each subject and each amplifier, we equally partitioned the 60 trials into 12 folds, each of which contained data of 5 trials, and evaluated the above two methods using the cross-validation strategy.
+Each time, 1 fold was used for training/fine-tuning, while the other 11 folds were used to evaluate the model.
+Note that because we wanted to train/fine-tune the model with as little data as possible, we took only 1 fold instead of 11 folds for training/fine-tuning.
+This procedure was repeated 12 times, and the accuracies of these 12 times were averaged.
+
+Table IV presents the average accuracies with standard deviations for these methods.
+Using the method LimitedCal, we found that when trained from scratch with data of only 5 trials, which took approximately 75 seconds for data collection, neither the LDA nor CNN model could achieve acceptable results, while the SVM model achieved an average accuracy above 70% after 10 flash rounds, showing its powerful data fitting ability.
+However, these results were still unsatisfactory in practice and were much worse than those of our zero-training method, which are shown in the third column.
+In regard to the method Pretrain + FT, although the models were retrained with data of only 5 trials, the average accuracy increased significantly from 83.74% to 90.82%.
+

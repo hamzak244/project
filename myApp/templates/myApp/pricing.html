@@ -1203,32 +1203,28 @@ footer {
       </div>
 
         <!-- Payment Popup -->
-  <div class="payment-popup" id="paymentPopup">
-    <div class="popup-content">
-      <h2>Payment Details</h2>
-      <form action="#">
-        <label for="fullname">Full Name</label>
-        <input type="text" id="fullname" name="fullname" required>
-        <label for="email">Email</label>
-        <input type="email" id="email" name="email" required>
-        <label for="CreditCard">Credit Card Number</label>
-        <input type="number" id="CreditCard" name="CreditCard" required>
-        <label for="SecurityCode">Security Code</label>
-        <input type="number" id="SecurityCode" name="SecurityCode" required>
-        <label for="ExpirationDate">Expiration Date</label>
-        <input type="date" id="ExpirationDate" name="ExpirationDate" required>
-        <label for="country">Country</label>
-        <select id="country" name="country" required>
-          <option value="USA">Pakistan</option>
-          <option value="USA">USA</option>
-          <option value="UK">UK</option>
-          <option value="Canada">Canada</option>
-        </select>
-        <!-- Add more fields for payment details (e.g., credit card number, expiry date) -->
-        <button type="submit">Pay Now</button>
-      </form>
-    </div>
-  </div>
+        <div class="payment-popup" id="paymentPopup">
+          <div class="popup-content">
+              <h2>Payment Details</h2>
+              <form id="paymentForm" action="#">
+                  <label for="fullname">Full Name</label>
+                  <input type="text" id="fullname" name="fullname" required>
+                  <label for="email">Email</label>
+                  <input type="email" id="email" name="email" required>
+                  <label for="CreditCard">Credit Card Number</label>
+                  <input type="number" id="CreditCard" name="CreditCard" maxlength="16" required>
+                  <label for="SecurityCode">CVC</label>
+                  <input type="number" id="SecurityCode" name="SecurityCode" maxlength="3" required>
+                  <label for="ExpirationDate">Expiration Date</label>
+                  <input type="date" id="ExpirationDate" name="ExpirationDate" required>
+                  <label for="country">Country</label>
+                  <select id="country" name="country" required>
+                  <!-- Options will be added dynamically by JavaScript -->
+                  </select>
+                  <button type="submit">Pay Now</button>
+              </form>
+          </div>
+      </div>
 <!-- 
     - #FOOTER
   -->
@@ -1239,7 +1235,7 @@ footer {
 
         <div class="footer-brand">
 
-          <a href="#" class="logo">
+          <a href="{% url 'home'%}" class="logo">
             <img src='{% static 'images/white Logo.png' %}' width="200" height="100" alt=" logo">
           </a>
 
@@ -1281,33 +1277,6 @@ footer {
 
         </ul>
 
-        <ul class="footer-list">
-
-          <li>
-            <p class="h5">About</p>
-          </li>
-
-          <li>
-            <a href="#" class="footer-link">Contact</a>
-          </li>
-
-          <li>
-            <a href="#" class="footer-link ">Terms</a>
-          </li>
-
-          <li>
-            <a href="#" class="footer-link">Privacy Policy</a>
-          </li>
-
-          <li>
-            <a href="#" class="footer-link">Cookies</a>
-          </li>
-
-          <li>
-            <a href="#" class="footer-link">Sitemap</a>
-          </li>
-
-        </ul>
 
         <ul class="footer-list">
 
@@ -1360,6 +1329,53 @@ footer {
         paymentPopup.style.display = "none";
       }
     }
+    document.getElementById('paymentForm').addEventListener('submit', function(event) {
+    const creditCardInput = document.getElementById('CreditCard');
+    const securityCodeInput = document.getElementById('SecurityCode');
+
+    if (creditCardInput.value.length !== 16) {
+        alert('Credit Card Number must have 16 digits.');
+        event.preventDefault();
+    }
+
+    if (securityCodeInput.value.length !== 3) {
+        alert('CVC must have only 3 digits.');
+        event.preventDefault();
+    }
+});
+const countries = [
+    "Afghanistan", "Albania", "Algeria", "Andorra", "Angola", "Antigua and Barbuda", "Argentina", "Armenia", 
+    "Australia", "Austria", "Azerbaijan", "Bahamas", "Bahrain", "Bangladesh", "Barbados", "Belarus", "Belgium", 
+    "Belize", "Benin", "Bhutan", "Bolivia", "Bosnia and Herzegovina", "Botswana", "Brazil", "Brunei", "Bulgaria", 
+    "Burkina Faso", "Burundi", "Cabo Verde", "Cambodia", "Cameroon", "Canada", "Central African Republic", "Chad", 
+    "Chile", "China", "Colombia", "Comoros", "Congo, Democratic Republic of the", "Congo, Republic of the", 
+    "Costa Rica", "Croatia", "Cuba", "Cyprus", "Czech Republic", "Denmark", "Djibouti", "Dominica", "Dominican Republic", 
+    "East Timor", "Ecuador", "Egypt", "El Salvador", "Equatorial Guinea", "Eritrea", "Estonia", "Eswatini", "Ethiopia", 
+    "Fiji", "Finland", "France", "Gabon", "Gambia", "Georgia", "Germany", "Ghana", "Greece", "Grenada", "Guatemala", 
+    "Guinea", "Guinea-Bissau", "Guyana", "Haiti", "Honduras", "Hungary", "Iceland", "India", "Indonesia", "Iran", 
+    "Iraq", "Ireland", "Israel", "Italy", "Jamaica", "Japan", "Jordan", "Kazakhstan", "Kenya", "Kiribati", "Korea, North", 
+    "Korea, South", "Kosovo", "Kuwait", "Kyrgyzstan", "Laos", "Latvia", "Lebanon", "Lesotho", "Liberia", "Libya", 
+    "Liechtenstein", "Lithuania", "Luxembourg", "Madagascar", "Malawi", "Malaysia", "Maldives", "Mali", "Malta", 
+    "Marshall Islands", "Mauritania", "Mauritius", "Mexico", "Micronesia", "Moldova", "Monaco", "Mongolia", 
+    "Montenegro", "Morocco", "Mozambique", "Myanmar", "Namibia", "Nauru", "Nepal", "Netherlands", "New Zealand", 
+    "Nicaragua", "Niger", "Nigeria", "North Macedonia", "Norway", "Oman", "Pakistan", "Palau", "Panama", "Papua New Guinea", 
+    "Paraguay", "Peru", "Philippines", "Poland", "Portugal", "Qatar", "Romania", "Russia", "Rwanda", "Saint Kitts and Nevis", 
+    "Saint Lucia", "Saint Vincent and the Grenadines", "Samoa", "San Marino", "Sao Tome and Principe", "Saudi Arabia", 
+    "Senegal", "Serbia", "Seychelles", "Sierra Leone", "Singapore", "Slovakia", "Slovenia", "Solomon Islands", "Somalia", 
+    "South Africa", "South Sudan", "Spain", "Sri Lanka", "Sudan", "Suriname", "Sweden", "Switzerland", "Syria", 
+    "Taiwan", "Tajikistan", "Tanzania", "Thailand", "Togo", "Tonga", "Trinidad and Tobago", "Tunisia", "Turkey", 
+    "Turkmenistan", "Tuvalu", "Uganda", "Ukraine", "United Arab Emirates", "United Kingdom", "United States", "Uruguay", 
+    "Uzbekistan", "Vanuatu", "Vatican City", "Venezuela", "Vietnam", "Yemen", "Zambia", "Zimbabwe"
+];
+
+const countrySelect = document.getElementById('country');
+
+countries.forEach(country => {
+    const option = document.createElement('option');
+    option.value = country;
+    option.textContent = country;
+    countrySelect.appendChild(option);
+});
   </script>
     </body>
     </html>

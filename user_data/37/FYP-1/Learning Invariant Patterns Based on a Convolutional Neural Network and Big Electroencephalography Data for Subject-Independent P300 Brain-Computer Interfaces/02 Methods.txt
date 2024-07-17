@@ -1,0 +1,60 @@
+02 Methods
+
+kΩ during data collection, as determined by dynamically monitoring the impedance values displayed on the screen of the connected computer.
+
+The positions of the 30 channels.
+
+Show All
+
+
+
+4×10 button matrix of characters. (400−1)×30+100=12,070 ms to complete the 400 flashes.
+
+Graphical user interface of the P300 speller.
+
+Show All
+
+… , F” shown in this figure is just a possible sequence.
+
+Show All
+
+
+
+Two hundred healthy subjects (168 males and 32 females, between 18 and 32 years of age) participated in our experiment. The study was approved by the Ethics Committee of Sichuan Provincial Rehabilitation Hospital, China (the cooperative institution). Written informed consent was obtained from all subjects. During the experiment, the subjects were instructed to focus their attention on the flashes of specified characters (i.e., targets) in each trial and to keep a running mental count of the number of the flashes while their EEG signals were recorded. Each subject performed 120 trials, with each trial corresponding to a character input using the two amplifiers, as mentioned in Section II-A (60 trials per amplifier). To avoid subject fatigue caused by long-term experiments, which would affect data quality, for each subject, the experiment containing 120 trials was divided into 4 sessions, each of which contained 30 trials. Between any pair of successive sessions, the subject had rest time. Only when the subject was in a good condition would the next session be started. Note that the sequence of 60 characters for each subject and each amplifier was randomly produced before the experiment began.
+
+n ”, refers to the number of subjects in the subset. For example, “TrV-SN-149” refers to the data of 149 of the 150 subjects in the training and validation set collected by both amplifiers.
+
+
+
+×250 x ~ i,j = x i,j − x ¯ i σ i , (1) where x i,j and x ~ i,j are the unnormalized and normalized signals of channel i at sampling point j , respectively, and x ¯ i and σ i are the average and standard deviation of the signal of channel i in the epoch, respectively. This normalization is meant to avoid undesirable biases to facilitate signal classification.
+
+30×25 matrix, which was denoted n s , n t , n r , n c , where n s represents the subject (ranging from 1 to s ), n t represents the current trial (ranging from 1 to t ), n r represents the current flash round (ranging from 1 to r ), and n c represents the corresponding character (ranging from 1 to c ). r =10 , and c =40 . n r0 ( n r0 =1,2,…, r ) repeats of each character in a trial were averaged as follows: ¯ n s , n t , n r0 , n c = 1 n r0 ∑ n r =1 n r0 n s , n t , n r , n c . (2) ¯ n s , n t , r , n c ( n c =1,2,…, c ) were fed into the deep neural network, while in the prediction/test phase, n r0 was set to different values to show the change in performance with respect to the number of flash rounds.
+
+A sample was labeled as a positive sample if and only if the corresponding character was the target of the current trial. Before being fed into the network, the preprocessed training data underwent another normalization process: the conventional zero-mean unit-variance normalization widely used in CNN training to improve convergence [35]. In the prediction/test phase, the test samples were also normalized using the mean and standard deviation of the training set.
+
+30×25 matrix. 30×1 and a stride of 1, resulting in 10 feature maps sized 1×25 . 1× k 2 and 1× k 3 , respectively, and a stride of 1. 1×(27− k 2 − k 3 ) . k 4 neurons and 1 neuron, respectively. k 2 and k 3 and the number of neurons k 4 as variables that will be determined later. (1+exp(−x)) −1 . , where is the input of the network. y=1 represents the presence of y=0 represents the absence of P300.
+
+The architecture of the CNN used for cross-subject P300 detection.
+
+Show All
+
+
+
+(30+1)×10+(10 k 2 +1)×10+(10 k 3 +1)×10 , and that of the fully connected layers is [10(27− k 2 − k 3 )+1] k 4 +( k 4 +1)=272 k 4 −10 . ℓ 2 regularization constraints.
+
+30×1 because this layer played a role in combining all of the 30 channels. k 2 and k 3 for convolutional layers k 4 for the fully connected layer k 2 and k 3 physically determined the temporal window sizes used for feature extraction, where the input data had 25 sample points along the time dimension. 2,4,…,10 as candidates for k 2 and k 3 . 5,10,…,25 ) as candidates. k 2 , k 3 , and k 4 were chosen as 8, 10, and 15, respectively, for the training and validation set TrV-SN-150.
+
+1:39 , the loss function was weighted by multiplying positive samples by 39 [26]. The model was trained on an NVIDIA GeForce GTX 1080 Ti GPU, with CUDA 9.0 and cuDNN v7, using TensorFlow, an open-source machine learning framework [38].
+
+For the cross-subject and within-amplifier/cross-amplifier independent tests, the models were respectively trained on three training sets (i.e., TrV-S-150, TrV-N-150, and TrV-SN-150) containing data from 150 subjects, and they were tested on two independent test sets (i.e., Te-S-50 and Te-N-50) containing data from the other 50 subjects. In this paper, we adopted accuracy, defined as the ratio of the number of correctly input characters to the total number of input characters, as the performance metric.
+
+n r rounds of button flashes, the decision was made as follows: d( n s , n t , n r )= argmax n c ∈{1,2,…, c } ¯ n s , n t , n r , n c ). (3) View Source
+
+¯ n s , n t , n r , n c is regarded as the probability of the presence of ¯ n s , n t , n r , n c ) , which indicates the confidence of making a decision. This characteristic raises the following questions: Is this probability relevant to the accuracy, and can it be further used to determine whether to make a decision?
+
+n s in trial n t after n r flash rounds, we calculated the maximum probability: n s , n t , n r ):= = max n c ∈{1,2,…, c } ¯ n s , n t , n r , n c ) ¯ n s , n t , n r ,d( n s , n t , n r ) ), (4) which indicates the confidence of making a decision for subject n s in trial n t after n r flash rounds. n s , n r ) , to simplify the notation: n s , n r ):= ¯ ( n s , n r )= 1 t ∑ n t =1 t n s , n t , n r ). (5) View Source
+
+n s after n r flash rounds as a( n s , n r ) . n s , n r ) and a( n s , n r ) . This finding inspired us to use the output of the network to determine whether to make a decision and automatically stop the current trial in each flash round in the online test.
+
+rmin , rmax , and a threshold of the probability th ( n r )∈[0, 1] for each flash round, i.e., n r ∈{ rmin ,…, rmax −1} . n s in trial n t , once n r ⩾ rmin , n s , n t , n r ) is calculated according to th ( n r ) . n s , n t , n r )⩾ th ( n r ) , then the system outputs d( n s , n t , n r ) as the prediction. n s , n t , n r )⩾ th ( n r ) or n r ⩾ rmax . n r reaches rmax and n s , n t , n r ) still has not reached the threshold th ( n r ) , then the system outputs d( n s , n t , rmax ) as the prediction.
+

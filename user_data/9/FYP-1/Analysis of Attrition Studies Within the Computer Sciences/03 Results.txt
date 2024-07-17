@@ -1,0 +1,94 @@
+03 Results
+
+This section presents the results of the analysis of data extracted from WoS and Scopus. The results include information on the number of documents, author information per document, article time-span, and commonly used keywords in attrition studies in the field of computer science.
+
+According to Section II-A, a total of 1310 articles focusing on students’ attrition in computer science education, published between 2000 and 2022, were considered. Figure 2 demonstrates that publications steadily increased from 2018 with an annual growth rate of 10.5%, but then the rate of growth flattened in 2020. Notably, 114 articles were published in 2020, followed by 113 in 2019 and 111 in 2021. There was a slight drop from 2021 to 2022, and we are unsure whether this was due to the impact of COVID-19.
+
+Time-plan of articles published between 2000 to 2022.
+
+Show All
+
+
+
+This section presents an impact analysis that measures the top publication venues for both journals and conferences. Additionally, we present the top twenty published institutions and the prominent countries where these institutions are located. The following sections provide a summary of the impact analysis.
+
+The top 10 popular publication venues are presented in Table 3 and Table 4. From Table 3, the Elsevier Computers and Education journal appeared to be the top-ranked journal during the selected period considered in this study. This is closely followed by the ACM Transactions on Computing Education, the IEEE Access, and the Education and Information Technologies. For conference proceedings, the top ranked was the IEEE Frontiers in Education Conference (FIE), followed by the American Society for Engineering Education (ASEE) Annual Conference, and the ACM Symposium on Computer Science Education (SIGCSE). We observe that majority of the sources are devoted to computing and engineering education studies.
+
+
+
+In relation to the top twenty most published institutions as shown in Table 5, we have observed that Arizona State University has the highest number of published articles with 44, followed by the University of California and Purdue University with 32 and 31 published articles respectively. Florida International University, Lamar University, and the University of Maryland are the last three institutions in the top twenty list. US institutions dominated the attrition studies list of universities, followed by Canada. In general, the list indicates that academic institutions in the US have a strong interest in this topic. One caveat to this data is that state universities such as the University of California have several campuses, each operating effectively as its own university. However, we were unable to separate by campus based on the data returned by our search. In contrast to the unified campuses of the University of California system, the University of Nebraska’s campuses are entirely distinct within our analysis. One possible explanation for this discrepancy could be the lack of completeness in the data extraction process. Specifically, it is conceivable that the process did not retrieve all necessary metadata, such as unique campus identifiers or specific campus-related keywords, which are vital for accurately distinguishing between the different campuses of the University of California system. Moreover, inconsistencies in the naming conventions or variations used for the University of California campuses in the retrieved data might have caused confusion. For instance, abbreviations, acronyms, or local colloquial names used in place of the official campus names may not have been recognized by the analysis algorithm. Such irregularities in data extraction and processing might have led to an inaccurate aggregation of data, which, in turn, could have artificially inflated the ranking of certain universities in the list.
+
+
+
+Table 6 shows the top twenty most cited countries. As illustrated in the table, the USA is in the first position, demonstrating its dominance in CS attrition research with 893 citations, followed by Canada with 48 citations, and China with 43 citations. Interestingly, European nations dominated the top twenty list. Among the Oceania nations, Australia had the highest number of citations with 28, followed by New Zealand with 9 citations. Notably, South Africa topped the list of African nations that appeared on the list with 13 citations.
+
+
+
+Della Corte et al. [40] use a conceptual structure to measure the quality of themes and to understand the evolution of a topic over time. This section provides a summary of the conceptual structure.
+
+A thematic map is a tool that describes the conceptual structure of a particular study [40]. In Figure 3, we present such a map, which provides researchers with knowledge about the thematic areas of the study. The map displays a comprehensive evolution of sub-topics used over the years, with two key measures: centrality (on the x-axis) and density (on the y-axis). Centrality measures the level of inter-cluster interactions between topics, indicating how connected a given topic is to others. This helps researchers understand the overall coherence of the study’s themes. Density, on the other hand, shows the intra-cluster relationship among keywords in a given theme and how they are developed over time. This measure is useful for understanding the level of detail and depth in the study’s exploration of each theme.
+
+The trends of topics over time.
+
+Show All
+
+
+
+The thematic map is divided into four quadrants: niche themes, motor theme, emerging themes, and basic themes. Niche themes have mostly unimportant external ties and marginal importance in the field. For example, themes such as “learning environment” and “software engineering” are relatively low or marginally important. The motor theme represents the main theme, characterized by high centrality and mostly conceptually related to other themes. The only theme within this category is “motivation”. The emerging or declining themes are mostly weakly developed with low density, containing terms such as “computer programming,” etc. The last quadrant mostly contains basic themes, which are necessary for the field of CS attrition. Examples in this category are “computer science education,” “active learning,” “retention,” and “computer science”.
+
+To investigate the interconnection of commonly used topics, we use a co-occurrence network as shown in Figure 4. The co-occurrence keyword network can be constructed using the co-occurrence frequency of keywords in a set of documents. Once the co-occurrence frequency matrix has been constructed, a graph can be created where each keyword is represented by a node and the co-occurrence frequency between keywords is represented by the edges connecting the nodes. The strength of the relationship between two keywords can be represented by the thickness or weight of the edge. Several tools have utilized network analysis measures, such as degree centrality, betweenness centrality, and eigenvector centrality to analyze network structure and identify the most important or central keywords in the network.
+
+Co-occurrence network of topics.
+
+Show All
+
+
+
+View Source
+
+Here, C_{D}(v) represents the degree centrality of node v , d_{v} represents the degree of node v , and n represents the total number of nodes in the network.
+
+View Source
+
+Here, V is the set of nodes, \sigma (s, t) is the total number of shortest paths from node s to node t , and \sigma (s, t|v) is the number of those paths that pass through node v . The betweenness centrality of a node v is the sum of the fraction of all pairs of nodes that node v lies on the shortest path between.
+
+View Source
+
+Here, x_{v} represents the centrality score of node v , a_{vj} represents the edge weight between node v and node j , n is the total number of nodes in the network, and \lambda is a constant scalar value.
+
+In the network, the size of the nodes represents the frequency of the topics, and the colored regions represent the commonly used topics. For instance, the common topics in the documents are “retention,” “computer science education,” “persistence,” “recruitment,” and “attrition”. Biblioshiny divides these topics into respective clusters, showing how these words are commonly used within a publication. For example, the red cluster shows the relationship between “retention,” “mentoring,” “recruitment,” “pedagogy,” “attrition,” “higher education,” “persistence,” “engineering education,” “undergraduate research,” “curriculum,” and “broadening participation”.
+
+This section presents the common keywords used in CS attrition studies. To achieve this, we discuss the most frequently used keywords, strongly related keywords, and trend patterns.
+
+The graph in Figure 5 shows the annual distribution trend of keywords from 2000 to 2022. Identifying keyword trends can help researchers focus on newer or emerging areas in the field. Most keywords experienced a sharp increase throughout the years considered in our analysis. “Retention” remains the most popular keyword used by CS researchers, followed by “computer science education”, “computer science”, and “computing education”. The choice of these keywords may be attributed to the countries in which the academic institutions are based. For example, US-based academic institutions prefer the “computing education” keyword, while European academic institutions use “computer science education” keywords. These keywords are likely to continue experiencing a significant increase in future trend analysis.
+
+Temporal keyword growth from 2000 to 2022.
+
+Show All
+
+
+
+To gain a better understanding of the most frequently used keywords, we have employed a word-cloud which displays the frequency of keywords used in a collection of publications. In a word cloud, the larger the keyword, the higher the frequency in the document. Figure 6 shows the commonly occurring keywords from our analysis, including “computer science education”, “retention”, “computer science”, “CS1”, and “gender”. Smaller-sized keywords like “self-efficacy”, “e-learning”, “learning analytics”, “CS2”, “data mining”, and “inclusion” are also present in the word-cloud, though they occur less frequently. These keywords are expected to continue to be prominent in the field and pave the way for future research directions.
+
+Top-most frequently occurring keywords.
+
+Show All
+
+
+
+Using the Vosviewer software, as depicted in Figure 7, we describe the top keywords used by authors. The closer two keywords are positioned to each other, the stronger their relatedness is, and the thickness of edges represents the strength of co-occurrence links between them. As presented in Figure 7, we selected the closely tied keywords or keywords with the highest total link strength out of 175 keywords. This indicates that these keywords are popular across authors. “Retention” was the most frequently occurring keyword, appearing 180 times with a total link strength of 365. “Computer science education” came next with 159 occurrences and 96 total link strength, followed by “computer science” with 100 occurrences and 57 total link strength.
+
+Top-most keyword interactions.
+
+Show All
+
+
+
+We used a tree-map to show the relatedness of keywords and to identify the most frequently used keywords. The percentage in the tree-map indicates the relevance of each keyword. As depicted in Figure 8, the tree-map shows that “retention” and “computer science education” are commonly used in research on CS student attrition. This indicates that these keywords are prominently used in the field. Other keywords of considerable interest that fall within this category are “CS1,” “computer science,” and “gender.” For keywords that are less related but still have significant relevance and are emerging, “cs0” and “race” are notable examples.
+
+Top-most related keywords.
+
+Show All
+
+
+

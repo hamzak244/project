@@ -1,0 +1,32 @@
+02 Methodology
+
+Bibliometric analysis was the chosen technique for this study, and the recommended workflow for scientific mapping process by Aria and Cuccurullo [17] and Agbo et al. [18] was employed. The Bibliometrix package and the biblioshiny function in the R programming language were used for the quantitative analysis tasks, and the VOSviewer software was used to create and visualize the bibliometric structures. The methodology workflow is presented in Figure 1.
+
+The bibliometric scientific mapping process [17].
+
+Show All
+
+
+
+Table 1 presents the selection criteria for articles contained in this study. We extracted data from two popular databases: Clarivate Analytics Web of Science (WoS) and Scopus, which contained millions of records. We limited our scope to articles published between January 1, 2000 through December 29, 2022, and we did not restrict the document type to any specific type. We used Boolean queries with keyword terms related to computer education, computer science, and computer engineering, as well as retention, attrition, student retention, drop-out prevention, student success, support strategies, and student integration, as shown in Table 1. Finally, we restricted our set to include only articles written in English. Our final set comprised 1310 articles including journals, conference proceedings, book chapters, and other electronic sources authored by 3143 individuals. A summary of the search results is presented in Table 2.
+
+
+
+The data analysis is divided into three phases. The first phase, descriptive analysis, involves summarizing and displaying the bibliographic data, which typically includes information about the articles, such as the author, publication date, journal, and keywords. The purpose of this phase is to gain a general understanding of the data and to identify any trends or patterns that may emerge. The second phase, network analysis, involves creating co-occurrence and co-citation networks to explore the relationships between the different articles and keywords. Co-occurrence networks display the frequency of appearance of different keywords or terms in the same article, while co-citation networks show the frequency of appearance of two articles in the same study. These networks help identify clusters of related articles and keywords, which can be useful in identifying research trends and areas of interest. The third phase, normalization, involves generating a similarity measure of the attrition dataset [17].
+
+where:\begin{align*} View Source
+
+View Source
+
+where:\begin{align*} a_{i}: \text {represents the frequency of keyword } ~i~ \text {in set View Source
+
+View Source
+
+View Source
+
+View Source
+
+Therefore, the Salton’s cosine similarity between sets A and B is approximately 0.716. Both Jaccard’s coefficient and Salton’s cosine can be used to measure the similarity between sets of items, but they have different strengths and weaknesses depending on the nature of the data being analyzed. These measures help identify similarities and differences between different articles, which can be useful in identifying patterns and trends in the data.
+
+Several diagrams were used to analyze and visualize the data, including histogram, maps, dendrogram, wordcloud, and treemap plots. These tools are commonly used in data analysis and visualization to help identify patterns and trends in the data and to communicate findings. One tool that was specifically used in this work is VOSviewer [36], which is a software tool for constructing and visualizing bibliometric networks. VOSviewer can be used to create keyword co-occurrence networks, which can help identify the main topics and trends to understand the trends of publications on attrition in computer science education.
+

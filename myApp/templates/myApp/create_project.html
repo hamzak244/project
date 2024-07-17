@@ -62,8 +62,9 @@
     }
 
     nav li:hover {
-        background-color: #e6e6e6;
-    }
+      background-color: #e6e6e6; /* White background on hover */
+      color: #0039a6; /* Blue text on hover */
+      border-color: #0039a6; /* Blue border on hover */    }
 
     nav i {
         margin-left: 8px;
@@ -92,21 +93,30 @@ nav li a:hover .tooltip-text {
     visibility: visible;
     opacity: 1;
 }
-    #toggleMenuBtn {
+#toggleMenuBtn {
         position: fixed;
         top: 15px;
         left: 12px;
         z-index: 3;
-        background: #0039a6;
-        width: 30px;
-        height: 30px;
+        width: 50px;
+        height: 50px;
         display: flex;
         justify-content: center;
         align-items: center;
         border: none;
-        color:  white;
+        color:  #0039a6;
         cursor: pointer;
     }
+    
+    #toggleMenuBtn:hover {
+      background-color: #e6e6e6; /* White background on hover */
+      color: #0039a6; /* Blue text on hover */
+      border-color: #0039a6; /* Blue border on hover */
+  }
+  #toggleMenuBtn i {
+    font-size: 24px; /* Adjust this value to increase/decrease size */
+    line-height: 1;
+}
 
     .main-content {
       margin-left: 200px; /* Adjust this value to make space for the hidden menu */
@@ -268,12 +278,16 @@ nav li a:hover .tooltip-text {
   padding: 0 10px;
 }
 
-#projectsList .project-item .project-name {
+#projectsList .project-item .project-name,
+#projectsList .project-item .project-domain {
   flex: 2;
-  
+  max-width: 220px; /* Set a maximum width */
+  word-break: break-all; /* Break words if they are too long */
+  white-space: normal; /* Allow text to wrap onto multiple lines */
+  overflow: hidden; /* Hide overflow */
+  text-overflow: ellipsis; /* Add ellipsis if needed */
 }
 
-#projectsList .project-item .project-domain,
 #projectsList .project-item .project-date {
   flex: 2;
 }
@@ -368,8 +382,6 @@ nav li a:hover .tooltip-text {
   color: #666666;
 }
 
-
-
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -380,6 +392,34 @@ nav li a:hover .tooltip-text {
     transform: scale(1);
   }
 }
+#logoutModal {
+      display: none;
+      position: fixed;
+      z-index: 5;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgb(0, 0, 0);
+      background-color: rgba(0, 0, 0, 0.4);
+      padding-top: 60px;
+  }
+
+  #logoutModal .modal-content {
+      background-color: white;
+      margin: 5% auto;
+      padding: 20px;
+      border: 1px solid #888;
+      width: 80%;
+      max-width: 300px;
+      text-align: center;
+      border-radius: 10px;
+  }
+
+  #logoutModal .modal-content button {
+      margin: 10px;
+  }
 
 
 @media (max-width: 1200px) {
@@ -515,7 +555,7 @@ nav li a:hover .tooltip-text {
   </style>
 </head>
 <body>
-  <button id="toggleMenuBtn" class="show" onclick="toggleMenu()">&#9776;</button>
+  <button id="toggleMenuBtn" class="show" onclick="toggleMenu()"><i class="fi fi-br-menu-burger"></i></button>
   <div id="hidden-menu">
     <br><br><br><br><br>
     <nav>
@@ -523,7 +563,7 @@ nav li a:hover .tooltip-text {
         <br>
         <li><a href="{% url 'home' %}" id="newProjectMenuLink"><i class="fi fi-sr-add-folder"></i><span class="tooltip-text">New Project</span></a></li>
         <br>
-        <li><a href="" id="viewcomponentsbtn"><i class="fi fi-br-dollar"></i><span class="tooltip-text">Pricing</span></a></li>
+        <li><a href="{% url 'pricing' %}" id="viewcomponentsbtn"><i class="fi fi-br-dollar"></i><span class="tooltip-text">Pricing</span></a></li>
         <br>
         <li><a href="{% url 'account_page' %}"><i class="fi fi-br-circle-user"></i><span class="tooltip-text">My Account</span></a></li>
         <br>
@@ -551,7 +591,9 @@ nav li a:hover .tooltip-text {
             <div class="project-item headings">
               <div class="project-name">Project Name</div>
               <div class="project-domain">Project Domain</div>
-              <div class="project-date">Project Creation Date</div>
+              <div class="project-date">Project Start Date</div>
+              <div class="project-actions">Actions</div>
+
             </div>
             <!-- Example Project Item -->
             <div class="project-item">
@@ -741,7 +783,8 @@ function loadProjects() {
           <div class="project-item headings">
             <div>Project Name</div>
             <div>Project Domain</div>
-            <div style="margin-right: 215px;">Project Start Date</div>
+            <div style="margin-right: 10px;">Project Start Date</div>
+            <div style="text-align: right;">Actions</div>
           </div>
         `;
         data.projects.forEach(project => {

@@ -1,0 +1,144 @@
+03 Methodology
+
+This section encompasses details about the proposed methodology. We have proposed two different methods to address the research questions. The details about the data set are discussed in sections 3.1 and 3.2. The clustering technique, FoS clusters, and citations trend are discussed in 3.3, 3.4, and 3.5.
+
+Details about Field of Study Multigraph (FoM), formed with the help of centrality measures is discussed in sections 4 and 4.1. Figure 1 is a graphical representation of modules of the proposed methodology.
+
+The proposed methodology.
+
+Show All
+
+
+
+The dataset employed for this study is taken from Microsoft academic1 [6] and is known as Microsoft Academic Graph (MAG) dataset which contains information about different academic articles, fields of study, and the association between academic articles and fields of study. The academic articles include conference papers, journal papers, and books. The data about these articles include paper id, paper title, authors, etc.
+
+The academic articles in MAG are from multiple fields of study (FoS) such as Physics, Computer Science,
+
+Engineering, Chemistry, and many others. The statistics about overall data and data specific to Computer Science are thus, we can separate the topic of each paper without analyzing the abstract of the paper or the paper content itself.
+
+Figure 2 above shows a snippet of the MAG hierarchy from level-0 to level-3. Level-0 contains FoS at a more generic level, like Engineering, Computer Science, etc. The lower levels contain more specific FoS as shown in the figure.
+
+MAG different levels.
+
+Show All
+
+
+
+Every paper in MAG has a unique ID and is mapped to one or more associated FoS in the multiple levels of MAG hierarchy i.e. level-0 to level-3. An example of mapping is shown in figure 3 where a paper from the domain of Computer Science is mapped to different FoS from level 3 to level 0. In general, the hierarchy of the FoS is in the form of a directed acyclic graph, i.e. an FoS may have more than one parent FoS. For example, Cluster Analysis (level-3), belongs to Feature Selection (level-2) and Classification (level-2) which belongs to Machine Learning (level-1) and Computer Science (level-0). The level-1 FoS of CS has been shown in appendix A.
+
+An example of Computer Science FoS levels.
+
+Show All
+
+
+
+As explained earlier, the MAG dataset contains articles from different domains. For this study, we have selected the research papers from the field of Computer Science published during 2007 to 2015. Even though the MAG contains the papers that are published in journals and conferences. However, we have considered only conference papers as significant outcomes are frequently published initially in conferences [20]. This approach works on FoS of level-1 because it is the earliest and most generic distribution of FoS of a particular domain of knowledge [3]. The FoS in MAG becomes more specific when we move down in the hierarchy. After getting the level-1 FoS of CS papers, we store the paper id, publication year, paper title, FoS, level-0, and level-1 FoS associated with the paper in a separate file named as FoS dataset as shown in table 2.
+
+
+
+To find out the association between the citations trend of papers and their corresponding FoS, we need to process our dataset to collect the yearly citation count of each paper and the number of publications for each FoS over the years. The MAG dataset does not contain the year-wise count of citations. For this purpose, we have selected those papers that have publication year between 2007 and 2011, and calculated the yearly citation count of each paper for the next five years, as shown in table 3 below.
+
+
+
+In the above table, the first column shows the paper number and its publication year, the second column illustrates the level-1 FoS associated with the paper. The third column contains the publishing year, the next five columns contain the citation count of papers over the next five years and the last column contains the papers of the data set in a year-wise manner. After calculating the citations pattern of an individual paper, we have calculated the citations pattern of each of 34 level-1 FoS of CS. For this purpose, we have summed the citation count of papers belonging to different FoS. Table 4 below shows the citations pattern of some of FoS over five years.
+
+
+
+Finally, we have replaced the FoS associated with each paper with the citation count of FoS for the publication year of the paper. Out of those citation counts, we have picked the top three ones. The example of pre-processed data used to perform experiments is shown in table 5 below. In this table, five papers published in the year 2007, the citation count of the top three associated FoS for 2007, and the citation count of each paper for the next five years, are shown as an example. The prepared data set contains the papers published from 2007 to 2011. In the next section, we present our approach to investigate the similarity between FoS and citations pattern.
+
+
+
+We have applied the clustering technique to analyze the impact of FoS on citation count of papers. Clustering is a method of grouping similar patterns (commonly signified as a vector of measurements) into different clusters based on similarity. Clustering analysis is one of the key analytical methods in data mining. The clustering technique is mainly appropriate for the studies focusing on capturing inter-relationships amongst the data items [21]. This study forms two different sets of clusters to address the RQ1. In one set of clusters, a 5-year count of citations of papers is considered as the feature set and in the other set, we have used the citation count of top three level-1 FoS associated with papers. Thereafter, similarity between two sets of clusters is calculated using Rand Index and Correlation.
+
+Before applying clustering, we first analyzed the clustering tendency of our dataset. For this purpose, Hopkins Statistic H is picked. This is a spatial statistic that tests the spatial randomness of a variable as distributed in a space [22]. This test is conducted iteratively using 0.5 as a threshold. If the value of H is less than 0.5, it means that data does not have statistically significant clusters. If the value of H is close to 1, this means that the data can significantly form clusters. We have computed H for our dataset separately on the citation pattern of papers and also the citation count of FoS. This has been computed year-wise for all the papers. All the values of H were more than 0.5 suggesting that our dataset tends to form meaningful clusters. Table 6 shows the value of H calculations.
+
+
+
+As indicated by the values of H , our dataset has a reasonable tendency for clustering. We have applied k-means clustering on Computer Science papers for five different years with two different selected feature sets, which are yearly citation counts of corresponding FoS and papers’ citation counts as shown in table 6 (above). Afterward, the similarity between the two sets of clusters is calculated for evaluation.
+
+K-means clustering [23] is a partition-based cluster analysis method. According to this algorithm, first, we have randomly selected k data values as initial cluster centers or centroids, then calculated a proximity metric (generally Euclidean distance) between each data value and each centroid and assigned it to the closest cluster, updated the averages of all clusters, repeated this process until the criterion is not matched.
+
+where k signifies k cluster centers, u_{k} signifies the k^{th} center, and {x}_{i} represents the i^{th} the point in the dataset. The value of k, in K-means, is set by evaluating Sum of Squared Error (SSE) with different values of k generally starting from 2 and moving onwards. For our experiments, the graph between the value of k and corresponding SSE is shown in figure 4.
+
+The relationship between SSE and the value of k for citation count(left), FoS(right).
+
+Show All
+
+
+
+As per this diagram, the value of SSE falls with an increase in the value of k and it rises at 8. Therefore, we set the value k as 7. After applying k-Means clustering on citation counts of FoS with k equals to 7, a total of seven clusters has been formed.
+
+The clustering results show the interaction of certain FoS with each other. We can see this with the interaction such as co-appearance of FoS in a research paper and similar FoS shows similar citation trends as they are clustered in the same group. We can see this with the interaction such as co-appearance of FoS in a research paper as shown in table 7. In particular, in research fields interdisciplinary interactions such as Machine Learning, Data Mining, Data Science, FoS may co-exist within one article, and the relationship between FoS may be important information. Therefore, it is essential to analyze the FoS that has a great influence on other FoS, such as the relationship between FoS, and the FoS that co-exists in articles.
+
+
+
+As it can be seen from the above table that cluster0 comprises following FoS of level-1: “Distributed Computing, Real-time Computing, Parallel Computing, Operating System”. It indicates that the citation pattern of these four FoS is common. These FoS usually occur together in the majority of research publications as Top-3 FoS. We can also observe that similar FoS shows similar citation trends of papers as they are clustered in the same group. Cluster1 comprises these FoS: “Computer Networks, Real-Time Computing, Operating System, Telecommunications” with the same interpretation and likewise the other groups.
+
+The clustering results show that cluster0 comprises following level-1 FoS: “Distributed Computing, Real-time Computing, Parallel Computing, Operating System”. These combinations look very natural, e.g., naturally, there is a possible relationship between the Distributed Computing, Real-time Computing, and Parallel Computing. These FoS usually occur together in the majority of research publications and both FoS seem to be more equal in terms of influence on each other. We can also observe that similar FoS shows similar citation trends of papers as they are clustered in the same group. Cluster1 comprises these FoS: “Computer Networks, Real-Time Computing, Operating System, Telecommunications”. We have also generated 7 clusters based on the citations pattern of the papers as shown in table 7 (above).
+
+where, a: two similar documents to the same clusters, b: two dissimilar documents to different clusters, c: two similar documents to the different clusters, and d: two dissimilar documents to the same clusters. As can be seen from table 8 that there is a certain level of similarity between FoS and the citation pattern of papers. The FoS has a certain level.
+
+
+
+View Source
+
+The formula returns a value between −1 and 1, where: 1 indicates a strong positive relationship, −1 indicates a strong negative relationship, and the result of zero indicates no relationship at all. Where, \text{N}= number of pairs of scores, \sum {xy} = sum of products of paired scores, \sum x = sum of x scores, \sum y = sum of y scores, \sum x^{2} = sum of squared x scores, \sum y^{2} = sum of squared y scores.
+
+For this experiment, we have considered 5 years’ citation counts of papers belonging to a particular FoS cluster. Out of these papers, we have taken a stratified random subset of 80% papers and used them as training data set and remaining 20% as a test set. In this way, 7 different training and test data sets have been formed which comprise of five years’ average of citation count of papers belonging to the same cluster. These values are shown in table 9 below.
+
+
+
+The values illustrated in the above table reveals that average citation count across multiple FoS is approximately similar. Next, to find the level of similarity among papers belonging to the same FoS, we have performed two steps:
+
+we have calculated the correlation coefficient between training dataset of one year with test dataset of every other year and compared them.
+
+Then, we plotted the training dataset against the test dataset of the same year to graphically see the level of similarity between them. Table 10 below shows the correlation coefficient between different clusters’ training dataset with each of the other clusters’ test dataset. The highlighted values show that every cluster has the highest correlation with the test dataset of its cluster. This proves that the papers belonging to the same FoS have similar citation patterns and if we select a particular FoS to work in, then we can have an estimate of the citation pattern that we may receive on our work.
+
+
+
+Figure 5 below shows the plots of training and test datasets of different clusters and citations pattern. The plots also show the similarity between the average citation trend of the same FoS. Moreover, the level of the correlation coefficient is also clear from the corresponding graph, for example, cluster0 has the maximum value of correlation coefficient which is also evident from the corresponding plot of figure 5, where both lines are almost identical.
+
+Training and test datasets of different clusters and citation patterns.
+
+Show All
+
+
+
+The correlation result shows the papers belonging to the same FoS and following the trend have similar increasing or decreasing patterns of citations, as shown in figure 5. The experimental results show that FoS has a certain impact on citation count. Furthermore, a high count of citation depicts that if a paper belongs to the same FoS, then it may have the same citation trend. This proves that a field of study has a certain impact on citation count of a paper and researchers should also contemplate the trend of a field of study while selecting a particular research area.
+
+In this paper, we use a multigraph with centrality measures to measure an FoS trend other than citation count (RQ2-3). Since most of the papers in our dataset correspond to more than one FoS, which establishes a link or relation between them. One possible approach to explore the significance or trend of an FoS other than the citation count could be the co-occurrence of an FoS with other FoS. More an FoS co-occurs with other FoS, more significant or trendy it is. The graph is a natural representation of such links between objects providing different centrality measures to measure the significance of objects within the graph.
+
+For this purpose, we propose to construct an FoS multigraph (FoM) from the articles. Next, the trend of each FoS can be determined using graph centrality measures. In this study, we have applied three classic centrality measures (degree centrality, closeness centrality, and betweenness centrality). These centrality measures have been evaluated in the context of FoS. Lastly, these metrics are considered as FoS trend metrics and compared with the results obtained for the citation count (table 5).
+
+A field of study multigraph (FoM) is built from the FoS of Computer Science papers. A multigraph is permitted to have multiple edges (also called parallel edges) between two nodes. Thus, two vertices (nodes) may be connected by more than one edge. A multigraph is a set of vertices, V, a set of edges, E, and a function f: E \to {{u, v}: u, v \in V and u \ne v}. The significance of every FoS is then resolute using graph centrality measures and papers are categorized based on the FoS they comprise. The construction of the FoM graph is principally based on the FoS which are enclosed in a research paper and their vicinity. Each FoS that is enclosed within the research paper is signified by a system of a labeled node. The edges are focused to grab the structure of the FoS as they occur inside the research papers (relationship of FoS in the paper) as is illustrated in Figure 6. The nearness between the FoS is signified by the edges that join the nodes and is defined using an explicit extensive diversity of FoS. As an example, let us suppose three papers with their corresponding FoS, as given below.
+
+FoM construction.
+
+Show All
+
+
+
+Paper1 FoS: Algorithm, Computer Vision.
+
+Paper2 FoS: Algorithm, Computer Vision, Data Mining, Machine Learning.
+
+Paper3 FoS: Data Mining, Machine Learning.
+
+The FoM for the above papers is shown in figure 6. In the above example, f(e1) = f(e2), so we say e1 and e2 are multiple or parallel edges. However, the edges e2 and e7 are not called parallel edges. The FoM shows that Algorithm is connected to Computer Vision, Data Mining, and Machine Learning. Similarly, Computer Vision is connected to Algorithm, Data Mining, and Machine Learning. Data Mining is connected to Algorithm, Computer Vision, and Machine Learning. Likewise, Machine Learning is connected to Algorithm, Data Mining, and Computer Vision. Algorithm and Computer Vision has parallel edges (e1, e2) as these FoS have appeared in paper 1 and paper 2. Similarly, Data Mining and Machine Learning have parallel edges (e7, e8) as they appeared in paper 2 and paper 3. As soon as the FoM graph is constructed, centrality measures including degree, betweenness, and closeness are computed for each node by using the formulas shown in equation 4, 5 and 6 respectively.
+
+Once the FoM is constructed, centrality measures are computed to assign a score to each node. Let G = (V, E, f) be a multigraph with a set of vertices (FoS) V, a set of edges E and f mapping edges between nodes. Starting with degree centrality, this section describes all the centrality measures employed in this study.
+
+View Source
+
+Generally, vertices with a higher degree or more connections tend to have a greater capacity to influence others. In the context of FoM, the value of degree centrality indicates the co-occurrence of a node (FoS) with other FoS in different papers which may be considered as influence or trend of that FoS.
+
+View Source
+
+The degree centrality signifies the importance of a node (FoS) based on its direct connections with other nodes (FoS), whereas the closeness centrality covers both direct and indirect connections of an FoS showing how central a node in the FoM is.
+
+View Source
+
+Being between means that a node can act as a bridge to provide flow of knowledge between most of the nodes in a network. FoS with high betweenness are the pivots in the network knowledge flowing. The nodes with the highest betweenness also result in the largest increase in typical distance between others when they are removed. After constructing FoM, we calculated the degree centrality measures for all nodes of FoM (representing FoS) starting from the year 2007 till 2011. Table 11 below shows the values of centrality measures of top-ten trendy FoS for the year 2007.
+
+
+

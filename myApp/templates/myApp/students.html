@@ -1539,7 +1539,7 @@
         - #CTA
       -->
 
-      <section class="section cta" aria-label="cta" style="background-image: url('./assets/images/cta-bg.jpg')">
+      <section class="section cta" aria-label="cta" style="background-image: url('{% static 'images/cta-bg.jpg' %}')">
         <div class="container">
 
           <h2 class="h2 section-title">Want smart tips and suggestions to
@@ -1692,7 +1692,7 @@
 
         <div class="footer-brand">
 
-          <a href="#" class="logo">
+          <a href="{% url 'home' %}" class="logo">
             <img src='{% static 'images/white logo.png' %}' width="200" height="100" alt="ResearchDraft logo">
           </a>
 
@@ -1734,33 +1734,6 @@
 
         </ul>
 
-        <ul class="footer-list">
-
-          <li>
-            <p class="h5">About</p>
-          </li>
-
-          <li>
-            <a href="#" class="footer-link">Contact</a>
-          </li>
-
-          <li>
-            <a href="#" class="footer-link ">Terms</a>
-          </li>
-
-          <li>
-            <a href="#" class="footer-link">Privacy Policy</a>
-          </li>
-
-          <li>
-            <a href="#" class="footer-link">Cookies</a>
-          </li>
-
-          <li>
-            <a href="#" class="footer-link">Sitemap</a>
-          </li>
-
-        </ul>
 
         <ul class="footer-list">
 

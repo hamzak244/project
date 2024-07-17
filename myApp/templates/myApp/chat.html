@@ -90,22 +90,30 @@ nav li a:hover .tooltip-text {
     visibility: visible;
     opacity: 1;
 }
-    #toggleMenuBtn {
+#toggleMenuBtn {
         position: fixed;
         top: 15px;
         left: 12px;
         z-index: 3;
-        background: #0039a6;
-        width: 30px;
-        height: 30px;
+        width: 50px;
+        height: 50px;
         display: flex;
         justify-content: center;
         align-items: center;
         border: none;
-        color:  white;
+        color:  #0039a6;
         cursor: pointer;
     }
-
+    
+    #toggleMenuBtn:hover {
+      background-color: #e6e6e6; /* White background on hover */
+      color: #0039a6; /* Blue text on hover */
+      border-color: #0039a6; /* Blue border on hover */
+  }
+  #toggleMenuBtn i {
+    font-size: 24px; /* Adjust this value to increase/decrease size */
+    line-height: 1;
+}
 
     #toggleEditorBtn {
         position: fixed;
@@ -317,14 +325,14 @@ nav li a:hover .tooltip-text {
     .modal {
     display: none; /* Hidden by default */
     position: fixed; /* Stay in place */
-    z-index: 1; /* Sit on top */
+    z-index: 10; /* Sit on top */
     left: 0;
     top: 0;
     width: 100%; /* Full width */
     height: 100%; /* Full height */
     overflow: auto; /* Enable scroll if needed */
     background-color: rgb(0,0,0); /* Fallback color */
-    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    background-color: rgba(0,0,0,0.8); /* Black w/ opacity */
 }
 
     .modal-content {
@@ -528,7 +536,7 @@ nav li a:hover .tooltip-text {
 </style>
 </head>
 <body>
-  <button id="toggleMenuBtn" onclick="toggleMenu()">&#9776;</button>
+  <button id="toggleMenuBtn" class="show" onclick="toggleMenu()"><i class="fi fi-br-menu-burger"></i></button>
   <div id="hidden-menu">
     <br>
     <br>
@@ -538,7 +546,7 @@ nav li a:hover .tooltip-text {
         <br>
         <li><a href="{% url 'create_project' %}"><i class="fi fi-br-house-chimney"></i><span class="tooltip-text">Home</span></a></li>
         <br>
-        <li><a href=""><i class="fi fi-br-dollar"></i><span class="tooltip-text">Pricing</span></a></li>
+        <li><a href="{% url 'pricing' %}"><i class="fi fi-br-dollar"></i><span class="tooltip-text">Pricing</span></a></li>
         <br>
         <li><a href="{% url 'fetch_data' %}" id="viewcomponentsbtn"><i class="fi fi-bs-duplicate"></i><span class="tooltip-text">View Papers</span></a></li>
         <br>
@@ -614,35 +622,33 @@ nav li a:hover .tooltip-text {
 
   <script>
     function toggleMenu() {
-    var hiddenMenu = document.getElementById('hidden-menu');
-    hiddenMenu.classList.toggle('show');
-}
-
-// Display the hidden menu when the page loads
-
-window.onload = function() {
-    var hiddenMenu = document.getElementById('hidden-menu');
-    hiddenMenu.classList.add('show');
-
-    var infoModal = document.getElementById('infoModal');
-    infoModal.style.display = 'block';
-};
-
-document.getElementById('gotItBtn').addEventListener('click', function() {
-    var infoModal = document.getElementById('infoModal');
-    infoModal.style.display = 'none';
-});
-document.getElementById('toggleEditorBtn').addEventListener('click', function() {
-    var textEditorContainer = document.getElementById('text-editor-container');
-    if (textEditorContainer.style.display === 'none' || textEditorContainer.style.display === '') {
-        textEditorContainer.style.display = 'flex';
-    } else {
-        textEditorContainer.style.display = 'none';
+      var hiddenMenu = document.getElementById('hidden-menu');
+      hiddenMenu.classList.toggle('show');
     }
-});
 
-// Function to update placeholder logic
-function updatePlaceholder() {
+    window.onload = function() {
+      var hiddenMenu = document.getElementById('hidden-menu');
+      hiddenMenu.classList.add('show');
+
+      var infoModal = document.getElementById('infoModal');
+      infoModal.style.display = 'block';
+    };
+
+    document.getElementById('gotItBtn').addEventListener('click', function() {
+      var infoModal = document.getElementById('infoModal');
+      infoModal.style.display = 'none';
+    });
+
+    document.getElementById('toggleEditorBtn').addEventListener('click', function() {
+      var textEditorContainer = document.getElementById('text-editor-container');
+      if (textEditorContainer.style.display === 'none' || textEditorContainer.style.display === '') {
+        textEditorContainer.style.display = 'flex';
+      } else {
+        textEditorContainer.style.display = 'none';
+      }
+    });
+
+    function updatePlaceholder() {
       const textEditor = document.getElementById('textEditor');
       const placeholderText = 'Type your research paper content here or paste it.';
       
@@ -652,62 +658,62 @@ function updatePlaceholder() {
         textEditor.removeAttribute('data-placeholder');
       }
     }
-// Event listener for input events on textEditor
-document.getElementById('textEditor').addEventListener('input', function() {
+
+    document.getElementById('textEditor').addEventListener('input', function() {
       updatePlaceholder();
     });
 
-    // Ensure the placeholder shows correctly on page load
     window.addEventListener('DOMContentLoaded', function() {
       updatePlaceholder();
     });
+
     document.getElementById('sendBtn').addEventListener('click', function() {
-        const userInput = document.getElementById('userInput').value;
-        if (userInput.trim() !== '') {
-            const userMessage = document.createElement('div');
-            userMessage.classList.add('message', 'user-message');
-            userMessage.textContent = userInput;
-            document.getElementById('chatWindow').appendChild(userMessage);
-            document.getElementById('userInput').value = '';
+      const userInput = document.getElementById('userInput').value;
+      if (userInput.trim() !== '') {
+        const userMessage = document.createElement('div');
+        userMessage.classList.add('message', 'user-message');
+        userMessage.textContent = userInput;
+        document.getElementById('chatWindow').appendChild(userMessage);
+        document.getElementById('userInput').value = '';
 
-            fetch("{% url 'chat_view' %}", {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRFToken': '{{ csrf_token }}'
-                },
-                body: JSON.stringify({ query: userInput })
-            })
-            .then(response => response.json())
-            .then(data => {
-                const botMessage = document.createElement('div');
-                botMessage.classList.add('message', 'bot-message');
-                botMessage.textContent = data.answer;
-                document.getElementById('chatWindow').appendChild(botMessage);
+        fetch("{% url 'chat_view' %}", {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': '{{ csrf_token }}'
+          },
+          body: JSON.stringify({ query: userInput })
+        })
+        .then(response => response.json())
+        .then(data => {
+          const botMessage = document.createElement('div');
+          botMessage.classList.add('message', 'bot-message');
+          botMessage.textContent = data.answer;
+          document.getElementById('chatWindow').appendChild(botMessage);
 
-                document.getElementById('chatWindow').scrollTop = document.getElementById('chatWindow').scrollHeight;
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
-        }
+          document.getElementById('chatWindow').scrollTop = document.getElementById('chatWindow').scrollHeight;
+        })
+        .catch(error => {
+          console.error('Error:', error);
+        });
+      }
     });
 
     document.getElementById('clearBtn').addEventListener('click', function() {
-        document.getElementById('chatWindow').innerHTML = '';
+      document.getElementById('chatWindow').innerHTML = '';
     });
 
     document.getElementById('copyBtn').addEventListener('click', function() {
-        const chatWindow = document.getElementById('chatWindow');
-        const range = document.createRange();
-        range.selectNode(chatWindow);
-        window.getSelection().removeAllRanges();
-        window.getSelection().addRange(range);
-        document.execCommand('copy');
-        window.getSelection().removeAllRanges();
-        alert('Chat copied to clipboard!');
+      const chatWindow = document.getElementById('chatWindow');
+      const range = document.createRange();
+      range.selectNodeContents(chatWindow);
+      const selection = window.getSelection();
+      selection.removeAllRanges();
+      selection.addRange(range);
+      document.execCommand('copy');
+      selection.removeAllRanges();
+      alert('Chat content copied to clipboard!');
     });
-
     document.getElementById('clearTextBtn').addEventListener('click', function() {
         document.getElementById('textEditor').innerHTML = '';
     });
@@ -720,49 +726,13 @@ document.getElementById('textEditor').addEventListener('input', function() {
         link.download = 'document.txt';
         link.click();
     });
-
-    document.getElementById('downloadDocBtn').addEventListener('click', function() {
-        const text = document.getElementById('textEditor').innerText;
-        const blob = new Blob([text], { type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' });
-        const link = document.createElement('a');
-        link.href = URL.createObjectURL(blob);
-        link.download = 'document.docx';
-        link.click();
+    document.getElementById('logoutBtn').addEventListener('click', function() {
+      document.getElementById('logoutModal').style.display = 'block';
     });
 
-    
-
-//logout modal
-const logoutBtn = document.getElementById('logoutBtn');
-    const logoutModal = document.getElementById('logoutModal');
-    const confirmLogoutBtn = document.getElementById('confirmLogoutBtn');
-    const cancelLogoutBtn = document.getElementById('cancelLogoutBtn');
-
-    logoutBtn.onclick = function() {
-      logoutModal.style.display = 'block';
-    };
-
-    confirmLogoutBtn.onclick = function() {
-      window.location.href = '/logout/';
-    };
-
-    cancelLogoutBtn.onclick = function() {
-      logoutModal.style.display = 'none';
-    };
-
-    window.onclick = function(event) {
-      if (event.target == logoutModal) {
-        logoutModal.style.display = 'none';
-      }
-    };
-
-    document.getElementById('textEditor').addEventListener('input', function() {
-        if (this.textContent.trim() === '') {
-            this.setAttribute('data-placeholder', 'TYPE YOUR RESEARCH PAPER CONTENT HERE OR PASTE IT.');
-        } else {
-            this.removeAttribute('data-placeholder');
-        }
+    document.getElementById('cancelLogoutBtn').addEventListener('click', function() {
+      document.getElementById('logoutModal').style.display = 'none';
     });
-</script>
+  </script>
 </body>
 </html>

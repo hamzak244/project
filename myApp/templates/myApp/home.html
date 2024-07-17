@@ -1819,7 +1819,7 @@ transform: translateY(-10px);
         - #CTA
       -->
 
-      <section class="section cta" aria-label="cta" style="background-image: url('./assets/images/cta-bg.jpg')">
+      <section class="section cta" aria-label="cta" style="background-image: url('{% static 'images/cta-bg.jpg' %}')">
 
         <div class="container">
 
@@ -1870,18 +1870,17 @@ transform: translateY(-10px);
             </button>
         </div>
         <div class="faq ">
-            <h3 class="faq-title">What types of documents does the tool support for upload?</h3>
-            <p class="faq-text">The tool supports PDF, DOC, DOCX document formats. Specifically for reference 
-              papers PDF format is to be used and for own draft of research paper DOC and DOCX can be used as well.</p>
+            <h3 class="faq-title">What types of links does the tool support for upload?</h3>
+            <p class="faq-text">The tool currently supports IEEE webpage links.</p>
             <button class="faq-toggle">
                 <i class="fas fa-chevron-down"></i>
                 <i class="fas fa-times"></i>
             </button>
         </div>
         <div class="faq ">
-            <h3 class="faq-title">Is there a limit to the number of files or length of the research paper I can upload?</h3>
-            <p class="faq-text">While we strive to accommodate various document sizes, there may be limits. Please check 
-              our Pricing or Plans for specific details on number of files and length restrictions.</p>
+            <h3 class="faq-title">Is there a limit to the number of links or length of the research paper I can upload?</h3>
+            <p class="faq-text">While we strive to accommodate various options, there may be limits. Please check 
+              our Pricing plans for specific details on number of links and length restrictions.</p>
             <button class="faq-toggle">
                 <i class="fas fa-chevron-down"></i>
                 <i class="fas fa-times"></i>
@@ -1911,7 +1910,7 @@ transform: translateY(-10px);
         - #CTA 2
       -->
 
-      <section class="section cta" aria-label="cta" style="background-image: url('./assets/images/cta-bg.jpg')">
+      <section class="section cta" aria-label="cta" style="background-image: url('{% static 'images/cta-bg.jpg' %}')">
         <div class="container">
 
           <h2 class="h2 section-title">Take the first step towards
@@ -1977,7 +1976,7 @@ transform: translateY(-10px);
 
         <div class="footer-brand">
 
-          <a href="#" class="logo">
+          <a href="{% url 'home'%}" class="logo">
             <img src="{% static 'images/white logo.png' %}" width="200" height="100" alt="ResearchDraft logo">
           </a>
 
@@ -2019,34 +2018,7 @@ transform: translateY(-10px);
 
         </ul>
 
-        <ul class="footer-list">
-
-          <li>
-            <p class="h5">About</p>
-          </li>
-
-          <li>
-            <a href="#" class="footer-link">Contact</a>
-          </li>
-
-          <li>
-            <a href="#" class="footer-link ">Terms</a>
-          </li>
-
-          <li>
-            <a href="#" class="footer-link">Privacy Policy</a>
-          </li>
-
-          <li>
-            <a href="#" class="footer-link">Cookies</a>
-          </li>
-
-          <li>
-            <a href="#" class="footer-link">Sitemap</a>
-          </li>
-
-        </ul>
-
+        
         <ul class="footer-list">
 
           <li>
