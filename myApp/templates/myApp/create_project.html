@@ -279,6 +279,7 @@ nav li a:hover .tooltip-text {
 }
 
 #projectsList .project-item .project-name,
+<<<<<<< HEAD
 #projectsList .project-item .project-domain {
   flex: 2;
   max-width: 220px; /* Set a maximum width */
@@ -286,6 +287,18 @@ nav li a:hover .tooltip-text {
   white-space: normal; /* Allow text to wrap onto multiple lines */
   overflow: hidden; /* Hide overflow */
   text-overflow: ellipsis; /* Add ellipsis if needed */
+=======
+#projectsList .project-item .project-domain
+{
+  flex: 2;
+  max-width: 220px; /* Set a maximum width */
+  word-wrap: break-word; /* Allow breaking words onto a new line */
+  overflow-wrap: break-word; /* Ensure long words are wrapped */
+  white-space: normal; /* Allow text to wrap onto multiple lines */
+  overflow: hidden; /* Hide overflow */
+  text-overflow: ellipsis; /* Add ellipsis if needed */
+ 
+>>>>>>> 8c3a87898b6a69118202607b76dcbeb75e5a93a9
 }
 
 #projectsList .project-item .project-date {
@@ -591,7 +604,11 @@ nav li a:hover .tooltip-text {
             <div class="project-item headings">
               <div class="project-name">Project Name</div>
               <div class="project-domain">Project Domain</div>
+<<<<<<< HEAD
               <div class="project-date">Project Start Date</div>
+=======
+              <div class="project-date">Project Creation Date</div>
+>>>>>>> 8c3a87898b6a69118202607b76dcbeb75e5a93a9
               <div class="project-actions">Actions</div>
 
             </div>
