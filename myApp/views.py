@@ -217,6 +217,7 @@ def check_welcome_modal(request):
 def logout_page(request):
     if request.method == 'POST':
         logout(request)
+        request.session.flush()  # Clear the session data
         return redirect('home')  # Redirect to home page after logout
     else:
         return HttpResponseBadRequest("Invalid request method.") 
