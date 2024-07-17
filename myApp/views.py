@@ -548,7 +548,14 @@ def accept_cookies(driver):
 
 
 
+import os
+import json
+import logging
 from dotenv import load_dotenv
+from django.http import JsonResponse
+from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
+from your_app.models import User  # Assuming your user model is named 'User'
 
 load_dotenv()
 
@@ -558,16 +565,16 @@ os.environ["OPENAI_API_KEY"] = openai_api_key
 logging.basicConfig(level=logging.INFO)
 
 class Document:
-    def _init_(self, page_content, doc_id, metadata=None):
+    def __init__(self, page_content, doc_id, metadata=None):
         self.page_content = page_content
         self.doc_id = doc_id
         self.metadata = metadata if metadata is not None else {}
 
-    def _repr_(self):
+    def __repr__(self):
         return f"Document(doc_id={self.doc_id}, metadata={self.metadata})"
 
 class UTF8TextLoader(TextLoader):
-    def _init_(self, file_path):
+    def __init__(self, file_path):
         self.file_path = file_path
 
     def load(self):
@@ -581,7 +588,10 @@ class UTF8TextLoader(TextLoader):
             logging.error(f"Error loading {self.file_path}: {e}")
             return []
 
-def initialize_chain(user_id, selected_project, base_dir="C:\\Users\\HP\\Desktop\\django\\myProject\\user_data"):
+def initialize_chain(user_id, selected_project, base_dir=None):
+    if base_dir is None:
+        base_dir = os.getenv("USER_DATA_DIR", "/app/user_data")  # Default to /app/user_data in Heroku
+
     project_path = os.path.join(base_dir, str(user_id), selected_project)
     logging.info(f"Project directory: {project_path}")
 
@@ -620,7 +630,7 @@ def initialize_chain(user_id, selected_project, base_dir="C:\\Users\\HP\\Desktop
 
     retriever = index.vectorstore.as_retriever(search_kwargs={"k": 1})
     chain = ConversationalRetrievalChain.from_llm(
-        llm=ChatOpenAI(model="gpt-4o"),
+        llm=ChatOpenAI(model="gpt-4"),
         retriever=retriever,
     )
 
