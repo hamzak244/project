@@ -555,7 +555,7 @@ from dotenv import load_dotenv
 from django.http import JsonResponse
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
-from your_app.models import User  # Assuming your user model is named 'User'
+from myApp.models import User  # Assuming your user model is named 'User'
 
 load_dotenv()
 
