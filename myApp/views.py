@@ -552,27 +552,28 @@ import os
 import sys
 import hashlib
 import json
+import logging
+
+from django.http import JsonResponse
+from django.shortcuts import render
+from django.views.decorators.csrf import csrf_exempt
 
 # Import necessary modules
 from langchain.chains import ConversationalRetrievalChain
 from langchain_community.document_loaders import TextLoader
 from langchain_community.embeddings import OpenAIEmbeddings
 from langchain.indexes import VectorstoreIndexCreator
-from langchain.indexes.vectorstore import VectorStoreIndexWrapper
 from langchain_community.vectorstores import Chroma
 from langchain_community.chat_models import ChatOpenAI
-from langchain_openai import ChatOpenAI
-from langchain_openai import OpenAIEmbeddings
-import constants
 
 class Document:
-    def _init_(self, page_content, doc_id, metadata=None):
+    def __init__(self, page_content, doc_id, metadata=None):
         self.page_content = page_content
         self.doc_id = doc_id
         self.metadata = metadata if metadata is not None else {}
 
 class UTF8TextLoader(TextLoader):
-    def _init_(self, file_path):
+    def __init__(self, file_path):
         self.file_path = file_path
 
     def load(self):
@@ -598,11 +599,8 @@ def calculate_checksum(directory):
 
 os.environ["OPENAI_API_KEY"] = "sk-None-J4IpD8DrhMBNH6phIyLMT3BlbkFJ5sw2CeaeSc3lk5PVLqfK"
 
-query = None
-if len(sys.argv) > 1:
-    query = sys.argv[1]
-
-data_dir = "data"
+# Global variables for chain and chat history
+data_dir = "C:\\Users\\HP\\Desktop\\django\\myProject\\myApp"
 
 # Check if data directory exists
 if not os.path.exists(data_dir):
@@ -611,13 +609,11 @@ if not os.path.exists(data_dir):
 
 # Load text files from the data folder
 text_files = [os.path.join(data_dir, file) for file in os.listdir(data_dir) if file.endswith(".txt")]
-loaders = []
 documents = []
 for file_path in text_files:
     loader = UTF8TextLoader(file_path)
     content = loader.load()
     if content:
-        loaders.append(loader)
         documents.extend(content)
 
 embedding = OpenAIEmbeddings()
@@ -635,14 +631,29 @@ chain = ConversationalRetrievalChain.from_llm(
 )
 
 chat_history = []
-while True:
-    if not query:
-        query = input("Prompt: ")
-    if query in ['quit', 'q', 'exit']:
-        sys.exit()
-    result = chain({"question": query, "chat_history": chat_history})
-    print("=" * 50)
-    print(result['answer'])
 
-    chat_history.append((query, result['answer']))
-    query = None
+@csrf_exempt
+def chat_view(request):
+    if request.method == 'POST':
+        user_query = json.loads(request.body).get('query')
+        if not user_query:
+            return JsonResponse({'error': 'No query provided'}, status=400)
+
+        logging.info(f"User query: {user_query}")
+
+        # Log the retrieved documents before invoking the chain
+        retriever = chain.retriever
+        retrieved_docs = retriever.get_relevant_documents(user_query)
+        logging.info(f"Retrieved documents for query '{user_query}':")
+        for doc in retrieved_docs:
+            doc_id = getattr(doc, 'doc_id', getattr(doc, 'lc_id', 'Unknown ID'))
+            logging.info(f"Retrieved Doc ID: {doc_id}, Content: {doc.page_content[:100]}...")
+
+        result = chain.invoke({"question": user_query, "chat_history": chat_history})
+        chat_history.append((user_query, result['answer']))
+        logging.info(f"Model response: {result['answer']}")
+
+        return JsonResponse({'answer': result['answer']})
+
+    return render(request, 'myApp/chat.html')
+
