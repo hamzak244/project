@@ -600,7 +600,7 @@ def calculate_checksum(directory):
 os.environ["OPENAI_API_KEY"] = "sk-None-J4IpD8DrhMBNH6phIyLMT3BlbkFJ5sw2CeaeSc3lk5PVLqfK"
 
 # Global variables for chain and chat history
-data_dir = "//s/data"
+data_dir = "data"
 
 # Check if data directory exists
 if not os.path.exists(data_dir):
