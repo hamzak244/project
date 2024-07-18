@@ -549,19 +549,30 @@ def accept_cookies(driver):
 
 
 import os
+import sys
+import hashlib
 import json
-import logging
-from dotenv import load_dotenv
-from django.http import JsonResponse
-from django.shortcuts import render
-from django.contrib.auth.decorators import login_required
-from myApp.models import User  # Assuming your user model is named 'User'
 
-import os
-import logging
+# Import necessary modules
+from langchain.chains import ConversationalRetrievalChain
+from langchain_community.document_loaders import TextLoader
+from langchain_community.embeddings import OpenAIEmbeddings
+from langchain.indexes import VectorstoreIndexCreator
+from langchain.indexes.vectorstore import VectorStoreIndexWrapper
+from langchain_community.vectorstores import Chroma
+from langchain_community.chat_models import ChatOpenAI
+from langchain_openai import ChatOpenAI
+from langchain_openai import OpenAIEmbeddings
+import constants
+
+class Document:
+    def _init_(self, page_content, doc_id, metadata=None):
+        self.page_content = page_content
+        self.doc_id = doc_id
+        self.metadata = metadata if metadata is not None else {}
 
 class UTF8TextLoader(TextLoader):
-    def __init__(self, file_path):
+    def _init_(self, file_path):
         self.file_path = file_path
 
     def load(self):
@@ -569,66 +580,69 @@ class UTF8TextLoader(TextLoader):
             with open(self.file_path, 'r', encoding='utf-8') as file:
                 page_content = file.read()
                 doc_id = os.path.basename(self.file_path)
-                logging.info(f"Loaded file: {self.file_path}")
                 return [Document(page_content=page_content, doc_id=doc_id)]
         except Exception as e:
-            logging.error(f"Error loading {self.file_path}: {e}")
+            print(f"Error loading {self.file_path}: {e}")
             return []
 
-def initialize_chain(user_id, selected_project, base_dir="/app/user_data"):
-    project_path = os.path.join(base_dir, str(user_id), selected_project)
-    logging.info(f"Project directory: {project_path}")
+def calculate_checksum(directory):
+    """Calculate checksum of all text files in a directory."""
+    md5 = hashlib.md5()
+    for root, _, files in os.walk(directory):
+        for file in files:
+            if file.endswith(".txt"):
+                with open(os.path.join(root, file), 'rb') as f:
+                    while chunk := f.read(8192):
+                        md5.update(chunk)
+    return md5.hexdigest()
 
-    if not os.path.exists(project_path):
-        logging.error(f"Project directory for user_id {user_id} and project {selected_project} does not exist.")
-        return None  # Return None or a default chain here
+os.environ["OPENAI_API_KEY"] = "sk-None-J4IpD8DrhMBNH6phIyLMT3BlbkFJ5sw2CeaeSc3lk5PVLqfK"
 
-    text_files = [os.path.join(root, file)
-                  for root, _, files in os.walk(project_path)
-                  for file in files if file.endswith(".txt")]
-    logging.info(f"Text files found: {text_files}")
+query = None
+if len(sys.argv) > 1:
+    query = sys.argv[1]
 
-    if not text_files:
-        logging.error(f"No text files found for user {user_id} in project {selected_project}")
-        # Return a default chain or a chain with a message
-        return ConversationalRetrievalChain.from_llm(
-            llm=ChatOpenAI(model="gpt-4o"),
-            retriever=None,
-            initial_message="No text files found for the specified project."
-        )
+data_dir = "data"
 
-    documents = []
-    for file_path in text_files:
-        loader = UTF8TextLoader(file_path)
-        content = loader.load()
-        if content:
-            documents.extend(content)
-        else:
-            logging.warning(f"No content loaded from file: {file_path}")
+# Check if data directory exists
+if not os.path.exists(data_dir):
+    print(f"Error: The directory '{data_dir}' does not exist.")
+    sys.exit(1)
 
-    logging.info(f"Total documents loaded: {len(documents)}")
-    for doc in documents:
-        logging.info(f"Document ID: {doc.doc_id}, Content: {doc.page_content[:100]}...")  # Log first 100 chars
+# Load text files from the data folder
+text_files = [os.path.join(data_dir, file) for file in os.listdir(data_dir) if file.endswith(".txt")]
+loaders = []
+documents = []
+for file_path in text_files:
+    loader = UTF8TextLoader(file_path)
+    content = loader.load()
+    if content:
+        loaders.append(loader)
+        documents.extend(content)
 
-    embedding = OpenAIEmbeddings()
+embedding = OpenAIEmbeddings()
 
-    vectorstore = Chroma(embedding_function=embedding)
-    index_creator = VectorstoreIndexCreator(embedding=embedding, vectorstore_kwargs={"vectorstore": vectorstore})
-    index = index_creator.from_documents(documents)
-    logging.info("Index created.")
+# Build new index
+print("Building new index...")
+vectorstore = Chroma(embedding_function=embedding)
+index_creator = VectorstoreIndexCreator(embedding=embedding, vectorstore_kwargs={"vectorstore": vectorstore})
+index = index_creator.from_documents(documents)
 
-    retriever = index.vectorstore.as_retriever(search_kwargs={"k": 1})
-    chain = ConversationalRetrievalChain.from_llm(
-        llm=ChatOpenAI(model="gpt-4o"),
-        retriever=retriever,
-    )
+# Create chain
+chain = ConversationalRetrievalChain.from_llm(
+    llm=ChatOpenAI(model="gpt-4o"),
+    retriever=index.vectorstore.as_retriever(search_kwargs={"k": 1}),
+)
 
-    # Manual test for retrieval using retriever's get_relevant_documents method
-    logging.info("Manual retrieval test:")
-    sample_query = "PLC"
-    retrieved_docs = retriever.get_relevant_documents(sample_query)  # Ensure correct argument structure
-    for doc in retrieved_docs:
-        doc_id = getattr(doc, 'doc_id', getattr(doc, 'lc_id', 'Unknown ID'))
-        logging.info(f"Retrieved Doc ID: {doc_id}, Content: {doc.page_content[:100]}...")
+chat_history = []
+while True:
+    if not query:
+        query = input("Prompt: ")
+    if query in ['quit', 'q', 'exit']:
+        sys.exit()
+    result = chain({"question": query, "chat_history": chat_history})
+    print("=" * 50)
+    print(result['answer'])
 
-    return chain
+    chat_history.append((query, result['answer']))
+    query = None
