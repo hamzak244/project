@@ -557,21 +557,8 @@ from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from myApp.models import User  # Assuming your user model is named 'User'
 
-load_dotenv()
-
-openai_api_key = os.getenv("OPENAI_API_KEY", "sk-None-J4IpD8DrhMBNH6phIyLMT3BlbkFJ5sw2CeaeSc3lk5PVLqfK")
-os.environ["OPENAI_API_KEY"] = openai_api_key
-
-logging.basicConfig(level=logging.INFO)
-
-class Document:
-    def __init__(self, page_content, doc_id, metadata=None):
-        self.page_content = page_content
-        self.doc_id = doc_id
-        self.metadata = metadata if metadata is not None else {}
-
-    def __repr__(self):
-        return f"Document(doc_id={self.doc_id}, metadata={self.metadata})"
+import os
+import logging
 
 class UTF8TextLoader(TextLoader):
     def __init__(self, file_path):
@@ -588,16 +575,13 @@ class UTF8TextLoader(TextLoader):
             logging.error(f"Error loading {self.file_path}: {e}")
             return []
 
-def initialize_chain(user_id, selected_project, base_dir=None):
-    if base_dir is None:
-        base_dir = os.getenv("USER_DATA_DIR", "/app/user_data")  # Default to /app/user_data in Heroku
-
+def initialize_chain(user_id, selected_project, base_dir="/app/user_data"):
     project_path = os.path.join(base_dir, str(user_id), selected_project)
     logging.info(f"Project directory: {project_path}")
 
     if not os.path.exists(project_path):
         logging.error(f"Project directory for user_id {user_id} and project {selected_project} does not exist.")
-        raise ValueError(f"Project directory for user_id {user_id} and project {selected_project} does not exist.")
+        return None  # Return None or a default chain here
 
     text_files = [os.path.join(root, file)
                   for root, _, files in os.walk(project_path)
@@ -606,7 +590,12 @@ def initialize_chain(user_id, selected_project, base_dir=None):
 
     if not text_files:
         logging.error(f"No text files found for user {user_id} in project {selected_project}")
-        raise ValueError(f"No text files found for user {user_id} in project {selected_project}")
+        # Return a default chain or a chain with a message
+        return ConversationalRetrievalChain.from_llm(
+            llm=ChatOpenAI(model="gpt-4o"),
+            retriever=None,
+            initial_message="No text files found for the specified project."
+        )
 
     documents = []
     for file_path in text_files:
@@ -630,7 +619,7 @@ def initialize_chain(user_id, selected_project, base_dir=None):
 
     retriever = index.vectorstore.as_retriever(search_kwargs={"k": 1})
     chain = ConversationalRetrievalChain.from_llm(
-        llm=ChatOpenAI(model="gpt-4"),
+        llm=ChatOpenAI(model="gpt-4o"),
         retriever=retriever,
     )
 
@@ -643,40 +632,3 @@ def initialize_chain(user_id, selected_project, base_dir=None):
         logging.info(f"Retrieved Doc ID: {doc_id}, Content: {doc.page_content[:100]}...")
 
     return chain
-
-@login_required
-def chat_view(request):
-    if request.method == 'POST':
-        user_id = request.user.id
-        selected_project = request.session.get('selected_project')
-
-        if not selected_project:
-            return JsonResponse({'error': 'No project selected'}, status=400)
-
-        user_query = json.loads(request.body).get('query')
-        if not user_query:
-            return JsonResponse({'error': 'No query provided'}, status=400)
-
-        try:
-            chain = initialize_chain(user_id, selected_project)
-        except ValueError as e:
-            return JsonResponse({'error': str(e)}, status=400)
-
-        chat_history = []
-        logging.info(f"User query: {user_query}")
-
-        # Log the retrieved documents before invoking the chain
-        retriever = chain.retriever
-        retrieved_docs = retriever.get_relevant_documents(user_query)  # Ensure correct argument structure
-        logging.info(f"Retrieved documents for query '{user_query}':")
-        for doc in retrieved_docs:
-            doc_id = getattr(doc, 'doc_id', getattr(doc, 'lc_id', 'Unknown ID'))
-            logging.info(f"Retrieved Doc ID: {doc_id}, Content: {doc.page_content[:100]}...")
-
-        result = chain.invoke({"question": user_query, "chat_history": chat_history})  # Ensure correct argument structure
-        chat_history.append((user_query, result['answer']))
-        logging.info(f"Model response: {result['answer']}")
-
-        return JsonResponse({'answer': result['answer']})
-
-    return render(request, 'myApp/chat.html')
